@@ -28,18 +28,28 @@ class Validator:
 		print(self.startingPlaces)
 		print("The ending places:")
 		print(self.endingPlaces)
-	def checkCycles(self):
-		for place in self.net.places:
-			cycleRecursion(place,[]) # does weird stuff here
-		
-	#maybe better name
+	#recursion, select a place and send it to the function. Send also all previous places.
+	#check if the descendants are in the previous places, if so, cycle found.
+	def getDescendants(self,placeIn):
+		descendants=[]
+		transitionPrevious=0
+		for arc in self.net.arcs:
+			if isinstance(arc.source,Place):
+				print(placeIn)
+				if placeIn.id==arc.source.id:
+					transitionPrevious = arc.target
+		for arc in self.net.arcs:
+			if isinstance(arc.source,Transition):
+				if transitionPrevious==arc.source:
+					descendants.append(arc.target)
+		return descendants
+	
 	def cycleRecursion(self,placeIn,placesIn):
 		placesIn.append(placeIn)
-		descendants = getDescendants(placeIn)
+		descendants = self.getDescendants(placeIn)
 		if placeIn.id in descendants:
 			#cycle found
 			for place in placesIn:
-				print("Place id in cycle:")
 				print(place.id)
 				self.numberOfCycles = self.numberOfCycles + 1
 		elif descendants==[]:
@@ -48,18 +58,9 @@ class Validator:
 		else:
 			#make sure every split it searched
 			for place in descendants:
-				cycleRecursion(place,placesIn)
-		
-	
-	def getDescendants(self,placeIn):
-		descendants=[]
-		transitionPrevious
-		for arc in self.net.arcs:
-			if isintance(arc.source,Place):
-				if placeIn.id==arc.source.id:
-					transitionPrevious = arc.target
-		for arc in self.net.arcs:
-			if isinstance(arc.source,Transition):
-				if transitionPrevious==arc.source:
-					descendants.append(arc.target.id)
-		return descendants
+				self. cycleRecursion(place,placesIn)
+	def checkCycles(self):
+		for place in self.net.places:
+			placesIn=[]
+			self.cycleRecursion(place,placesIn)
+	#maybe better name
