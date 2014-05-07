@@ -28,6 +28,38 @@ class Validator:
 		print(self.startingPlaces)
 		print("The ending places:")
 		print(self.endingPlaces)
-	#def checkEndingArcs():
-	#check for cycles(how?)
-	#def checkForCycles():
+	def checkCycles(self):
+		for place in self.net.places:
+			cycleRecursion(place,[]) # does weird stuff here
+		
+	#maybe better name
+	def cycleRecursion(self,placeIn,placesIn):
+		placesIn.append(placeIn)
+		descendants = getDescendants(placeIn)
+		if placeIn.id in descendants:
+			#cycle found
+			for place in placesIn:
+				print("Place id in cycle:")
+				print(place.id)
+				self.numberOfCycles = self.numberOfCycles + 1
+		elif descendants==[]:
+			#no cycle found
+			return
+		else:
+			#make sure every split it searched
+			for place in descendants:
+				cycleRecursion(place,placesIn)
+		
+	
+	def getDescendants(self,placeIn):
+		descendants=[]
+		transitionPrevious
+		for arc in self.net.arcs:
+			if isintance(arc.source,Place):
+				if placeIn.id==arc.source.id:
+					transitionPrevious = arc.target
+		for arc in self.net.arcs:
+			if isinstance(arc.source,Transition):
+				if transitionPrevious==arc.source:
+					descendants.append(arc.target.id)
+		return descendants
