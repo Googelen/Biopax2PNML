@@ -50,7 +50,6 @@ class Validator:
 		if placeIn.id in descendants:
 			#cycle found
 			for place in placesIn:
-				print(place.id)
 				self.numberOfCycles = self.numberOfCycles + 1
 		elif descendants==[]:
 			#no cycle found
@@ -63,4 +62,6 @@ class Validator:
 		for place in self.net.places:
 			placesIn=[]
 			self.cycleRecursion(place,placesIn)
+		print("Number Of Cycles:")
+		print(self.numberOfCycles)
 	#maybe better name
