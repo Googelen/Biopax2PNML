@@ -6,6 +6,28 @@ class Validator:
 		self.net=net
 		self.startingPlaces = []
 		self.endingPlaces = []
+		self.number_of_cycles=0
+		self.cycles=[]
+		self.type=""
+		self.number_of_components=0
+	
+	def validate(self):
+		self.checkArcs()
+		self.checkCycles()
+		self.countComponents()
+		self.whatGraph()
+		#this is very ugly, maybe your logger?
+		print("Starting places")
+		print(self.startingPlaces)
+		print("Ending places")
+		print(self.endingPlaces)
+		print("Number of cycles")
+		print(self.number_of_cycles)
+		print("Type of graph")
+		print(self.type)
+		print("Number of Components")
+		print(self.number_of_components)
+		
 		
 	def checkArcs(self):
 		for place in self.net.places:
@@ -24,44 +46,111 @@ class Validator:
 				self.startingPlaces.append(place.id)
 			if setEnd:
 				self.endingPlaces.append(place.id)
-		print("The starting places:")
-		print(self.startingPlaces)
-		print("The ending places:")
-		print(self.endingPlaces)
+		
+	def countComponents(self):
+		#select starting place
+		remaining_places = self.net.places
+		while remaining_places:
+			#get a place
+			place=self.getFirst(remaining_places)
+			component = self.getComponent(place)
+			remaining_places = set(remaining_places)-set(component)
+			self.number_of_components=self.number_of_components+1
+	
+	def getFirst(self,iterable, default=None):
+		if iterable:
+			for item in iterable:
+				return item
+		return default
+	
+	def getComponent(self,placeIn):
+		previous_neighbours=[]
+		neighbours=[placeIn]
+		# expand the neighbours
+		while(neighbours!=previous_neighbours):
+			temp_neighbours=neighbours
+			parents=[]
+			children=[]
+			#get children and parents
+			for place in neighbours:
+				if place not in previous_neighbours:
+					parents.extend(self.getParents(place))
+					children.extend(self.getChildren(place))
+			#add them if they do not yet exist		
+			for parent in parents:
+				if parent not in neighbours:
+					neighbours.append(parent)
+			for child in children:
+				if child not in neighbours:
+					neighbours.append(child)
+			previous_neighbours=temp_neighbours #for less loops
+			
+		return neighbours
+	
+	def getParents(self,placeIn):
+		parents=[]
+		transitionPrevious=[]
+		for arc in self.net.arcs:
+			if isinstance(arc.target, Place):
+				if placeIn.id==arc.target.id:
+					transitionPrevious.append(arc.source)
+		
+		for arc in self.net.arcs:
+			if isinstance(arc.target,Transition):
+				if arc.target in transitionPrevious:
+					parents.append(arc.source)
+		return parents
+		
+	
 	#recursion, select a place and send it to the function. Send also all previous places.
 	#check if the descendants are in the previous places, if so, cycle found.
-	def getDescendants(self,placeIn):
-		descendants=[]
-		transitionPrevious=0
+	
+	def getChildren(self,placeIn):
+		children=[]
+		transitionNext=[]
 		for arc in self.net.arcs:
 			if isinstance(arc.source,Place):
-				print(placeIn)
 				if placeIn.id==arc.source.id:
-					transitionPrevious = arc.target
+					transitionNext.append(arc.target)
 		for arc in self.net.arcs:
 			if isinstance(arc.source,Transition):
-				if transitionPrevious==arc.source:
-					descendants.append(arc.target)
-		return descendants
+				if arc.source in transitionNext:
+					children.append(arc.target)
+		return children
 	
 	def cycleRecursion(self,placeIn,placesIn):
 		placesIn.append(placeIn)
-		descendants = self.getDescendants(placeIn)
-		if placeIn.id in descendants:
+		children = self.getChildren(placeIn)
+		if placeIn.id in children:
 			#cycle found
-			for place in placesIn:
-				self.numberOfCycles = self.numberOfCycles + 1
-		elif descendants==[]:
+			self.number_of_cycles = self.number_of_cycles + 1
+			self.cycles.append(placesIn)
+			
+		elif children==[]:
 			#no cycle found
 			return
 		else:
 			#make sure every split it searched
-			for place in descendants:
+			for place in children:
 				self. cycleRecursion(place,placesIn)
+				
+				
 	def checkCycles(self):
 		for place in self.net.places:
 			placesIn=[]
 			self.cycleRecursion(place,placesIn)
-		print("Number Of Cycles:")
-		print(self.numberOfCycles)
 	#maybe better name
+	
+	#call this at the end
+	def whatGraph(self):
+		#every place has 1 arc exept for 1
+		if (len(self.net.arcs)-1==len(self.net.places)):
+			self.type="Linear"
+		#there are no starting and ending places
+		elif (len(self.startingPlaces)==0 and len(self.endingPlaces)==0):
+			self.type="Cyclic"
+		#there are no cycles
+		elif self.number_of_cycles==0:
+			self.type="Branch"
+		else:
+			self.type="Undefined"
