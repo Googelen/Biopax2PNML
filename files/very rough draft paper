@@ -2,6 +2,9 @@ Hypothesis:
 How can generated petrinets from biopax be validated to become executable pathways
 (Fancy words)
 
+    [Maybe a more modest proposal:
+     What properties of petri nets can be determined with information from biopax?]
+
 Paragraphs:
 Earlier work/intro
 Some talk about the work from timo

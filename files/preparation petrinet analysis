@@ -5,23 +5,35 @@ Check reversibility: is the initial state reachable again?
 Page 14 contains all kind of analysis possible:
 easy ones:
 ORD
+    [is this really feasable? We don't have any information about weights in our model]
 CON
-SCF
+    [Agreed. Mayby also SC (strongly connected)?]
+    [For SC we also would have to check for boundary nodes]
+SCF (static confilct free)
+   [I agree, this is something we can test]
 
 A net with boundary nodes cannot be bounded and live at the same time.
+
+
 P-invariance
 T-invariance (requires matrices)
+    [Could be a first step to fill the net with tokens. cf p 234]
 
 page 18 abount finding minimal invariance is not that handy I think, 
 because we do not know how the petrinet acctually looks like, 
 there may be missing arcs and then this has no meaning
+    [Isn't that true for any analysis we can perform?]
 
 Finding deadlocks is do-able
 
 Reachability graph neccesairy? they state it becomes very computation intensive and large
+    [Is this even possible without initial token numbers?]
 
 are we going to do everything on page 29? that is all of the above (summary of validations)
 Can we use their tool for analysis? (Sno08 == snoopy apparently)
+    [They say they used Charlie [Cha08]. That's a Java program.
+    I'm not sure if we can call that from our python environment or
+    if it runs only with a graphical interface]
 
 H5:
 Problem:
@@ -31,11 +43,31 @@ I lost it...
 I think they use a lot of math to calculate how many tokens should be used where
 But seems very hard to do 
 
-Suggestions of static analysis:
-boundness
-livelyness
-reversability
-dead locks
-p and t invariance
-If we have spare time some options from page 14
 
+Suggestions of static analysis:
+===============================
+
+From Murata, T.: Petri nets: Properties, analysis and applications. Proc.of the IEEE 77(4), 541–580 (1989)
+ * boundness
+    [Irrelevant for us since there are no tokens yet]
+ * livelyness
+    [i.e. there are no dead states for any transition]
+ * reversability [i.e. any state can be reached again]
+[I don't know if these really make a lot sense for us since we don't have any tokens or weights]
+
+ * dynamic conflict
+    [one marking enables two transitions which disable each other.
+     We would have to add signs to our model]
+
+ * Net structure classes (p. 229)
+     + State machine
+     + Synchronization graph
+     + Extended free choice
+     + Extended simple
+  [I suggest these because we can compute them without any weights or token numbers]
+
+ * dead locks
+ * p and t invariance
+
+If we have spare time some options from page 14
+    [actually, I suggest we start with all the tests from pp 14-... which apply to our model]
