@@ -118,13 +118,24 @@ class Validator:
 					children.append(arc.target)
 		return children
 	
+	def add_to_cycles(self,placesIn):
+		duplicate_found=False
+		for cycle in self.cycles:
+			if(set(cycle)&set(placesIn)==set(placesIn)):
+				duplicate_found=True
+		
+		if(not duplicate_found):
+			self.cycles.append(placesIn)
+	
+	
 	def cycleRecursion(self,placeIn,placesIn):
 		placesIn.append(placeIn)
 		children = self.getChildren(placeIn)
 		if placeIn.id in children:
 			#cycle found
 			self.number_of_cycles = self.number_of_cycles + 1
-			self.cycles.append(placesIn)
+			placesIn.pop() #the original place was added, remove this one
+			add_to_cycles(placesIn)
 			
 		elif children==[]:
 			#no cycle found
