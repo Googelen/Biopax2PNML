@@ -1,0 +1,41 @@
+Implement macro modeling (arcs both ways and add transitions together)
+Check boundness (maxial number of tokens) (static)
+Check livelyness (are all transitions fired?)
+Check reversibility: is the initial state reachable again?
+Page 14 contains all kind of analysis possible:
+easy ones:
+ORD
+CON
+SCF
+
+A net with boundary nodes cannot be bounded and live at the same time.
+P-invariance
+T-invariance (requires matrices)
+
+page 18 abount finding minimal invariance is not that handy I think, 
+because we do not know how the petrinet acctually looks like, 
+there may be missing arcs and then this has no meaning
+
+Finding deadlocks is do-able
+
+Reachability graph neccesairy? they state it becomes very computation intensive and large
+
+are we going to do everything on page 29? that is all of the above (summary of validations)
+Can we use their tool for analysis? (Sno08 == snoopy apparently)
+
+H5:
+Problem:
+stochastica approach uses positive and negative interactions which we do not have implemented
+
+I lost it...
+I think they use a lot of math to calculate how many tokens should be used where
+But seems very hard to do 
+
+Suggestions of static analysis:
+boundness
+livelyness
+reversability
+dead locks
+p and t invariance
+If we have spare time some options from page 14
+
