@@ -121,7 +121,7 @@ class Validator:
 	def add_to_cycles(self,placesIn):
 		duplicate_found=False
 		for cycle in self.cycles:
-			if(set(cycle)&set(placesIn)==set(placesIn)):
+			if(set(cycle)==set(placesIn)):
 				duplicate_found=True
 		
 		if(not duplicate_found):
