@@ -16,8 +16,11 @@ A net with boundary nodes cannot be bounded and live at the same time.
 
 
 P-invariance
+    > Token conservation
 T-invariance (requires matrices)
+    > loops (stable states)
     [Could be a first step to fill the net with tokens. cf p 234]
+    > This could be used to find superfluous subgraphs or missing arcs
 
 page 18 abount finding minimal invariance is not that handy I think, 
 because we do not know how the petrinet acctually looks like, 
