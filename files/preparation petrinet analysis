@@ -31,8 +31,10 @@ Finding deadlocks is do-able
 
 Reachability graph neccesairy? they state it becomes very computation intensive and large
     [Is this even possible without initial token numbers?]
+    Could be handy, but gives lots of combinatorics.
 
 are we going to do everything on page 29? that is all of the above (summary of validations)
+    No
 Can we use their tool for analysis? (Sno08 == snoopy apparently)
     [They say they used Charlie [Cha08]. That's a Java program.
     I'm not sure if we can call that from our python environment or
@@ -40,7 +42,7 @@ Can we use their tool for analysis? (Sno08 == snoopy apparently)
 
 H5:
 Problem:
-stochastica approach uses positive and negative interactions which we do not have implemented
+stochastica approach uses positive and negative interactions and arc weigths which we do not have implemented
 
 I lost it...
 I think they use a lot of math to calculate how many tokens should be used where
@@ -67,9 +69,11 @@ From Murata, T.: Petri nets: Properties, analysis and applications. Proc.of the 
      + Synchronization graph
      + Extended free choice
      + Extended simple
+        Last 2 are supperfluous but do them anyway
+        
   [I suggest these because we can compute them without any weights or token numbers]
 
- * dead locks
+ * dead locks and traps
  * p and t invariance
 
 If we have spare time some options from page 14
