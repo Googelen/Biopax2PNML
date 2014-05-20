@@ -1,16 +1,16 @@
-Hypothesis:
+Goal:
 How can generated petrinets from biopax be validated to become executable pathways
-(Fancy words)
 
-    [Maybe a more modest proposal:
-     What properties of petri nets can be determined with information from biopax?]
+Hypothesis:
+What properties of petri nets can be determined with information from biopax?]
 
 Paragraphs:
+Motivation
 Earlier work/intro
 Some talk about the work from timo
 
-How to do such a thing
-How are we going to do this
+How to do such a thing, and why this way
+How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
 
 Static validation
 explain what we have done statically
@@ -23,5 +23,8 @@ Improving the generated petrinet
 I do not know if this is a good idea, because maybe this will not work, but if eventually this should happen right?
 Also, not a clue how to do this
 
+Future work
+
 Conclusion
+Motivation, summary, hypothesis
 What have we done
