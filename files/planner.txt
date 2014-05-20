@@ -1,0 +1,22 @@
+Week 1
+19-5  25-5
+Net structure classes
+Livelyness
+Boundness
+
+Week 2
+25-5  1-6
+Implement P/T invariance
+
+Week 3
+2-6 8-6
+deadlocks and traps
+  Maybe switch those, I do not know if it is handy if you first know the p/t invariance 
+  before deadlocks or the other way around
+Write paper
+intro, 2 paragraphs
+
+Week 4
+9-6 11-6
+
+11-6: meating
