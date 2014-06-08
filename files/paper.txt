@@ -18,7 +18,7 @@ How to do such a thing, and why this way
 To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the 
 How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
 
-
+ 
 Static validation
 explain what we have done statically
 
