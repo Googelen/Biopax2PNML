@@ -1,0 +1,37 @@
+Goal:
+How can generated petri nets from Biopax be validated to become executable pathways
+
+Hypothesis:
+What properties of petri nets can be determined with information from Biopax?
+
+Paragraphs:
+Motivation
+After having read about petri nets, it became clear to us that there is not yet an easy way to construct such a network. Such a process is very hard because of the many possibilities and the amount of research there has to be done in order to make a petri net complete. However after we read the research of (blood cells), it became clear that even an incomplete petri net is able to predict some possible missing transitions in the cell or is able to help researchers look for new experiments.(c.elegans paper) If a petri net is nearing completions it is even able to simulate the behavior of interactions in an organism. We found this very intriguing and we decided to dive into this branch of bioinformatics. 
+We were aware that the information researchers gained from experiments was stored in large databases, like wikipathways and Biopax. (reference) One disadvantage of these databases however, is that the information is static, and not executable like a petri net. A former master student at the VU, Timo Willemsen, has made a program which was able to convert information from the Biopax database into a petri net, however, his program was not very extensive, but it was the foundation for out new goal: validating those generated petri nets from Biopax to become executable pathways.
+Another reason we decided to make continue the research of Willemsen, because we had the feeling that we could understand this concept and be able to expand his project so it will be able to not only create a petri net, but also tell us something about the properties of this petri net.
+Earlier work/intro
+In this paper we are trying to make executable models of organisms or parts of organisms by means of petri nets. A petri net is a form of representing how a process progresses over time. This is done by having places, transitions, arcs and tokens. The places represent a state, the place a substance is, or a substance itself. A transition can represent a transition of a substance from one place to another, a process in which a substance is transformed or another change. An arc represents which place is connected to which transition and a token shows which place is currently active. Before a transition can fire, it has to have tokens in the places before it. A place can hold more than one token. This network has been proven to be Turing complete (reference).
+The research of Timo Willemsen is the basic for our research. He has made a tool that is able to convert a Biopax structure into a petri net. However, this tool does not implement validation. This is what we wanted to improve. We also used papers of (Feenstra) where it is explained how petri nets are formed and how they can be used to predict possible outcomes of experiments. These papers all are focused on the Caenorhabditis elegans.
+Some talk about the work from timo
+
+How to do such a thing, and why this way
+To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the 
+How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
+
+
+Static validation
+explain what we have done statically
+
+Dynamic validation
+Explain what we have done dynamically
+Not yet done
+
+Improving the generated petri net
+I do not know if this is a good idea, because maybe this will not work, but if eventually this should happen right?
+Also, not a clue how to do this
+
+Future work
+
+Conclusion
+Motivation, summary, hypothesis
+What have we done
