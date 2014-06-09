@@ -18,10 +18,7 @@ class EmptyNetTestCase(unittest.TestCase):
 
 class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 	def setUp(self):
-		net={
-		'places':(None),
-		'transitions':(None)
-		}
+		net = PetriNet("This petri net is empty")
 		c = NetClassifier(net)
 		test_places1 = {
 		'test1': (None,set(['0','1','2'])),
@@ -42,8 +39,6 @@ class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 		'test3':(None,set(['1','2','3']))
 	
 		}
-		self.test_extended_simple()
-		self.test_extended_free_choice()
 		
 	def test_extended_simple(self):
 		self.assertEqual(True,c.is_extended_simple_choice(test_places1))
