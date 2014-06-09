@@ -1,15 +1,25 @@
 import unittest
-import classifier
+from models import PetriNet
+from classifier.classifier import NetClassifier
 
-class MyTestCase(unittest.TestCase):
-	def test_something(self):
-		self.assertEqual(True, False)
+
+class EmptyNetTestCase(unittest.TestCase):
+	def setUp(self):
+		net = PetriNet("This petri net is empty")
+		c = NetClassifier(net)
+		self.classes = c.classify()
+
+	def test_empty_net_should_be_sm(self):
+		self.assertTrue(self.classes['state_machine'])
+
+	def test_empty_net_should_be_sg(self):
+		self.assertTrue(self.classes['synchronisation_graph'])
 
 
 class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
-	def __init__(self):
+	def setUp(self):
 		net=None
-		classifier = classifier.NetClassifier(net)
+		c = NetClassifier(net)
 		test_places1 = {
 		'test1': (None,set(['0','1','2'])),
 		'test2': (None,set(['3','4','5'])),
@@ -33,13 +43,15 @@ class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 		self.test_extended_free_choice()
 		
 	def test_extended_simple(self):
-		self.assertEqual(True,classifier.is_extended_simple_choice(test_places1))
-		self.assertEqual(True,classifier.is_extended_simple_choice(test_places2))
-		self.assertEqual(False,classifier.is_extended_simple_choice(test_places3))
+		self.assertEqual(True,c.is_extended_simple_choice(test_places1))
+		self.assertEqual(True,c.is_extended_simple_choice(test_places2))
+		self.assertEqual(False,c.is_extended_simple_choice(test_places3))
 		
 	def test_extended_free_choice(self):
-		self.assertEqual(True,classifier.is_extended_free_choice(test_places1))
-		self.assertEqual(False, classifier.is_extended_free_choice(test_places2))
-		self.assertEqual(False,classifier.is_extended_free_choice(test_places3))
+		self.assertEqual(True,c.is_extended_free_choice(test_places1))
+		self.assertEqual(False, c.is_extended_free_choice(test_places2))
+		self.assertEqual(False,c.is_extended_free_choice(test_places3))
+		
+
 if __name__ == '__main__':
 	unittest.main()
