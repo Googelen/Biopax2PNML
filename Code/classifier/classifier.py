@@ -4,7 +4,7 @@ class NetClassifier:
 	def __init__(self, net):
 		self.net=net
 
-	def classify(self, net):
+	def classify(self):
 	
 		classes = {
 			'state_machine': False,
@@ -13,7 +13,7 @@ class NetClassifier:
 			'extended_simple': False
 		}
 	
-		nodes = count_arcs_at_nodes(net.arcs)
+		nodes = count_arcs_at_nodes(self.net.arcs)
 		(places, transitions) = split_nodes(nodes)
 	
 		classes['state_machine'] = is_not_branching(transitions)
