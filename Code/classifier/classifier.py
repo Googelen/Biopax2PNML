@@ -58,7 +58,7 @@ class NetClassifier:
 		:param nodes: Iterable of Places or Transitions
 		:return: True if nodes contains at least one branching node.
 		"""
-		return all([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
+		return any([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
 		
 	def is_extended_free_choice(self):
 		for combined_places in itertools.combinations(self.places,2):
