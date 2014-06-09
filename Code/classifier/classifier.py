@@ -51,29 +51,22 @@ Class classifier:
 		return all([(sources <= 1) and (targets <= 1) and (sources == targets) for (sources, targets) in nodes])
 		
 	def is_extended_free_choice(self,places):
-		for place1 in places:
-			for place2 in places:
-				if(!(is_overlap(place1,place2) or is_the_same(place1,place2)))
-					return False
+		for combined_places in itertools.combinations(places,2):
+			place1 = combined_places[0]
+			place2 = combined_places[1]
+			if(!(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1]))
+				return False
 		return True
 
 	def is_extended_simple_choice(self,places):
-		for place1 in places:
-			#it should be possible to check less combinations here, by skipping if place2 is in place1
-			for place2 in places:
-				if(!(!is_overlap(place1,place2) or contains(place1,place2))):
-					return False
+		for combined_places in itertools.combinations(places,2):
+			place1 = combined_places[0]
+			place2 = combined_places[1]
+			if(!(place1[1].isdisjoined(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
+				return False
 		return True
 
-	def contains(self,place1,place2):
-		
 
-	def is_overlap(self, place1, place2):
-		for transition1 in place1[1]:
-			for transition2 in place2[1]:
-				if(transition2==transition1):
-					return True
-		return False
 
 	def classify(self):
 		self.EFC = is_extended_free_choice(places)
