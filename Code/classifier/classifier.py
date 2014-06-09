@@ -18,7 +18,8 @@ Class classifier:
 	
 		classes['state_machine'] = is_not_branching(transitions)
 		classes['synchronisation_graph'] = is_not_branching(places)
-	
+		classes['extended_free_choice'] = is_extened_free_choice(places)
+		classes['extended_simple'] = is_extended_simple(places)
 		return classes
 	
 	
@@ -65,9 +66,3 @@ Class classifier:
 			if(!(place1[1].isdisjoined(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
 				return False
 		return True
-
-
-
-	def classify(self):
-		self.EFC = is_extended_free_choice(places)
-		self.ES = is_extended_simple(places)
