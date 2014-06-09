@@ -1,0 +1,40 @@
+Pseudo algorithms for ER and EFC
+For each place in the set of places construct the post places, if it is a cycle, take the entire cycle and stop when it is at the selected place again.
+Do this by taking the set of all post places of 1 place of 1 step, and then take all post places of these places. Use recursion.
+After this has been constructed, start making all possible combination of places and see if the intersection of the sets is null or if both sets are the same
+If this is true for all places the network is extended free choice
+
+For each place construct the set of all post places like above
+See if the intersection of the sets is null, or if one of the 2 sets is a subset of the other set.
+If this is true, the network is extended simple.
+
+ERC:
+
+Function Construct postplaces oldplaces, newplaces, initialplace:
+For each new place, 
+Foundplace = 	Find fist postplaces
+	if foundplace contains initial place
+//skip it
+Else
+		Found places.add(found place)
+If(foundplaces==0){
+Return
+else
+construct postplaces(oldplaces+newplaces, foundplaces, initialplace)
+return found places
+
+call construct postplaces for each place
+for each place
+	for each place not yet visited in previous loop
+		if !(difference of postplace ==null  or postplaces place1 == postplaces place 2)
+			can never be a extened free choice
+
+
+ES:
+call construct postplaces
+for each place
+	for each place not yet visited in previous loop
+		if !(difference of postplace ==null  or postplaces place1 contains postplaces place 2 or !postplaces place2 contains postplaces place1)
+			can never be a extened simple
+
+
