@@ -6,8 +6,6 @@ class MyTestCase(unittest.TestCase):
 		self.assertEqual(True, False)
 
 
-if __name__ == '__main__':
-	unittest.main()
 class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 	def __init__(self):
 		net=None
@@ -43,3 +41,5 @@ class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 		self.assertEqual(True,classifier.is_extended_free_choice(test_places1))
 		self.assertEqual(False, classifier.is_extended_free_choice(test_places2))
 		self.assertEqual(False,classifier.is_extended_free_choice(test_places3))
+if __name__ == '__main__':
+	unittest.main()
