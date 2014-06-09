@@ -1,6 +1,6 @@
 from models import *
 
-	Class classifier:
+Class classifier:
 	def classify(net):
 	
 		classes = {
