@@ -13,13 +13,13 @@ class NetClassifier:
 			'extended_simple': False
 		}
 	
-		nodes = count_arcs_at_nodes(self.net.arcs)
-		(places, transitions) = split_nodes(nodes)
+		nodes = self.count_arcs_at_nodes(self.net.arcs)
+		(places, transitions) = self.split_nodes(nodes)
 	
-		classes['state_machine'] = is_not_branching(transitions)
-		classes['synchronisation_graph'] = is_not_branching(places)
-		classes['extended_free_choice'] = is_extened_free_choice(places)
-		classes['extended_simple'] = is_extended_simple(places)
+		classes['state_machine'] = self.is_not_branching(transitions)
+		classes['synchronisation_graph'] = self.is_not_branching(places)
+		classes['extended_free_choice'] = self.is_extened_free_choice(places)
+		classes['extended_simple'] = self.is_extended_simple(places)
 		return classes
 
 	def count_arcs_at_nodes(self, arcs):
@@ -52,7 +52,7 @@ class NetClassifier:
 		for combined_places in itertools.combinations(places,2):
 			place1 = combined_places[0]
 			place2 = combined_places[1]
-			if(!(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1]))
+			if(!(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1])):
 				return False
 		return True
 
