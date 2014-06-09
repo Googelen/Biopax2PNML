@@ -18,7 +18,10 @@ class EmptyNetTestCase(unittest.TestCase):
 
 class extended_simple_and_extended_free_choice_testcase(unittest.TestCase):
 	def setUp(self):
-		net=None
+		net={
+		'places':(None),
+		'transitions':(None)
+		}
 		c = NetClassifier(net)
 		test_places1 = {
 		'test1': (None,set(['0','1','2'])),
