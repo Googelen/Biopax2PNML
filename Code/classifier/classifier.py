@@ -23,7 +23,7 @@ class NetClassifier:
 			'state_machine': not self.contains_branching_node(self.transitions),
 			'synchronisation_graph': not self.contains_branching_node(self.places),
 			'extended_free_choice': self.is_extended_free_choice(self.places),
-			'extended_simple': self.is_extended_simple(self.places)
+			'extended_simple': self.is_extended_simple_choice(self.places)
 		}
 
 	def get_pre_post_neighbours(self):
