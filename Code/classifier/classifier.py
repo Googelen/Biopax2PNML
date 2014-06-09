@@ -7,6 +7,8 @@ class NetClassifier:
 		self.places = {place: (set(), set()) for place in self.net.places}
 		self.transitions = {transition: (set(), set()) for transition in self.net.transitions}
 
+		self.get_pre_post_neighbours()
+
 	@property
 	def classifications(self):
 		"""Classify net and return classifications.
@@ -19,11 +21,14 @@ class NetClassifier:
 
 		:return: Dict of classes to boolean values. Each entry is True if the classification applies.
 		"""
+
+		is_extended_free_choice, is_extended_simple = self.is_extended_classes()
+
 		return {
 			'state_machine': not self.contains_branching_node(self.transitions),
 			'synchronisation_graph': not self.contains_branching_node(self.places),
-			'extended_free_choice': self.is_extended_free_choice(),
-			'extended_simple': self.is_extended_simple()
+			'extended_free_choice': is_extended_free_choice,
+			'extended_simple': is_extended_simple
 		}
 
 	def get_pre_post_neighbours(self):
@@ -59,19 +64,19 @@ class NetClassifier:
 		:return: True if nodes contains at least one branching node.
 		"""
 		return any([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
-		
-	def is_extended_free_choice(self):
-		for combined_places in itertools.combinations(self.places,2):
-			place1 = self.places[combined_places[0]]
-			place2 = self.places[combined_places[1]]
-			if(not(place1[1].isdisjoint(place2[1]) or place1[1]== place2[1])):
-				return False
-		return True
 
-	def is_extended_simple(self):
-		for combined_places in itertools.combinations(self.places,2):
-			place1 = self.places[combined_places[0]]
-			place2 = self.places[combined_places[1]]
-			if(not(place1[1].isdisjoint(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
-				return False
-		return True
+	def is_extended_classes(self):
+		"""Check if net is Extended Free Choice and/or Extended Simple.
+
+		:rtype : tuple(Bool, Bool)
+		:return: (is_extended_free_choice, is_extended_simple)
+		"""
+		extended_free_choice = True
+		for (pre1, post1), (pre2, post2) in itertools.combinations(self.places.values(), 2):
+			if not (post1.isdisjoint(post2) or post1 == post2):
+				extended_free_choice = False
+
+			if not (post1.isdisjoint(post2) or post1 <= post2 or post2 <= post1):
+				return False, False
+
+		return extended_free_choice, True
