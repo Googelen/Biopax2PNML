@@ -1,6 +1,9 @@
 from models import *
 
 Class classifier:
+	def __init__(self, net):
+		self.net=net
+
 	def classify(net):
 	
 		classes = {
@@ -73,6 +76,5 @@ Class classifier:
 		return False
 
 	def classify(self):
-		places = create_post_places()
 		self.EFC = is_extended_free_choice(places)
 		self.ES = is_extended_simple(places)
