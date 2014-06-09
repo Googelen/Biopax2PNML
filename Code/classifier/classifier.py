@@ -1,62 +1,63 @@
-from models import *
 import itertools
 
 class NetClassifier:
 	def __init__(self, net):
-		self.net=net
+		self.net = net
+		self.places = {place: (set(), set()) for place in self.net.places}
+		self.transitions = {transition: (set(), set()) for transition in self.net.transitions}
 
+	@property
 	def classify(self):
-	
-		classes = {
-			'state_machine': False,
-			'synchronisation_graph': False,
-			'extended_free_choice': False,
-			'extended_simple': False
+		"""Classify net.
+
+		Check if net is
+		State Machine (there are neither forward branching nor backward branching transitions),
+		Synchronisation Graph (there are neither forward branching nor backward branching places),
+		Extended Free Choice (transitions in conflict have identical sets of preplaces),
+		Extended Simple (every transition is involved in one conflict at most).
+
+		:return: Dict of classes to boolean values.
+		"""
+		return {
+			'state_machine': not self.contains_branching_node(self.transitions),
+			'synchronisation_graph': not self.contains_branching_node(self.places),
+			'extended_free_choice': self.is_extened_free_choice(self.places),
+			'extended_simple': self.is_extended_simple(self.places)
 		}
-	
-		nodes = self.count_arcs_at_nodes(self.net.arcs)
-		(places, transitions) = self.split_nodes(nodes)
-	
-		classes['state_machine'] = self.is_not_branching(transitions)
-		classes['synchronisation_graph'] = self.is_not_branching(places)
-		classes['extended_free_choice'] = self.is_extened_free_choice(places)
-		classes['extended_simple'] = self.is_extended_simple(places)
-		#test_places = {
-		#	'test1': (None,set(['0','1','2'])),
-		#	'test2': (None,set(['3','4','5'])),
-		#	'test3':(None,set(['1','2','0']))
-		#
-		#}
-		#
-		#print(self.is_extended_free_choice(test_places))
-		
-		return classes
 
-	def count_arcs_at_nodes(self, arcs):
-		nodes = {}
-	
-		for arc in arcs:
-			(sources, targets) = nodes[arc.source]
-			nodes[arc.source] = (sources + 1, targets)
-	
-			(sources, targets) = nodes[arc.target]
-			nodes[arc.target] = (sources, targets + 1)
-	
-		return nodes
+	def get_pre_post_neighbours(self):
+		"""Adds sources and targets from all arcs to pre- and post-neighbour sets of self.places and self.transitions.
+		"""
+		for arc in self.net.arcs:
 
-	def split_nodes(self, nodes):
-		transitions = {}
-		places = {}
-		for (d, v) in nodes.items():
-			if isinstance(v, Transition):
-				transitions[d] = v
-			else:
-				places[d] = v
-	
-		return (places, transitions)
+			if arc.source in self.places:
+				# source is Place => target is a Transition
+				self.update_node(arc, self.places, self. transitions)
 
-	def is_not_branching(nodes):
-		return all([(sources <= 1) and (targets <= 1) and (sources == targets) for (sources, targets) in nodes])
+			elif arc.source in self.transitions:
+				# source is Transition -> target is Place
+				self.update_node(arc, self.transitions, self.places)
+
+	def update_node(self, arc, sources, targets):
+		"""Adds arc.target and arc.source as pre- and post-neighbours to targets and sources.
+
+		 Adds arc.target as post-neighbour to arc.source in sources.
+		 Adds arc.source as pre-neighbour to arc.target in targests.
+
+		:param arc: Arc
+		:param sources: Dict of nodes to tuple of sets of pre- and post-neighbours.
+		:param targets: Dict of nodes to tuple of sets of pre- and post-neighbours.
+		"""
+		sources[arc.source][1].add(arc.target)
+		targets[arc.target][0].add(arc.source)
+
+	def contains_branching_node(self, nodes):
+		"""Check if nodes contains at least one branching node.
+
+		:param nodes: Iterable of Places or Transitions
+		:return: True if nodes contains at least one branching node.
+		"""
+		return all([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
 		
 	def is_extended_free_choice(self,places):
 		for combined_places in itertools.combinations(places,2):
