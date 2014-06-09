@@ -72,7 +72,7 @@ class NetClassifier:
 		:return: (is_extended_free_choice, is_extended_simple)
 		"""
 		extended_free_choice = True
-		for (pre1, post1), (pre2, post2) in itertools.combinations(self.places.values(), 2):
+		for (_, post1), (_, post2) in itertools.combinations(self.places.values(), 2):
 			if not (post1.isdisjoint(post2) or post1 == post2):
 				extended_free_choice = False
 
