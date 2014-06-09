@@ -7,7 +7,7 @@ class EmptyNetTestCase(unittest.TestCase):
 	def setUp(self):
 		net = PetriNet("This petri net is empty")
 		c = NetClassifier(net)
-		self.classes = c.classify()
+		self.classes = c.classifications
 
 	def test_empty_net_should_be_sm(self):
 		self.assertTrue(self.classes['state_machine'])

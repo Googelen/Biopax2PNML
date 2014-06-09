@@ -8,8 +8,8 @@ class NetClassifier:
 		self.transitions = {transition: (set(), set()) for transition in self.net.transitions}
 
 	@property
-	def classify(self):
-		"""Classify net.
+	def classifications(self):
+		"""Classify net and return classifications.
 
 		Check if net is
 		State Machine (there are neither forward branching nor backward branching transitions),
@@ -17,7 +17,7 @@ class NetClassifier:
 		Extended Free Choice (transitions in conflict have identical sets of preplaces),
 		Extended Simple (every transition is involved in one conflict at most).
 
-		:return: Dict of classes to boolean values.
+		:return: Dict of classes to boolean values. Each entry is True if the classification applies.
 		"""
 		return {
 			'state_machine': not self.contains_branching_node(self.transitions),
