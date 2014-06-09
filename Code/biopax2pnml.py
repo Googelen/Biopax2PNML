@@ -10,7 +10,7 @@ class Convertor:
 		net = reader.read(inputfile)
 		validatorThingy = validator.Validator(net)
 		validatorThingy.checkArcs()
-		classify = classifier.Classifier(net)
+		classify = classifier.NetClassifier(net)
 		classify.classify()
 		writer = pnml.Writer(net)
 		writer.write(outputfile)
