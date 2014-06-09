@@ -1,10 +1,10 @@
 from models import *
 
-Class classifier:
+class NetClassifier:
 	def __init__(self, net):
 		self.net=net
 
-	def classify(net):
+	def classify(self, net):
 	
 		classes = {
 			'state_machine': False,
@@ -21,9 +21,8 @@ Class classifier:
 		classes['extended_free_choice'] = is_extened_free_choice(places)
 		classes['extended_simple'] = is_extended_simple(places)
 		return classes
-	
-	
-	def count_arcs_at_nodes(arcs):
+
+	def count_arcs_at_nodes(self, arcs):
 		nodes = {}
 	
 		for arc in arcs:
@@ -34,9 +33,8 @@ Class classifier:
 			nodes[arc.target] = (sources, targets + 1)
 	
 		return nodes
-	
-	
-	def split_nodes(nodes):
+
+	def split_nodes(self, nodes):
 		transitions = {}
 		places = {}
 		for (d, v) in nodes.items():
@@ -46,8 +44,7 @@ Class classifier:
 				places[d] = v
 	
 		return (places, transitions)
-	
-	
+
 	def is_not_branching(nodes):
 		return all([(sources <= 1) and (targets <= 1) and (sources == targets) for (sources, targets) in nodes])
 		
