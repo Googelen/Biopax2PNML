@@ -34,7 +34,7 @@ class BasicNetTestCase(unittest.TestCase):
 		nets[1].newArc(Arc(transitions[0], places[2]))
 		nets[1].newArc(Arc(places[2], transitions[2]))
 		nets[1].newArc(Arc(transitions[1], places[3]))
-		nets[1].newArc(Arc(transitions[1], places[3]))
+		nets[1].newArc(Arc(transitions[2], places[3]))
 
 		nets[2].newArc(Arc(places[0], transitions[0]))
 		nets[2].newArc(Arc(transitions[0], places[1]))
@@ -49,18 +49,18 @@ class BasicNetTestCase(unittest.TestCase):
 
 		self.assertFalse(c['state_machine'])
 		self.assertFalse(c['synchronisation_graph'])
+		self.assertTrue(c['extended_free_choice'])
 		self.assertTrue(c['extended_simple'])
-		self.assertFalse(c['extended_free_choice'])
 
 		self.assertFalse(d['state_machine'])
 		self.assertFalse(d['synchronisation_graph'])
-		self.assertFalse(d['extended_simple'])
-		self.assertFalse(d['extended_free_choice'])
+		self.assertTrue(d['extended_free_choice'])
+		self.assertTrue(d['extended_simple'])
 
 		self.assertFalse(e['state_machine'])
 		self.assertFalse(e['synchronisation_graph'])
-		self.assertFalse(e['extended_simple'])
-		self.assertFalse(e['extended_free_choice'])
+		self.assertTrue(e['extended_free_choice'])
+		self.assertTrue(e['extended_simple'])
 		
 
 if __name__ == '__main__':
