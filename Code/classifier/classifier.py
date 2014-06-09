@@ -64,7 +64,7 @@ class NetClassifier:
 		for combined_places in itertools.combinations(self.places,2):
 			place1 = self.places[combined_places[0]]
 			place2 = self.places[combined_places[1]]
-			if(not(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1])):
+			if(not(place1[1].isdisjoint(place2[1]) or place1[1]== place2[1])):
 				return False
 		return True
 
@@ -72,6 +72,6 @@ class NetClassifier:
 		for combined_places in itertools.combinations(self.places,2):
 			place1 = self.places[combined_places[0]]
 			place2 = self.places[combined_places[1]]
-			if(not(place1[1].isdisjoined(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
+			if(not(place1[1].isdisjoint(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
 				return False
 		return True
