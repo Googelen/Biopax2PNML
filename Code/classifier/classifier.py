@@ -22,8 +22,8 @@ class NetClassifier:
 		return {
 			'state_machine': not self.contains_branching_node(self.transitions),
 			'synchronisation_graph': not self.contains_branching_node(self.places),
-			'extended_free_choice': self.is_extended_free_choice(self.places),
-			'extended_simple': self.is_extended_simple_choice(self.places)
+			'extended_free_choice': self.is_extended_free_choice(),
+			'extended_simple': self.is_extended_simple()
 		}
 
 	def get_pre_post_neighbours(self):
@@ -60,18 +60,18 @@ class NetClassifier:
 		"""
 		return all([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
 		
-	def is_extended_free_choice(self,places):
-		for combined_places in itertools.combinations(places,2):
-			place1 = places[combined_places[0]]
-			place2 = places[combined_places[1]]
+	def is_extended_free_choice(self):
+		for combined_places in itertools.combinations(self.places,2):
+			place1 = self.places[combined_places[0]]
+			place2 = self.places[combined_places[1]]
 			if(not(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1])):
 				return False
 		return True
 
-	def is_extended_simple_choice(self,places):
-		for combined_places in itertools.combinations(places,2):
-			place1 = places[combined_places[0]]
-			place2 = places[combined_places[1]]
+	def is_extended_simple(self):
+		for combined_places in itertools.combinations(self.places,2):
+			place1 = self.places[combined_places[0]]
+			place2 = self.places[combined_places[1]]
 			if(not(place1[1].isdisjoined(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
 				return False
 		return True
