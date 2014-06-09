@@ -1,6 +1,6 @@
 import unittest
 from models import PetriNet
-from classifier.classifier import NetClassifier
+from classifier import NetClassifier
 
 
 class EmptyNetTestCase(unittest.TestCase):
