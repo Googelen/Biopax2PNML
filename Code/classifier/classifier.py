@@ -1,4 +1,5 @@
 from models import *
+import itertools
 
 class NetClassifier:
 	def __init__(self, net):
@@ -20,6 +21,15 @@ class NetClassifier:
 		classes['synchronisation_graph'] = self.is_not_branching(places)
 		classes['extended_free_choice'] = self.is_extened_free_choice(places)
 		classes['extended_simple'] = self.is_extended_simple(places)
+		#test_places = {
+		#	'test1': (None,set(['0','1','2'])),
+		#	'test2': (None,set(['3','4','5'])),
+		#	'test3':(None,set(['1','2','0']))
+		#
+		#}
+		#
+		#print(self.is_extended_free_choice(test_places))
+		
 		return classes
 
 	def count_arcs_at_nodes(self, arcs):
@@ -50,16 +60,16 @@ class NetClassifier:
 		
 	def is_extended_free_choice(self,places):
 		for combined_places in itertools.combinations(places,2):
-			place1 = combined_places[0]
-			place2 = combined_places[1]
+			place1 = places[combined_places[0]]
+			place2 = places[combined_places[1]]
 			if(!(place1[1].isdisjoined(place2[1]) or place1[1]== place2[1])):
 				return False
 		return True
 
 	def is_extended_simple_choice(self,places):
 		for combined_places in itertools.combinations(places,2):
-			place1 = combined_places[0]
-			place2 = combined_places[1]
+			place1 = places[combined_places[0]]
+			place2 = places[combined_places[1]]
 			if(!(place1[1].isdisjoined(place2[1]) or place1[1]<=place2[1] or place2[1]<=place1[1])):
 				return False
 		return True
