@@ -1,6 +1,6 @@
 import unittest
 from models import *
-from classifier import NetClassifier
+from properties.classifier import NetClassifier
 
 
 class BasicNetTestCase(unittest.TestCase):
