@@ -25,8 +25,8 @@ class NetClassifier:
 		is_extended_free_choice, is_extended_simple = self.is_extended_classes()
 
 		return {
-			'state_machine': not self.contains_branching_node(self.transitions),
-			'synchronisation_graph': not self.contains_branching_node(self.places),
+			'state_machine': self.is_not_branching(self.transitions),
+			'synchronisation_graph': self.is_not_branching(self.places),
 			'extended_free_choice': is_extended_free_choice,
 			'extended_simple': is_extended_simple
 		}
@@ -38,7 +38,7 @@ class NetClassifier:
 
 			if arc.source in self.places:
 				# source is Place => target is a Transition
-				self.update_node(arc, self.places, self. transitions)
+				self.update_node(arc, self.places, self.transitions)
 
 			elif arc.source in self.transitions:
 				# source is Transition -> target is Place
@@ -47,8 +47,8 @@ class NetClassifier:
 	def update_node(self, arc, sources, targets):
 		"""Adds arc.target and arc.source as pre- and post-neighbours to targets and sources.
 
-		 Adds arc.target as post-neighbour to arc.source in sources.
-		 Adds arc.source as pre-neighbour to arc.target in targests.
+		Adds arc.target as post-neighbour to arc.source in sources.
+		Adds arc.source as pre-neighbour to arc.target in targests.
 
 		:param arc: Arc
 		:param sources: Dict of nodes to tuple of sets of pre- and post-neighbours.
@@ -57,13 +57,13 @@ class NetClassifier:
 		sources[arc.source][1].add(arc.target)
 		targets[arc.target][0].add(arc.source)
 
-	def contains_branching_node(self, nodes):
+	def is_not_branching(self, nodes):
 		"""Check if nodes contains at least one branching node.
 
 		:param nodes: Iterable of Places or Transitions
 		:return: True if nodes contains at least one branching node.
 		"""
-		return any([(sources > 1) and (targets > 1) and (sources == targets) for (sources, targets) in nodes])
+		return all([(len(pre) <= 1) and (len(post) > 1) and (len(pre) == len(post)) for (pre, post) in nodes.values()])
 
 	def is_extended_classes(self):
 		"""Check if net is Extended Free Choice and/or Extended Simple.
