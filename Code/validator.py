@@ -14,7 +14,8 @@ class Validator:
 		self.number_of_components=0
 		self.deadlock_places = {}
 		self.trap_places = {}
-	
+		self.validate()
+		
 	def validate(self):
 		self.checkArcs()
 		self.checkCycles()
@@ -196,6 +197,7 @@ class Validator:
 			self.type="Linear"
 		#there are no starting and ending places
 		elif (len(self.startingPlaces)==0 and len(self.endingPlaces)==0):
+		#elif(not structural.has_boundary_nodes)
 			self.type="Cyclic"
 		#there are no cycles
 		elif self.number_of_cycles==0:
