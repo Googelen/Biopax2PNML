@@ -43,7 +43,12 @@ class NetClassifier:
 			elif arc.source in self.transitions:
 				# source is Transition -> target is Place
 				self.update_node(arc, self.transitions, self.places)
+	def get_pre_post_places(self):
+		return self.places
 
+	def get_pre_post_transitions(self):
+		return self.transitions
+		
 	def update_node(self, arc, sources, targets):
 		"""Adds arc.target and arc.source as pre- and post-neighbours to targets and sources.
 
