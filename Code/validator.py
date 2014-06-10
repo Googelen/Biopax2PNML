@@ -10,6 +10,8 @@ class Validator:
 		self.cycles=[]
 		self.type=""
 		self.number_of_components=0
+		self.deadlock_places = {}
+		self.trap_places = {}
 	
 	def validate(self):
 		self.checkArcs()
@@ -28,7 +30,40 @@ class Validator:
 		print("Number of Components")
 		print(self.number_of_components)
 		
-		
+	def find_deadlocks(self):
+		classify = classifier.NetClassifier(self.net)
+		places = classify.get_pre_post_places()
+		(deadlock_places,trap_places) = get_deadlock_and_trap(places)
+
+		if(not(len(deadlock_places) is 0)):
+			self.deadlock_places = deadlock_places
+			print("deadlocks found")
+		if(not(len(trap_places) is 0)):
+			self.trap_places = trap_places
+			print("trap found")
+
+	def get_deadlock_and_trap(self, places):
+		places_in_deadlock ={}
+		places_in_trap = {}
+		for i in range(1,len(places)+1):
+			for place_name in itertools.combinations(places,1):
+				places_to_check = {}
+				for name in place_name:
+					places_to_check.union(places[name])
+				post_places = {}
+				pre_places = {}
+
+				for j in range(0,len(place_name)):
+					post_places.union(places_to_append[j][1])
+					pre_places.union(places_to_append[j][1])
+
+				if(pre_places<=post_places):
+					places_in_deadlock.union(places_to_check)
+				if(post_places<=pre_places):
+					places_in_trap.union(places_to_check)
+		return (places_in_deadlock, places_in_trap)
+	
+	
 	def checkArcs(self):
 		for place in self.net.places:
 			setStart=True
