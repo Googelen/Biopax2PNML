@@ -18,9 +18,31 @@ How to do such a thing, and why this way
 To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the 
 How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
 
- 
+
 Static validation
-explain what we have done statically
+One way of obtaining information from a petrinet is validating it statically. We used several algorithms from Heiner (2008) [number]. We valuated the following criteria:
+Starting places: the places which have no ingoing arc.
+Ending places: the places which have no outgoing arc.
+The cycles: the number of cycles in the net and which places belong to a cycle.
+Number of components: are there parts of the network which are disjoined?
+Type of petrinet: Choose from: linear, cyclic, branched or undefined.
+Class of petrinet: Classifies if the net belongs in one or more of the following classes:
+•	State machine: there are no forward or backward branching transitions.
+•	Synchronization graph: there are not forward or backward branching places.
+•	Extended simple: transitions in conflict have identical sets of preplaces
+•	Extended free choice: every transition is involved in 1 conflict at most.
+Which places are in a structural deadlock: it checks this by taking any combination of places and sees if the pre-transitions are a subset of the post-transitions.
+Which places are in a structural trap: it checks this by taking any combination of places and sees if the post-transitions are a subset of the pre-transitions
+Properties:
+	Is it connected: checks if the network has components
+	Is it pure: checks if there are 2 arcs which connect the same components in opposite ways
+	Is it homogenous: checks if the 
+	Has it a static conflict tree
+	Has it boundary input transitions
+	Has it boundary output transitions
+	Has it boundary input places
+	Has it boundary output places
+
 
 Dynamic validation
 Explain what we have done dynamically
@@ -35,3 +57,8 @@ Future work
 Conclusion
 Motivation, summary, hypothesis
 What have we done
+
+
+
+References:
+M Heiner, D Gilbert, R Donaldson, ‘Petri Nets for System and Synthetic Biology’, M Bernardo, P Degano and G Zavattaro (eds.): SFM 2008, Springer LNCS 5016, pp 215-264, 2008.
