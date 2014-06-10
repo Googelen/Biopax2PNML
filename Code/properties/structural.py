@@ -30,7 +30,11 @@ class NetStructuralProperties:
 			'extended_free_choice': is_extended_free_choice,
 			'extended_simple': is_extended_simple
 		}
+	def get_pre_post_places(self):
+		return self.places
 
+	def get_pre_post_transitions(self):
+		return self.transitions
 	def get_pre_post_neighbours(self):
 		"""Adds sources and targets from all arcs to pre- and post-neighbour sets of self.places and self.transitions.
 		"""
