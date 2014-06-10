@@ -39,7 +39,7 @@ class BasicNetTestCase(unittest.TestCase):
 		nets[2].newArc(Arc(places[0], transitions[0]))
 		nets[2].newArc(Arc(transitions[0], places[1]))
 		nets[2].newArc(Arc(places[1], transitions[1]))
-		nets[2].newArc(Arc(transitions[0], places[2]))
+		nets[2].newArc(Arc(transitions[1], places[2]))
 		nets[2].newArc(Arc(transitions[1], places[3]))
 
 
