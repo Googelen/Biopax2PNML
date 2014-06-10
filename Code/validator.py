@@ -1,4 +1,6 @@
 from models import *
+import classifier
+import itertools
 
 class Validator:
 	#check if there are places with no ingoing arcs (feedback? how?)
