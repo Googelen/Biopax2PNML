@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+ xmlns:owl="http://www.w3.org/2002/07/owl#"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#">
+<owl:Ontology rdf:about="">
+ <owl:imports rdf:resource="http://www.biopax.org/release/biopax-level3.owl#" />
+</owl:Ontology>
+
+<bp:RelationshipXref rdf:about="id44">
+ <bp:id rdf:datatype = "xsd:string">3421</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id43">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id44" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id42">
+ <bp:id rdf:datatype = "xsd:string">4191</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:SmallMolecule rdf:about="ac347">
+ <bp:displayName rdf:datatype = "xsd:string">water</bp:displayName>
+ <bp:entityReference rdf:resource="id9" />
+</bp:SmallMolecule>
+
+<bp:ProteinReference rdf:about="id41">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id42" />
+</bp:ProteinReference>
+
+<bp:UnificationXref rdf:about="id48">
+ <bp:id rdf:datatype = "xsd:string">HMDB00156</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id47">
+ <bp:xref rdf:resource="id48" />
+</bp:SmallMoleculeReference>
+
+<bp:RelationshipXref rdf:about="id46">
+ <bp:id rdf:datatype = "xsd:string">4967</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id45">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id46" />
+</bp:ProteinReference>
+
+<bp:Protein rdf:about="c6452">
+ <bp:entityReference rdf:resource="id29" />
+ <bp:displayName rdf:datatype = "xsd:string">DLST</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="c53f3">
+ <bp:displayName rdf:datatype = "xsd:string">(S)-malate</bp:displayName>
+ <bp:entityReference rdf:resource="id47" />
+</bp:SmallMolecule>
+
+<bp:RelationshipXref rdf:about="id40">
+ <bp:id rdf:datatype = "xsd:string">6389</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:Protein rdf:about="e2231">
+ <bp:entityReference rdf:resource="id61" />
+ <bp:displayName rdf:datatype = "xsd:string">SDHB</bp:displayName>
+</bp:Protein>
+
+<bp:Protein rdf:about="a61f3">
+ <bp:entityReference rdf:resource="id33" />
+ <bp:displayName rdf:datatype = "xsd:string">IDH3B</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="c6beb">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 30031</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">succinate</bp:displayName>
+ <bp:entityReference rdf:resource="id59" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="ab312">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57945</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">NADH</bp:displayName>
+ <bp:entityReference rdf:resource="id11" />
+</bp:SmallMolecule>
+
+<bp:RelationshipXref rdf:about="id38">
+ <bp:id rdf:datatype = "xsd:string">8802</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id39">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id40" />
+</bp:ProteinReference>
+
+<bp:Protein rdf:about="e6311">
+ <bp:entityReference rdf:resource="id25" />
+ <bp:displayName rdf:datatype = "xsd:string">CS</bp:displayName>
+</bp:Protein>
+
+<bp:ProteinReference rdf:about="id53">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id54" />
+</bp:ProteinReference>
+
+<bp:UnificationXref rdf:about="id52">
+ <bp:id rdf:datatype = "xsd:string">HMDB00134</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id55">
+ <bp:xref rdf:resource="id56" />
+</bp:SmallMoleculeReference>
+
+<bp:RelationshipXref rdf:about="id54">
+ <bp:id rdf:datatype = "xsd:string">6392</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:BioSource rdf:about="id2">
+ <bp:standardName rdf:datatype = "xsd:string">Homo sapiens</bp:standardName>
+</bp:BioSource>
+
+<bp:ProteinReference rdf:about="id57">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id58" />
+</bp:ProteinReference>
+
+<bp:SmallMolecule rdf:about="a8ee4">
+ <bp:displayName rdf:datatype = "xsd:string">ubiquinone-10</bp:displayName>
+ <bp:entityReference rdf:resource="id79" />
+</bp:SmallMolecule>
+
+<bp:Pathway rdf:about="id1">
+ <bp:pathwayComponent rdf:resource="id110" />
+ <bp:pathwayComponent rdf:resource="id89" />
+ <bp:pathwayComponent rdf:resource="id85" />
+ <bp:pathwayComponent rdf:resource="id121" />
+ <bp:pathwayComponent rdf:resource="id123" />
+ <bp:pathwayComponent rdf:resource="id120" />
+ <bp:pathwayComponent rdf:resource="id103" />
+ <bp:pathwayComponent rdf:resource="id119" />
+ <bp:pathwayComponent rdf:resource="id112" />
+ <bp:pathwayComponent rdf:resource="id96" />
+ <bp:pathwayComponent rdf:resource="id100" />
+ <bp:pathwayComponent rdf:resource="id86" />
+ <bp:pathwayComponent rdf:resource="id90" />
+ <bp:pathwayComponent rdf:resource="id113" />
+ <bp:pathwayComponent rdf:resource="id107" />
+ <bp:pathwayComponent rdf:resource="id108" />
+ <bp:pathwayComponent rdf:resource="id94" />
+ <bp:pathwayComponent rdf:resource="id116" />
+ <bp:pathwayComponent rdf:resource="id118" />
+ <bp:pathwayComponent rdf:resource="id87" />
+ <bp:pathwayComponent rdf:resource="id115" />
+ <bp:pathwayComponent rdf:resource="id114" />
+ <bp:pathwayComponent rdf:resource="id104" />
+ <bp:pathwayComponent rdf:resource="id105" />
+ <bp:pathwayComponent rdf:resource="id98" />
+ <bp:pathwayComponent rdf:resource="id122" />
+ <bp:pathwayComponent rdf:resource="id111" />
+ <bp:pathwayComponent rdf:resource="id99" />
+ <bp:pathwayComponent rdf:resource="id88" />
+ <bp:pathwayComponent rdf:resource="id106" />
+ <bp:pathwayComponent rdf:resource="id109" />
+ <bp:pathwayComponent rdf:resource="id117" />
+ <bp:pathwayComponent rdf:resource="id95" />
+ <bp:pathwayComponent rdf:resource="id93" />
+ <bp:pathwayComponent rdf:resource="id97" />
+ <bp:pathwayComponent rdf:resource="id92" />
+ <bp:pathwayComponent rdf:resource="id91" />
+ <bp:pathwayComponent rdf:resource="id124" />
+ <bp:pathwayComponent rdf:resource="id101" />
+ <bp:pathwayComponent rdf:resource="id102" />
+ <bp:comment rdf:datatype = "xsd:string">The [[wikipedia:citric_acid_cycle|citric acid cycle]], also known as the tricarboxylic acid cycle (TCA cycle) or the Krebs cycle, (or rarely, the Szent-Gyorgyi-Krebs cycle) is a series of enzyme-catalysed chemical reactions of central importance in all living cells that use oxygen as part of cellular respiration. In eukaryotes, the citric acid cycle occurs in the matrix of the mitochondrion. The components and reactions of the citric acid cycle were established by seminal work from both [[wikipedia:Albert_Szent-Gyorgyi|Albert Szent-Gyorgyi]] and [[wikipedia:Hans_Krebs|Hans Krebs]]. 
+Source: Wikipedia ([[wikipedia:citric_acid_cycle]]) (WikiPathways-description)</bp:comment>
+ <bp:comment rdf:datatype = "xsd:string"> (GenMAPP notes)</bp:comment>
+ <bp:comment rdf:datatype = "xsd:string">Metabolic Process (WikiPathways-category)</bp:comment>
+ <bp:comment rdf:datatype = "xsd:string"> (GenMAPP remarks)</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">TCA Cycle</bp:displayName>
+ <bp:organism rdf:resource="id2" />
+</bp:Pathway>
+
+<bp:UnificationXref rdf:about="id56">
+ <bp:id rdf:datatype = "xsd:string">HMDB00094</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id59">
+ <bp:xref rdf:resource="id60" />
+</bp:SmallMoleculeReference>
+
+<bp:RelationshipXref rdf:about="id58">
+ <bp:id rdf:datatype = "xsd:string">50</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:UnificationXref rdf:about="id6">
+ <bp:id rdf:datatype = "xsd:string">HMDB01201</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id5">
+ <bp:xref rdf:resource="id6" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id4">
+ <bp:id rdf:datatype = "xsd:string">HMDB01273</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id3">
+ <bp:xref rdf:resource="id4" />
+</bp:SmallMoleculeReference>
+
+<bp:SmallMolecule rdf:about="f85a0">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 58189</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">GDP</bp:displayName>
+ <bp:entityReference rdf:resource="id5" />
+</bp:SmallMolecule>
+
+<bp:SmallMoleculeReference rdf:about="id9">
+ <bp:xref rdf:resource="id10" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id8">
+ <bp:id rdf:datatype = "xsd:string">HMDB01967</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id51">
+ <bp:xref rdf:resource="id52" />
+</bp:SmallMoleculeReference>
+
+<bp:SmallMoleculeReference rdf:about="id7">
+ <bp:xref rdf:resource="id8" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id50">
+ <bp:id rdf:datatype = "xsd:string">HMDB00223</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMolecule rdf:about="d9ef6">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57288</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">acetyl-CoA</bp:displayName>
+ <bp:entityReference rdf:resource="id31" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="c02ba">
+ <bp:displayName rdf:datatype = "xsd:string">water</bp:displayName>
+ <bp:entityReference rdf:resource="id9" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="c7118">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 30616</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">ATP</bp:displayName>
+ <bp:entityReference rdf:resource="id77" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="ea5a6">
+ <bp:comment rdf:datatype = "xsd:string">Type your comment here</bp:comment>
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57287</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">CoA</bp:displayName>
+ <bp:entityReference rdf:resource="id73" />
+</bp:SmallMolecule>
+
+<bp:Protein rdf:about="c57b3">
+ <bp:entityReference rdf:resource="id37" />
+ <bp:displayName rdf:datatype = "xsd:string">SUCLG1</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMoleculeReference rdf:about="id49">
+ <bp:xref rdf:resource="id50" />
+</bp:SmallMoleculeReference>
+
+<bp:Protein rdf:about="fbddc">
+ <bp:entityReference rdf:resource="id13" />
+ <bp:displayName rdf:datatype = "xsd:string">FH</bp:displayName>
+</bp:Protein>
+
+<bp:RelationshipXref rdf:about="id26">
+ <bp:id rdf:datatype = "xsd:string">1431</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id25">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id26" />
+</bp:ProteinReference>
+
+<bp:SmallMolecule rdf:about="b96da">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 15562</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">D-threo-Isocitrate</bp:displayName>
+ <bp:entityReference rdf:resource="id17" />
+</bp:SmallMolecule>
+
+<bp:RelationshipXref rdf:about="id24">
+ <bp:id rdf:datatype = "xsd:string">8801</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:SmallMolecule rdf:about="bc872">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57945</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">NADH</bp:displayName>
+ <bp:entityReference rdf:resource="id11" />
+</bp:SmallMolecule>
+
+<bp:ProteinReference rdf:about="id23">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id24" />
+</bp:ProteinReference>
+
+<bp:UnificationXref rdf:about="id22">
+ <bp:id rdf:datatype = "xsd:string">HMDB00208</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id21">
+ <bp:xref rdf:resource="id22" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id20">
+ <bp:id rdf:datatype = "xsd:string">HMDB01022</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMolecule rdf:about="a39f2">
+ <bp:displayName rdf:datatype = "xsd:string">oxaloacetate</bp:displayName>
+ <bp:entityReference rdf:resource="id49" />
+</bp:SmallMolecule>
+
+<bp:Protein rdf:about="bdef5">
+ <bp:entityReference rdf:resource="id57" />
+ <bp:displayName rdf:datatype = "xsd:string">ACO2</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="e5766">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57783</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">NADPH</bp:displayName>
+ <bp:entityReference rdf:resource="id71" />
+</bp:SmallMolecule>
+
+<bp:Protein rdf:about="dd5a4">
+ <bp:entityReference rdf:resource="id67" />
+ <bp:displayName rdf:datatype = "xsd:string">IDH2</bp:displayName>
+</bp:Protein>
+
+<bp:Protein rdf:about="f381d">
+ <bp:entityReference rdf:resource="id45" />
+ <bp:displayName rdf:datatype = "xsd:string">OGDH</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="e95eb">
+ <bp:displayName rdf:datatype = "xsd:string">citrate</bp:displayName>
+ <bp:entityReference rdf:resource="id55" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="c5215">
+ <bp:displayName rdf:datatype = "xsd:string">ubiquinol-10</bp:displayName>
+ <bp:entityReference rdf:resource="id81" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="fc117">
+ <bp:displayName rdf:datatype = "xsd:string">fumarate</bp:displayName>
+ <bp:entityReference rdf:resource="id51" />
+</bp:SmallMolecule>
+
+<bp:UnificationXref rdf:about="id18">
+ <bp:id rdf:datatype = "xsd:string">HMDB00193</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id19">
+ <bp:xref rdf:resource="id20" />
+</bp:SmallMoleculeReference>
+
+<bp:RelationshipXref rdf:about="id16">
+ <bp:id rdf:datatype = "xsd:string">6391</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:SmallMoleculeReference rdf:about="id17">
+ <bp:xref rdf:resource="id18" />
+</bp:SmallMoleculeReference>
+
+<bp:ProteinReference rdf:about="id35">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id36" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id34">
+ <bp:id rdf:datatype = "xsd:string">3420</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id37">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id38" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id36">
+ <bp:id rdf:datatype = "xsd:string">3419</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:SmallMoleculeReference rdf:about="id31">
+ <bp:xref rdf:resource="id32" />
+</bp:SmallMoleculeReference>
+
+<bp:RelationshipXref rdf:about="id30">
+ <bp:id rdf:datatype = "xsd:string">1743</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id33">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id34" />
+</bp:ProteinReference>
+
+<bp:UnificationXref rdf:about="id32">
+ <bp:id rdf:datatype = "xsd:string">HMDB01206</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:Catalysis rdf:about="id108">
+ <bp:controller rdf:resource="e5766" />
+ <bp:controlled rdf:resource="id106" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id109">
+ <bp:controller rdf:resource="f4381" />
+ <bp:controlled rdf:resource="id106" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id106">
+ <bp:right rdf:resource="b96da" />
+ <bp:right rdf:resource="b5c93" />
+ <bp:left rdf:resource="da75d" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id107">
+ <bp:controller rdf:resource="dd5a4" />
+ <bp:controlled rdf:resource="id106" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id104">
+ <bp:controller rdf:resource="cea45" />
+ <bp:controlled rdf:resource="id101" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id105">
+ <bp:controller rdf:resource="a61f3" />
+ <bp:controlled rdf:resource="id101" />
+</bp:Catalysis>
+
+<bp:Protein rdf:about="bd36e">
+ <bp:entityReference rdf:resource="id23" />
+ <bp:xref rdf:resource="d25" />
+ <bp:displayName rdf:datatype = "xsd:string">SUCLG2</bp:displayName>
+</bp:Protein>
+
+<bp:Catalysis rdf:about="id102">
+ <bp:controller rdf:resource="eb68a" />
+ <bp:controlled rdf:resource="id101" />
+</bp:Catalysis>
+
+<bp:SmallMolecule rdf:about="d568e">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57287</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">CoA</bp:displayName>
+ <bp:entityReference rdf:resource="id73" />
+</bp:SmallMolecule>
+
+<bp:Catalysis rdf:about="id103">
+ <bp:controller rdf:resource="ee392" />
+ <bp:controlled rdf:resource="id101" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id100">
+ <bp:left rdf:resource="e95eb" />
+</bp:BiochemicalReaction>
+
+<bp:BiochemicalReaction rdf:about="id101">
+ <bp:right rdf:resource="f30d1" />
+ <bp:right rdf:resource="ea9a4" />
+ <bp:right rdf:resource="da75d" />
+ <bp:left rdf:resource="b96da" />
+</bp:BiochemicalReaction>
+
+<bp:SmallMolecule rdf:about="ffbe6">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57292</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">succinyl-CoA</bp:displayName>
+ <bp:entityReference rdf:resource="id19" />
+</bp:SmallMolecule>
+
+<bp:ProteinReference rdf:about="id27">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id28" />
+</bp:ProteinReference>
+
+<bp:SmallMolecule rdf:about="bcff7">
+ <bp:displayName rdf:datatype = "xsd:string">NAD</bp:displayName>
+ <bp:entityReference rdf:resource="id65" />
+</bp:SmallMolecule>
+
+<bp:RelationshipXref rdf:about="id28">
+ <bp:id rdf:datatype = "xsd:string">1738</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id29">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id30" />
+</bp:ProteinReference>
+
+<bp:SmallMolecule rdf:about="da75d">
+ <bp:displayName rdf:datatype = "xsd:string">2-oxoglutarate</bp:displayName>
+ <bp:entityReference rdf:resource="id21" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="cae57">
+ <bp:displayName rdf:datatype = "xsd:string">water</bp:displayName>
+ <bp:entityReference rdf:resource="id9" />
+</bp:SmallMolecule>
+
+<bp:Catalysis rdf:about="id112">
+ <bp:controller rdf:resource="ea5a6" />
+ <bp:controlled rdf:resource="id110" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id111">
+ <bp:controller rdf:resource="f381d" />
+ <bp:controlled rdf:resource="id110" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id110">
+ <bp:right rdf:resource="ffbe6" />
+ <bp:right rdf:resource="ab312" />
+ <bp:right rdf:resource="f5407" />
+ <bp:left rdf:resource="da75d" />
+</bp:BiochemicalReaction>
+
+<bp:BiochemicalReaction rdf:about="id116">
+ <bp:right rdf:resource="c7118" />
+ <bp:right rdf:resource="bc5b7" />
+ <bp:right rdf:resource="f85a0" />
+ <bp:right rdf:resource="e1568" />
+ <bp:right rdf:resource="c6beb" />
+ <bp:right rdf:resource="e271d" />
+ <bp:right rdf:resource="ac299" />
+ <bp:left rdf:resource="ffbe6" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id115">
+ <bp:controller rdf:resource="bcff7" />
+ <bp:controlled rdf:resource="id110" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id114">
+ <bp:controller rdf:resource="f1927" />
+ <bp:controlled rdf:resource="id110" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id113">
+ <bp:controller rdf:resource="c6452" />
+ <bp:controlled rdf:resource="id110" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id119">
+ <bp:right rdf:resource="d7980" />
+ <bp:right rdf:resource="e95eb" />
+ <bp:left rdf:resource="ab88e" />
+</bp:BiochemicalReaction>
+
+<bp:SmallMolecule rdf:about="f30d1">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57945</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">NADH</bp:displayName>
+ <bp:entityReference rdf:resource="id11" />
+</bp:SmallMolecule>
+
+<bp:Catalysis rdf:about="id118">
+ <bp:controller rdf:resource="bd36e" />
+ <bp:controlled rdf:resource="id116" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id117">
+ <bp:controller rdf:resource="c57b3" />
+ <bp:controlled rdf:resource="id116" />
+</bp:Catalysis>
+
+<bp:PublicationXref rdf:about="d25">
+ <bp:source rdf:datatype = "xsd:string">J Biol Chem</bp:source>
+ <bp:title rdf:datatype = "xsd:string">Expression of two succinyl-CoA synthetases with different nucleotide specificities in mammalian tissues.</bp:title>
+ <bp:id rdf:datatype = "xsd:string">15234968</bp:id>
+ <bp:db rdf:datatype = "xsd:string">PubMed</bp:db>
+ <bp:author rdf:datatype = "xsd:string">Milavetz BI</bp:author>
+ <bp:author rdf:datatype = "xsd:string">Tews KN</bp:author>
+ <bp:author rdf:datatype = "xsd:string">Frohlich D</bp:author>
+ <bp:author rdf:datatype = "xsd:string">Adkins S</bp:author>
+ <bp:author rdf:datatype = "xsd:string">Lambeth DO</bp:author>
+ <bp:year rdf:datatype = "xsd:int">2004</bp:year>
+</bp:PublicationXref>
+
+<bp:UnificationXref rdf:about="id80">
+ <bp:id rdf:datatype = "xsd:string">HMDB01072</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id81">
+ <bp:xref rdf:resource="id82" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id82">
+ <bp:id rdf:datatype = "xsd:string">HMDB13111</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id83">
+ <bp:xref rdf:resource="id84" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id84">
+ <bp:id rdf:datatype = "xsd:string">HMDB01429</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:BiochemicalReaction rdf:about="id85">
+ <bp:right rdf:resource="c5215" />
+ <bp:right rdf:resource="fc117" />
+ <bp:left rdf:resource="c6beb" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id86">
+ <bp:controller rdf:resource="a8ee4" />
+ <bp:controlled rdf:resource="id85" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id87">
+ <bp:controller rdf:resource="b5f1a" />
+ <bp:controlled rdf:resource="id85" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id88">
+ <bp:controller rdf:resource="d0245" />
+ <bp:controlled rdf:resource="id85" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id89">
+ <bp:controller rdf:resource="ddb56" />
+ <bp:controlled rdf:resource="id85" />
+</bp:Catalysis>
+
+<bp:SmallMolecule rdf:about="b5c93">
+ <bp:displayName rdf:datatype = "xsd:string">NADP</bp:displayName>
+ <bp:entityReference rdf:resource="id69" />
+</bp:SmallMolecule>
+
+<bp:BiochemicalReaction rdf:about="id121">
+ <bp:right rdf:resource="cae57" />
+ <bp:right rdf:resource="ab88e" />
+ <bp:left rdf:resource="b96da" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id120">
+ <bp:controller rdf:resource="bdef5" />
+ <bp:controlled rdf:resource="id119" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id123">
+ <bp:right rdf:resource="d9ef6" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id122">
+ <bp:controller rdf:resource="d1c04" />
+ <bp:controlled rdf:resource="id121" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id124">
+ <bp:right rdf:resource="d9ef6" />
+</bp:BiochemicalReaction>
+
+<bp:UnificationXref rdf:about="id10">
+ <bp:id rdf:datatype = "xsd:string">HMDB02111</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id11">
+ <bp:xref rdf:resource="id12" />
+</bp:SmallMoleculeReference>
+
+<bp:Protein rdf:about="fd8f9">
+ <bp:entityReference rdf:resource="id41" />
+ <bp:displayName rdf:datatype = "xsd:string">MDH2</bp:displayName>
+</bp:Protein>
+
+<bp:UnificationXref rdf:about="id12">
+ <bp:id rdf:datatype = "xsd:string">HMDB01487</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:ProteinReference rdf:about="id13">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id14" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id14">
+ <bp:id rdf:datatype = "xsd:string">2271</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:ProteinReference rdf:about="id15">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id16" />
+</bp:ProteinReference>
+
+<bp:Catalysis rdf:about="id90">
+ <bp:controller rdf:resource="e2231" />
+ <bp:controlled rdf:resource="id85" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id91">
+ <bp:right rdf:resource="d9ef6" />
+</bp:BiochemicalReaction>
+
+<bp:SmallMolecule rdf:about="ac299">
+ <bp:displayName rdf:datatype = "xsd:string">Pi</bp:displayName>
+ <bp:entityReference rdf:resource="id83" />
+</bp:SmallMolecule>
+
+<bp:BiochemicalReaction rdf:about="id94">
+ <bp:left rdf:resource="c6beb" />
+</bp:BiochemicalReaction>
+
+<bp:BiochemicalReaction rdf:about="id95">
+ <bp:right rdf:resource="d65f9" />
+ <bp:right rdf:resource="a39f2" />
+ <bp:right rdf:resource="bc872" />
+ <bp:left rdf:resource="c53f3" />
+</bp:BiochemicalReaction>
+
+<bp:BiochemicalReaction rdf:about="id92">
+ <bp:right rdf:resource="c53f3" />
+ <bp:right rdf:resource="ac347" />
+ <bp:left rdf:resource="fc117" />
+</bp:BiochemicalReaction>
+
+<bp:Catalysis rdf:about="id93">
+ <bp:controller rdf:resource="fbddc" />
+ <bp:controlled rdf:resource="id92" />
+</bp:Catalysis>
+
+<bp:SmallMolecule rdf:about="eb68a">
+ <bp:displayName rdf:datatype = "xsd:string">NAD</bp:displayName>
+ <bp:entityReference rdf:resource="id65" />
+</bp:SmallMolecule>
+
+<bp:Catalysis rdf:about="id98">
+ <bp:controller rdf:resource="e6311" />
+ <bp:controlled rdf:resource="id97" />
+</bp:Catalysis>
+
+<bp:Protein rdf:about="cea45">
+ <bp:entityReference rdf:resource="id43" />
+ <bp:displayName rdf:datatype = "xsd:string">IDH3G</bp:displayName>
+</bp:Protein>
+
+<bp:Catalysis rdf:about="id99">
+ <bp:controller rdf:resource="d9ef6" />
+ <bp:controlled rdf:resource="id97" />
+</bp:Catalysis>
+
+<bp:Catalysis rdf:about="id96">
+ <bp:controller rdf:resource="fd8f9" />
+ <bp:controlled rdf:resource="id95" />
+</bp:Catalysis>
+
+<bp:BiochemicalReaction rdf:about="id97">
+ <bp:right rdf:resource="d568e" />
+ <bp:right rdf:resource="e95eb" />
+ <bp:right rdf:resource="c02ba" />
+ <bp:left rdf:resource="a39f2" />
+</bp:BiochemicalReaction>
+
+<bp:Protein rdf:about="d0245">
+ <bp:entityReference rdf:resource="id15" />
+ <bp:displayName rdf:datatype = "xsd:string">SDHC</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="ea9a4">
+ <bp:displayName rdf:datatype = "xsd:string">CO2</bp:displayName>
+ <bp:entityReference rdf:resource="id7" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="ab88e">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 16383</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">cis-aconitate</bp:displayName>
+ <bp:entityReference rdf:resource="id63" />
+</bp:SmallMolecule>
+
+<bp:Protein rdf:about="f1927">
+ <bp:entityReference rdf:resource="id27" />
+ <bp:displayName rdf:datatype = "xsd:string">DLD</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="e1568">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57287</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">CoA</bp:displayName>
+ <bp:entityReference rdf:resource="id73" />
+</bp:SmallMolecule>
+
+<bp:Protein rdf:about="ddb56">
+ <bp:entityReference rdf:resource="id53" />
+ <bp:displayName rdf:datatype = "xsd:string">SDHD</bp:displayName>
+</bp:Protein>
+
+<bp:UnificationXref rdf:about="id60">
+ <bp:id rdf:datatype = "xsd:string">HMDB00254</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:Protein rdf:about="ee392">
+ <bp:entityReference rdf:resource="id35" />
+ <bp:displayName rdf:datatype = "xsd:string">IDH3A</bp:displayName>
+</bp:Protein>
+
+<bp:ProteinReference rdf:about="id61">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id62" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id62">
+ <bp:id rdf:datatype = "xsd:string">6390</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:Protein rdf:about="b5f1a">
+ <bp:entityReference rdf:resource="id39" />
+ <bp:displayName rdf:datatype = "xsd:string">SDHA</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMolecule rdf:about="d7980">
+ <bp:displayName rdf:datatype = "xsd:string">water</bp:displayName>
+ <bp:entityReference rdf:resource="id9" />
+</bp:SmallMolecule>
+
+<bp:ProteinReference rdf:about="id67">
+ <bp:organism rdf:resource="id2" />
+ <bp:xref rdf:resource="id68" />
+</bp:ProteinReference>
+
+<bp:RelationshipXref rdf:about="id68">
+ <bp:id rdf:datatype = "xsd:string">3418</bp:id>
+ <bp:db rdf:datatype = "xsd:string">Entrez Gene</bp:db>
+</bp:RelationshipXref>
+
+<bp:SmallMoleculeReference rdf:about="id69">
+ <bp:xref rdf:resource="id70" />
+</bp:SmallMoleculeReference>
+
+<bp:SmallMoleculeReference rdf:about="id63">
+ <bp:xref rdf:resource="id64" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id64">
+ <bp:id rdf:datatype = "xsd:string">HMDB00072</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id65">
+ <bp:xref rdf:resource="id66" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id66">
+ <bp:id rdf:datatype = "xsd:string">HMDB00902</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMolecule rdf:about="f4381">
+ <bp:displayName rdf:datatype = "xsd:string">CO2</bp:displayName>
+ <bp:entityReference rdf:resource="id7" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="e271d">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 456216</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">ADP</bp:displayName>
+ <bp:entityReference rdf:resource="id75" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="f5407">
+ <bp:displayName rdf:datatype = "xsd:string">CO2</bp:displayName>
+ <bp:entityReference rdf:resource="id7" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="bc5b7">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 37565</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">GTP</bp:displayName>
+ <bp:entityReference rdf:resource="id3" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="d65f9">
+ <bp:displayName rdf:datatype = "xsd:string">NAD</bp:displayName>
+ <bp:entityReference rdf:resource="id65" />
+</bp:SmallMolecule>
+
+<bp:UnificationXref rdf:about="id72">
+ <bp:id rdf:datatype = "xsd:string">HMDB00221</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id73">
+ <bp:xref rdf:resource="id74" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id70">
+ <bp:id rdf:datatype = "xsd:string">HMDB00217</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id71">
+ <bp:xref rdf:resource="id72" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id78">
+ <bp:id rdf:datatype = "xsd:string">HMDB00538</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id79">
+ <bp:xref rdf:resource="id80" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id76">
+ <bp:id rdf:datatype = "xsd:string">HMDB01341</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:Protein rdf:about="d1c04">
+ <bp:entityReference rdf:resource="id57" />
+ <bp:displayName rdf:datatype = "xsd:string">ACO2</bp:displayName>
+</bp:Protein>
+
+<bp:SmallMoleculeReference rdf:about="id77">
+ <bp:xref rdf:resource="id78" />
+</bp:SmallMoleculeReference>
+
+<bp:UnificationXref rdf:about="id74">
+ <bp:id rdf:datatype = "xsd:string">HMDB01423</bp:id>
+ <bp:db rdf:datatype = "xsd:string">HMDB</bp:db>
+</bp:UnificationXref>
+
+<bp:SmallMoleculeReference rdf:about="id75">
+ <bp:xref rdf:resource="id76" />
+</bp:SmallMoleculeReference>
+</rdf:RDF>
