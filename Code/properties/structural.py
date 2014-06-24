@@ -31,10 +31,17 @@ class NetStructuralProperties:
 			'extended_simple': is_extended_simple
 		}
 	def get_pre_post_places(self):
+		"""
+		return function, returns the places with post and pre transitions
+		"""
 		return self.places
 
 	def get_pre_post_transitions(self):
+		"""
+		return function, returns the transitions with post and pre places
+		"""
 		return self.transitions
+
 	def get_pre_post_neighbours(self):
 		"""Adds sources and targets from all arcs to pre- and post-neighbour sets of self.places and self.transitions.
 		"""
@@ -60,6 +67,30 @@ class NetStructuralProperties:
 		"""
 		sources[arc.source][1].add(arc.target)
 		targets[arc.target][0].add(arc.source)
+		
+	def is_not_branching(self, nodes):
+		"""Check if nodes contains at least one branching node.
+
+		:param nodes: Iterable of Places or Transitions
+		:return: True if nodes contains at least one branching node.
+		"""
+		return all([(len(pre) <= 1) and (len(post) > 1) and (len(pre) == len(post)) for (pre, post) in nodes.values()])
+
+	def is_extended_classes(self):
+		"""Check if net is Extended Free Choice and/or Extended Simple.
+
+		:rtype : tuple(Bool, Bool)
+		:return: (is_extended_free_choice, is_extended_simple)
+		"""
+		extended_free_choice = True
+		for (_, post1), (_, post2) in itertools.combinations(self.places.values(), 2):
+			if not (post1.isdisjoint(post2) or post1 == post2):
+				extended_free_choice = False
+
+			if not (post1.isdisjoint(post2) or post1 <= post2 or post2 <= post1):
+				return False, False
+
+		return extended_free_choice, True
 
 	@property
 	def is_pure(self):
@@ -185,21 +216,26 @@ class NetStructuralProperties:
 		return seen == nodes
 
 
-def boundary_nodes(nodes, place='input'):
-	"""Get  boundary nodes of net.
-
-	:rtype : list(Places) or list(Transitions)
-	:param nodes: Dict from Place or Transition to tupel of sets of Transition or Place.
-	:param place: 'input' or 'output'
-	:return: List of places or transitions which are boundary nodes.
-	"""
-	if place == 'output':
-		get_set = lambda sets: set[1]
-	else:
-		get_set = lambda sets: set[0]
-
-	return [t for (t, sets) in nodes.items() if len(get_set(sets)) < 1]
-
-
-def groupby(arcs, keyfunc):
-	return [list(g) for k, g in itertools.groupby(sorted(arcs, key=keyfunc), key=keyfunc)]
+	def boundary_nodes(nodes, place='input'):
+		"""Get  boundary nodes of net.
+	
+		:rtype : list(Places) or list(Transitions)
+		:param nodes: Dict from Place or Transition to tupel of sets of Transition or Place.
+		:param place: 'input' or 'output'
+		:return: List of places or transitions which are boundary nodes.
+		"""
+		if place == 'output':
+			get_set = lambda sets: set[1]
+		else:
+			get_set = lambda sets: set[0]
+	
+		return [t for (t, sets) in nodes.items() if len(get_set(sets)) < 1]
+	
+	
+		#this function gives an error, so I commented it. It says that Transition() and Places() are unorderable
+	def groupby(arcs, keyfunc):
+		filtered_arcs = []
+		for arc in arcs:
+			if isinstance(arc.source,type(keyfunc)):
+				filtered_arcs.add(arc)
+		return [list(g) for k, g in itertools.groupby(sorted(filtered_arcs, key=keyfunc), key=keyfunc)]
