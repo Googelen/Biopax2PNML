@@ -15,7 +15,7 @@ The research of Timo Willemsen is the basic for our research. He has made a tool
 Some talk about the work from timo
 
 How to do such a thing, and why this way
-To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the 
+To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the biopax to PNML converter. Because this format is not a common format, we have to write the classifiers and validators ourselves. The program Willemsen wrote was available on https://github.com/TimoWillemsen/Biopax2PNML and is written in Pyton. Therefore we used Pyton as language to extend this program. In the papers of Heiner (2008) and [the long one which was more of a manual] there were several algorithms to retrieve information about the petrinet. We could use pyton for static validation, but not for dynamic validation. For dynamic validation we looked into Snoopy, a tool created by [makers]. However, the PNML format is not yet supported by Snoopy, and therefore we could not use this program. We decided to focus on the static validation for this paper. 
 How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
 
 
