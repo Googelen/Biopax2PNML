@@ -1,5 +1,5 @@
 from models import *
-import classifier
+import properties.structural
 import itertools
 
 class Validator:
@@ -15,7 +15,7 @@ class Validator:
 		self.deadlock_places = {}
 		self.trap_places = {}
 		self.validate()
-		
+	
 	def validate(self):
 		self.checkArcs()
 		self.checkCycles()
@@ -34,7 +34,7 @@ class Validator:
 		print(self.number_of_components)
 		
 	def find_deadlocks(self):
-		classify = classifier.NetClassifier(self.net)
+		classify = structural.NetStructuralProperties(self.net)
 		places = classify.get_pre_post_places()
 		(deadlock_places,trap_places) = get_deadlock_and_trap(places)
 
@@ -105,8 +105,8 @@ class Validator:
 		previous_neighbours=[]
 		neighbours=[placeIn]
 		# expand the neighbours
-		while(neighbours!=previous_neighbours):
-			temp_neighbours=neighbours
+		while(set(neighbours) != set(previous_neighbours)):
+			temp_neighbours=list(neighbours)
 			parents=[]
 			children=[]
 			#get children and parents
@@ -114,10 +114,12 @@ class Validator:
 				if place not in previous_neighbours:
 					parents.extend(self.getParents(place))
 					children.extend(self.getChildren(place))
-			#add them if they do not yet exist		
+			#add them if they do not yet exist	
+
 			for parent in parents:
 				if parent not in neighbours:
 					neighbours.append(parent)
+
 			for child in children:
 				if child not in neighbours:
 					neighbours.append(child)
@@ -167,21 +169,39 @@ class Validator:
 	
 	
 	def cycleRecursion(self,placeIn,placesIn):
-		placesIn.append(placeIn)
 		children = self.getChildren(placeIn)
-		if placeIn.id in children:
+
+		if placeIn in set(placesIn):
 			#cycle found
 			self.number_of_cycles = self.number_of_cycles + 1
-			placesIn.pop() #the original place was added, remove this one
-			add_to_cycles(placesIn)
-			
+			self.add_to_cycles(placesIn)
+
 		elif children==[]:
 			#no cycle found
 			return
 		else:
 			#make sure every split it searched
+			placesIn.append(placeIn)
+			#for debugging
+			"""
+			have_to_print = False
 			for place in children:
-				self. cycleRecursion(place,placesIn)
+				if place in placesIn:
+					have_to_print = True
+
+			if have_to_print:
+				print(placeIn.description)
+				print("places in")
+				for place in placesIn:
+					print(place.description)
+
+				print("children")
+				for place in children:
+					print (place.description)
+				print("")
+			"""
+			for place in children:
+				self.cycleRecursion(place,placesIn)
 				
 				
 	def checkCycles(self):
@@ -197,7 +217,7 @@ class Validator:
 			self.type="Linear"
 		#there are no starting and ending places
 		elif (len(self.startingPlaces)==0 and len(self.endingPlaces)==0):
-		#elif(not structural.has_boundary_nodes)
+			#elif(not structural.has_boundary_nodes)
 			self.type="Cyclic"
 		#there are no cycles
 		elif self.number_of_cycles==0:
