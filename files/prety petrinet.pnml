@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pnml>
+  <net type="http://www.yasper.org/specs/epnml-1.1" id="id-1">
+    <toolspecific tool="Yasper" version="1.2.4020.34351">
+      <roles xmlns="http://www.yasper.org/specs/epnml-1.1/toolspec" />
+    </toolspecific>
+    <page id="top-level">
+      <transition id="t2">
+        <graphics>
+          <position x="835" y="385" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t3">
+        <graphics>
+          <position x="1212" y="689" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t4">
+        <graphics>
+          <position x="817" y="541" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t5">
+        <graphics>
+          <position x="524" y="461" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t6">
+        <graphics>
+          <position x="428" y="756" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t7">
+        <graphics>
+          <position x="573" y="574" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t8">
+        <graphics>
+          <position x="684" y="691" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t9">
+        <graphics>
+          <position x="479" y="292" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t10">
+        <graphics>
+          <position x="695" y="237" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t11">
+        <graphics>
+          <position x="1077" y="697" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t12">
+        <graphics>
+          <position x="871" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t13">
+        <graphics>
+          <position x="631" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t14">
+        <graphics>
+          <position x="1264" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t15">
+        <graphics>
+          <position x="1337" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t16">
+        <graphics>
+          <position x="983" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t17">
+        <graphics>
+          <position x="950" y="313" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t18">
+        <graphics>
+          <position x="1034" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t19">
+        <graphics>
+          <position x="1124" y="688" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t20">
+        <graphics>
+          <position x="908" y="387" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t21">
+        <graphics>
+          <position x="780" y="691" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t22">
+        <graphics>
+          <position x="745" y="544" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t23">
+        <graphics>
+          <position x="365" y="144" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t24">
+        <graphics>
+          <position x="313" y="548" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t25">
+        <graphics>
+          <position x="217" y="764" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t26">
+        <graphics>
+          <position x="520" y="723" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t27">
+        <graphics>
+          <position x="178" y="579" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t28">
+        <graphics>
+          <position x="168" y="261" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t29">
+        <graphics>
+          <position x="96" y="758" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <transition id="t30">
+        <graphics>
+          <position x="239" y="267" />
+          <dimension x="32" y="32" />
+        </graphics>
+      </transition>
+      <place id="da75d">
+        <name>
+          <text>2-oxoglutarate</text>
+        </name>
+        <graphics>
+          <position x="928" y="482" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="b96da">
+        <name>
+          <text>D-threo-Isocitrate</text>
+        </name>
+        <graphics>
+          <position x="747" y="66" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="b5c93">
+        <name>
+          <text>NADP</text>
+        </name>
+        <graphics>
+          <position x="1232" y="912" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="cae57">
+        <name>
+          <text>water</text>
+        </name>
+        <graphics>
+          <position x="815" y="890" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ab88e">
+        <name>
+          <text>cis-aconitate</text>
+        </name>
+        <graphics>
+          <position x="449" y="644" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="d7980">
+        <name>
+          <text>water</text>
+        </name>
+        <graphics>
+          <position x="412" y="872" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="e95eb">
+        <name>
+          <text>citrate</text>
+        </name>
+        <graphics>
+          <position x="539" y="895" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="c6beb">
+        <name>
+          <text>succinate</text>
+        </name>
+        <graphics>
+          <position x="695" y="298" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="c5215">
+        <name>
+          <text>ubiquinol-10</text>
+        </name>
+        <graphics>
+          <position x="699" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="fc117">
+        <name>
+          <text>fumarate</text>
+        </name>
+        <graphics>
+          <position x="368" y="278" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ffbe6">
+        <name>
+          <text>succinyl-CoA</text>
+        </name>
+        <graphics>
+          <position x="890" y="79" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="bc5b7">
+        <name>
+          <text>GTP</text>
+        </name>
+        <graphics>
+          <position x="1124" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="e1568">
+        <name>
+          <text>CoA</text>
+        </name>
+        <graphics>
+          <position x="868" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="c7118">
+        <name>
+          <text>ATP</text>
+        </name>
+        <graphics>
+          <position x="630" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="e271d">
+        <name>
+          <text>ADP</text>
+        </name>
+        <graphics>
+          <position x="1266" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ac299">
+        <name>
+          <text>Pi</text>
+        </name>
+        <graphics>
+          <position x="1340" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="f85a0">
+        <name>
+          <text>GDP</text>
+        </name>
+        <graphics>
+          <position x="981" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="f5407">
+        <name>
+          <text>CO2</text>
+        </name>
+        <graphics>
+          <position x="1034" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ab312">
+        <name>
+          <text>NADH</text>
+        </name>
+        <graphics>
+          <position x="1203" y="910" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="f30d1">
+        <name>
+          <text>NADH</text>
+        </name>
+        <graphics>
+          <position x="782" y="885" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ea9a4">
+        <name>
+          <text>CO2</text>
+        </name>
+        <graphics>
+          <position x="740" y="896" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="c53f3">
+        <name>
+          <text>(S)-malate</text>
+        </name>
+        <graphics>
+          <position x="110" y="71" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="ac347">
+        <name>
+          <text>water</text>
+        </name>
+        <graphics>
+          <position x="330" y="844" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="a39f2">
+        <name>
+          <text>oxaloacetate</text>
+        </name>
+        <graphics>
+          <position x="230" y="574" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="d568e">
+        <name>
+          <text>CoA</text>
+        </name>
+        <graphics>
+          <position x="217" y="872" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="c02ba">
+        <name>
+          <text>water</text>
+        </name>
+        <graphics>
+          <position x="162" y="851" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="bc872">
+        <name>
+          <text>NADH</text>
+        </name>
+        <graphics>
+          <position x="91" y="860" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <place id="d65f9">
+        <name>
+          <text>NAD</text>
+        </name>
+        <graphics>
+          <position x="285" y="844" />
+          <dimension x="20" y="20" />
+        </graphics>
+      </place>
+      <arc id="a1" source="da75d" target="t2" />
+      <arc id="a2" source="t2" target="b96da" />
+      <arc id="a3" source="da75d" target="t3" />
+      <arc id="a4" source="t3" target="b5c93" />
+      <arc id="a5" source="b96da" target="t4" />
+      <arc id="a6" source="t4" target="cae57" />
+      <arc id="a7" source="b96da" target="t5" />
+      <arc id="a8" source="t5" target="ab88e" />
+      <arc id="a9" source="ab88e" target="t6" />
+      <arc id="a10" source="t6" target="d7980" />
+      <arc id="a11" source="ab88e" target="t7" />
+      <arc id="a12" source="t7" target="e95eb" />
+      <arc id="a13" source="c6beb" target="t8" />
+      <arc id="a14" source="t8" target="c5215" />
+      <arc id="a15" source="c6beb" target="t9" />
+      <arc id="a16" source="t9" target="fc117" />
+      <arc id="a17" source="ffbe6" target="t10" />
+      <arc id="a18" source="t10" target="c6beb" />
+      <arc id="a19" source="ffbe6" target="t11" />
+      <arc id="a20" source="t11" target="bc5b7" />
+      <arc id="a21" source="ffbe6" target="t12" />
+      <arc id="a22" source="t12" target="e1568" />
+      <arc id="a23" source="ffbe6" target="t13" />
+      <arc id="a24" source="t13" target="c7118" />
+      <arc id="a25" source="ffbe6" target="t14" />
+      <arc id="a26" source="t14" target="e271d" />
+      <arc id="a27" source="ffbe6" target="t15" />
+      <arc id="a28" source="t15" target="ac299" />
+      <arc id="a29" source="ffbe6" target="t16" />
+      <arc id="a30" source="t16" target="f85a0" />
+      <arc id="a89" source="da75d" target="t17" />
+      <arc id="a90" source="t17" target="ffbe6" />
+      <arc id="a91" source="da75d" target="t18" />
+      <arc id="a92" source="t18" target="f5407" />
+      <arc id="a93" source="da75d" target="t19" />
+      <arc id="a94" source="t19" target="ab312" />
+      <arc id="a95" source="b96da" target="t20" />
+      <arc id="a96" source="t20" target="da75d" />
+      <arc id="a97" source="b96da" target="t21" />
+      <arc id="a98" source="t21" target="f30d1" />
+      <arc id="a99" source="b96da" target="t22" />
+      <arc id="a100" source="t22" target="ea9a4" />
+      <arc id="a101" source="fc117" target="t23" />
+      <arc id="a102" source="t23" target="c53f3" />
+      <arc id="a103" source="fc117" target="t24" />
+      <arc id="a104" source="t24" target="ac347" />
+      <arc id="a105" source="a39f2" target="t25" />
+      <arc id="a106" source="t25" target="d568e" />
+      <arc id="a107" source="a39f2" target="t26" />
+      <arc id="a108" source="t26" target="e95eb" />
+      <arc id="a109" source="a39f2" target="t27" />
+      <arc id="a110" source="t27" target="c02ba" />
+      <arc id="a111" source="c53f3" target="t28" />
+      <arc id="a112" source="t28" target="a39f2" />
+      <arc id="a113" source="c53f3" target="t29" />
+      <arc id="a114" source="t29" target="bc872" />
+      <arc id="a115" source="c53f3" target="t30" />
+      <arc id="a116" source="t30" target="d65f9" />
+    </page>
+  </net>
+</pnml>
