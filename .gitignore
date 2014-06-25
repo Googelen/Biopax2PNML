@@ -1,2 +1,10 @@
 *.pyc
 *~
+files/paper/*.aux
+files/paper/*.bbl
+files/paper/*.blg
+files/paper/*.log
+files/paper/*.out
+files/paper/*.pdf
+files/paper/*.synctex.gz
+files/paper/*.tdo

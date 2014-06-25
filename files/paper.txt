@@ -1,64 +1,8 @@
-Goal:
-How can generated petri nets from Biopax be validated to become executable pathways
+Contents of this file moved to the LaTeX file
 
-Hypothesis:
-What properties of petri nets can be determined with information from Biopax?
+files/paper/biopax2pnml.tex
 
-Paragraphs:
-Motivation
-After having read about petri nets, it became clear to us that there is not yet an easy way to construct such a network. Such a process is very hard because of the many possibilities and the amount of research there has to be done in order to make a petri net complete. However after we read the research of (blood cells), it became clear that even an incomplete petri net is able to predict some possible missing transitions in the cell or is able to help researchers look for new experiments.(c.elegans paper) If a petri net is nearing completions it is even able to simulate the behavior of interactions in an organism. We found this very intriguing and we decided to dive into this branch of bioinformatics. 
-We were aware that the information researchers gained from experiments was stored in large databases, like wikipathways and Biopax. (reference) One disadvantage of these databases however, is that the information is static, and not executable like a petri net. A former master student at the VU, Timo Willemsen, has made a program which was able to convert information from the Biopax database into a petri net, however, his program was not very extensive, but it was the foundation for out new goal: validating those generated petri nets from Biopax to become executable pathways.
-Another reason we decided to make continue the research of Willemsen, because we had the feeling that we could understand this concept and be able to expand his project so it will be able to not only create a petri net, but also tell us something about the properties of this petri net.
-Earlier work/intro
-In this paper we are trying to make executable models of organisms or parts of organisms by means of petri nets. A petri net is a form of representing how a process progresses over time. This is done by having places, transitions, arcs and tokens. The places represent a state, the place a substance is, or a substance itself. A transition can represent a transition of a substance from one place to another, a process in which a substance is transformed or another change. An arc represents which place is connected to which transition and a token shows which place is currently active. Before a transition can fire, it has to have tokens in the places before it. A place can hold more than one token. This network has been proven to be Turing complete (reference).
-The research of Timo Willemsen is the basic for our research. He has made a tool that is able to convert a Biopax structure into a petri net. However, this tool does not implement validation. This is what we wanted to improve. We also used papers of (Feenstra) where it is explained how petri nets are formed and how they can be used to predict possible outcomes of experiments. These papers all are focused on the Caenorhabditis elegans.
-Some talk about the work from timo
+Please edit and add stuff there!
 
-How to do such a thing, and why this way
-To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the biopax to PNML converter. Because this format is not a common format, we have to write the classifiers and validators ourselves. The program Willemsen wrote was available on https://github.com/TimoWillemsen/Biopax2PNML and is written in Pyton. Therefore we used Pyton as language to extend this program. In the papers of Heiner (2008) and [the long one which was more of a manual] there were several algorithms to retrieve information about the petrinet. We could use pyton for static validation, but not for dynamic validation. For dynamic validation we looked into Snoopy, a tool created by [makers]. However, the PNML format is not yet supported by Snoopy, and therefore we could not use this program. We decided to focus on the static validation for this paper. 
-How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)
-
-
-Static validation
-One way of obtaining information from a petrinet is validating it statically. We used several algorithms from Heiner (2008) [number]. We valuated the following criteria:
-Starting places: the places which have no ingoing arc.
-Ending places: the places which have no outgoing arc.
-The cycles: the number of cycles in the net and which places belong to a cycle.
-Number of components: are there parts of the network which are disjoined?
-Type of petrinet: Choose from: linear, cyclic, branched or undefined.
-Class of petrinet: Classifies if the net belongs in one or more of the following classes:
-•	State machine: there are no forward or backward branching transitions.
-•	Synchronization graph: there are not forward or backward branching places.
-•	Extended simple: transitions in conflict have identical sets of preplaces
-•	Extended free choice: every transition is involved in 1 conflict at most.
-Which places are in a structural deadlock: it checks this by taking any combination of places and sees if the pre-transitions are a subset of the post-transitions.
-Which places are in a structural trap: it checks this by taking any combination of places and sees if the post-transitions are a subset of the pre-transitions
-Properties:
-	Is it connected: checks if the network has components
-	Is it pure: checks if there are 2 arcs which connect the same components in opposite ways
-	Is it homogenous: checks if the 
-	Has it a static conflict tree
-	Has it boundary input transitions
-	Has it boundary output transitions
-	Has it boundary input places
-	Has it boundary output places
-
-
-Dynamic validation
-Explain what we have done dynamically
-Not yet done
-
-Improving the generated petri net
-I do not know if this is a good idea, because maybe this will not work, but if eventually this should happen right?
-Also, not a clue how to do this
-
-Future work
-
-Conclusion
-Motivation, summary, hypothesis
-What have we done
-
-
-
-References:
-M Heiner, D Gilbert, R Donaldson, ‘Petri Nets for System and Synthetic Biology’, M Bernardo, P Degano and G Zavattaro (eds.): SFM 2008, Springer LNCS 5016, pp 215-264, 2008.
+Thanks,
+Franz
