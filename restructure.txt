@@ -1,0 +1,31 @@
+suggested file structure:
+	root
+	|
+	|
+	|
+	\
+	 Code
+	   |
+	   \
+	    Tests (contains tests)
+	   |
+	   \
+	    Properties (contains validator and structural.py, clasifier.py = duplicate, can be deleted)
+	   |
+	   \
+	    folder of original.py files (the program itself?)?
+	|
+	\
+	 Papers (could be other repository, contains papers of Timo)
+	|
+	\
+	 Biopax Files (.owl)
+	|
+	\
+	 Petrinets (contains output pnml files)
+	|
+	\
+	 Files (Could be other repository)
+	   |
+	   \
+	    paper (move files up or have in this folder?)
