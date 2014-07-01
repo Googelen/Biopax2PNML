@@ -1,3 +1,7 @@
+# I added some comments
+# (1) In principle all filenames and directory names should be lowercase and not include any spaces.
+# (2) As you already correctly suggest: This repo should only be about the code. All other stuff should be removed.folder of original.py files (the program itself?)?
+
 suggested file structure:
 	root
 	|
@@ -5,6 +9,7 @@ suggested file structure:
 	|
 	\
 	 Code
+	 # should be a meaningful name like "biopax2pnml"
 	   |
 	   \
 	    Tests (contains tests)
@@ -14,18 +19,22 @@ suggested file structure:
 	   |
 	   \
 	    folder of original.py files (the program itself?)?
+	    # That stuff should probably be just in the folder which you currently call "Code"
 	|
 	\
 	 Papers (could be other repository, contains papers of Timo)
+	 # Let's just remove them and exchange papers in Zotero or something similar.
 	|
 	\
 	 Biopax Files (.owl)
 	|
 	\
 	 Petrinets (contains output pnml files)
+	 # Do these really need to be in the repository?
 	|
 	\
 	 Files (Could be other repository)
+	 # I agree, that should not be in this repository.
 	   |
 	   \
 	    paper (move files up or have in this folder?)
