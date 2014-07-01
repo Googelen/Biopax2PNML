@@ -15,48 +15,50 @@
 \begin{document}
     \maketitle
     \todo{Find title}
-    
+    %what do you mean by that?
     \listoftodos
     
     \pagebreak
     
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\section{Introduction}\label{sec:introduction}   
+\section{Introduction}\label{sec:introduction}
 
 \todo[inline]{This is from papers.txt. Is this the correct place for this? Rewrite if necessary!}
 
-    Goal: \todo{Where should this go?}
+    Goal:     
+    \todo[inline]{Where should this go? }
+    %this is more of our research question
     How can generated petri nets from Biopax be validated to become executable pathways
-    
+    %this is more of what we are working towards
     Hypothesis:
     What properties of petri nets can be determined with information from Biopax?
      
     
-    After having read about petri nets, it became clear to us that there is not yet an easy way to construct such a network. Such a process is very hard because of the many possibilities and the amount of research there has to be done in order to make a petri net complete. However after we read the research of (blood cells), it became clear that even an incomplete petri net is able to predict some possible missing transitions in the cell or is able to help researchers look for new experiments.
-    \todo{References are missing all over the place}(c.elegans paper)
-    If a petri net is nearing completions it is even able to simulate the behavior of interactions in an organism. We found this very intriguing and we decided to dive into this branch of bioinformatics. 
+    After having read about petri nets\cite{Boldhaus2010, Krepska2008, Bonzanni2009}, it became clear to us that there is not yet an easy way to construct such a network. Such a process is very hard because of the many possibilities and the amount of research there has to be done in order to make a petri net complete. However after we read the research of \cite{Bonzanni2013}, it became clear that even an incomplete petri net is able to predict some possible missing transitions in the cell or is able to help researchers look for new experiments.
+    \cite{Bonzanni2009}
+    If a petri net is nearing completions it is even able to simulate the behavior of interactions in an organism. We found this very intriguing and we decided to dive into this branch of bioinformatics.
     
-    We were aware that the information researchers gained from experiments was stored in large databases, like wikipathways and Biopax. (reference) One disadvantage of these databases however, is that the information is static, and not executable like a petri net. A former master student at the VU, Timo Willemsen, has made a program which was able to convert information from the Biopax database into a petri net, however, his program was not very extensive, but it was the foundation for out new goal: validating those generated petri nets from Biopax to become executable pathways.
+    We were aware that the information researchers gained from experiments was stored in large databases, like wikipathways and Biopax. \cite{Willemsen2013} One disadvantage of these databases however, is that the information is static, and not executable like a petri net. A former master student at the VU, Timo Willemsen, has made a program which was able to convert information from the Biopax database into a petri net, however, his program was not very extensive, but it was the foundation for out new goal: validating those generated petri nets from Biopax to become executable pathways.
     
     Another reason we decided to make continue the research of Willemsen, because we had the feeling that we could understand this concept and be able to expand his project so it will be able to not only create a petri net, but also tell us something about the properties of this petri net.
     
     In this paper we are trying to make executable models of organisms or parts of organisms by means of petri nets. A petri net is a form of representing how a process progresses over time. This is done by having places, transitions, arcs and tokens. The places represent a state, the place a substance is, or a substance itself. A transition can represent a transition of a substance from one place to another, a process in which a substance is transformed or another change. An arc represents which place is connected to which transition and a token shows which place is currently active. Before a transition can fire, it has to have tokens in the places before it. A place can hold more than one token. This network has been proven to be Turing complete (reference).
     
-    The research of Timo Willemsen is the basic for our research~\cite{Willemsen2013}. He has made a tool that is able to convert a Biopax structure into a petri net. However, this tool does not implement validation. This is what we wanted to improve. We also used papers of
-    \todo{Add reference}(Feenstra) where it is explained how petri nets are formed and how they can be used to predict possible outcomes of experiments. These papers all are focused on the Caenorhabditis elegans.
+    The research of Timo Willemsen is the basic for our research~ \cite{Willemsen2013}. He has made a tool that is able to convert a Biopax structure into a petri net. However, this tool does not implement validation. This is what we wanted to improve. We also used papers
+    \cite{Bonzanni2014, Bonzanni2009} where it is explained how petri nets are formed and how they can be used to predict possible outcomes of experiments. These papers all are focused on the Caenorhabditis elegans.
     \todo[inline]{Some talk about the work from timo}
     
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \section{How to do such a thing, and why this way}\label{sec:methods}
 
-    To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the biopax to PNML converter. Because this format is not a common format, we have to write the classifiers and validators ourselves. The program Willemsen wrote was available on \url{https://github.com/TimoWillemsen/Biopax2PNML} and is written in Pyton. Therefore we used Pyton as language to extend this program. In the papers of Heiner (2008) and [the long one which was more of a manual] there were several algorithms to retrieve information about the petrinet. We could use pyton for static validation, but not for dynamic validation. For dynamic validation we looked into Snoopy, a tool created by [makers]. However, the PNML format is not yet supported by Snoopy, and therefore we could not use this program. We decided to focus on the static validation for this paper.
+    To make a validator for the petri nets, we first have to see what the properties of the petri net are. We used the format which Willemsen has used to make the biopax to PNML converter. Because this format is not a common format, we have to write the classifiers and validators ourselves. The program Willemsen wrote was available on \url{https://github.com/TimoWillemsen/Biopax2PNML} and is written in Pyton. Therefore we used Pyton as language to extend this program. In \cite{Heiner2008} and [the long one which was more of a manual] there were several algorithms to retrieve information about the petrinet. We could use pyton for static validation, but not for dynamic validation. For dynamic validation we looked into Snoopy, a tool created by \cite{Heiner2012}. However, the PNML format is not yet supported by Snoopy, and therefore we could not use this program. We decided to focus on the static validation for this paper.
     
     \todo[inline]{How are we going to do this (And come back to the motivation e.g. we do it like this because...motivation)}
     
     
 \subsection{Static validation}\label{sec:static_validation}
-    One way of obtaining information from a petrinet is validating it statically. We used several algorithms from Heiner (2008) [number]. We valuated the following criteria:
-    \todo{This list should become text.}
+    One way of obtaining information from a petrinet is validating it statically. We used several algorithms from \cite{Heiner2008}. We valuated the following criteria:
+    \todo[inline]{This list should become text.}
     \begin{description}
         
     \item [Starting places] the places which have no ingoing arc.
@@ -86,7 +88,7 @@
     \begin{itemize}
         \item Is it connected: checks if the network has components
         \item Is it pure: checks if there are 2 arcs which connect the same components in opposite ways
-        \item Is it homogenous: checks if the 
+        \item Is it homogenous: checks if the
         \item Has it a static conflict tree
         \item Has it boundary input transitions
         \item Has it boundary output transitions
@@ -119,7 +121,8 @@
     
     
     References:
-    M Heiner, D Gilbert, R Donaldson, ‘Petri Nets for System and Synthetic Biology’, M Bernardo, P Degano and G Zavattaro (eds.): SFM 2008, Springer LNCS 5016, pp 215-264, 2008.\todo{Is that in the bibtex file already?}
+    M Heiner, D Gilbert, R Donaldson, ‘Petri Nets for System and Synthetic Biology’, M Bernardo, P Degano and G Zavattaro (eds.): SFM 2008, Springer LNCS 5016, pp 215-264, 2008.
+    \todo[inline]{Is that in the bibtex file already?}
     
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \bibliographystyle{plainnat}
