@@ -1,0 +1,24 @@
+Observations of the last time:
+
+Database connection with "UnificationXref"tag
+Converts database ID to rdf id
+
+With "SmallMoleculeReference" mapped into other rdf id
+
+With another "SmallMolecule" mapped into rdf resource as many times as it occurs
+This resource has different identifiers for the same "SmallMoleculeReference", so e.g. if 'water' is involved 3 times, it has 3 different resources
+
+This is used in the "BiochemicalReaction", which is used in the program of Timo
+
+Problems:
+Same substance is mapped as many times as it occurs to different id's
+BiochemicalReaction tag can have multiple 'right' or 'left' places, but the SPARQL query only returns the 1 pair
+Also, 'right' is the postplace and left is the 'preplace'
+Also the 'Catalysis' tag has a controlled and controller substance, which is not part of the SPARQL query
+
+SPARQL = rdf query language
+http://www.w3.org/TR/rdf-sparql-query/
+
+I think we should rewrite the query or extend it.
+Possible problem:
+  In the query it returns an array, but is it possible to be longer than 4 items?
