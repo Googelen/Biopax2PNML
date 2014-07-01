@@ -49,7 +49,7 @@ class Reader:
 			SELECT  ?controller ?controlled ?displayNameController ?displayNameControlled
 			WHERE {
 			    ?Catalysis bp:controller ?controller . 
-			    ?Catalysis bp:controlled ?controlled
+			    ?Catalysis bp:controlled ?controlled .
 			    ?controller bp:displayName ?displayNameController . 
 			    ?controlled bp:displayName ?displayNameControlled
 			}
