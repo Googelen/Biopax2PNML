@@ -26,19 +26,12 @@ class Reader:
 		"""
 
 		for x in graph.query(query):
-			placeLeft = Place(x[0], x[1])
-			placeRight = Place(x[2], x[3])
-			transition = Transition()
-			arcleft = Arc(placeLeft, transition)
-			arcRight = Arc(transition, placeRight)
-
-			self.net.newPlace(placeLeft)
-			self.net.newPlace(placeRight)
-			self.net.newTransition(transition)
-			self.net.newArc(arcleft)
-			self.net.newArc(arcRight)
+			counter=0
+			while(x.left):
+				self.processQuery(x.left[counter],x.displayNameLeft[counter], x.right[0], x.displayNameRight[0])
+				counter++
 			#print("left: %s right: %s" % x)
-
+		readCatalysis(inputfile)
 		return self.net
 
 		#print("graph has %s statements." % len(graph))
@@ -46,7 +39,40 @@ class Reader:
 		#print(self.root.nsmap)
 		#description = self.root.findall('bp:BiochemicalReaction',namespaces=self.root.nsmap)
 		#print(description)
+	def readCatalysis(self, inputfile):
+		graph = rdflib.Graph()
+		result = graph.parse(inputfile)
 
+
+		query = """
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT  ?controller ?controlled ?displayNameController ?displayNameControlled
+			WHERE {
+			    ?Catalysis bp:controller ?controller . 
+			    ?Catalysis bp:controlled ?controlled
+			    ?controller bp:displayName ?displayNameController . 
+			    ?controlled bp:displayName ?displayNameControlled
+			}
+		"""
+		for x in graph.query(query):
+			#This works both ways
+			processQuery(x.controller, x.displayNameController,x.controlled,x.displayNameControlled)
+			processQuery(x.controlled, x.displayNameControlled,x.controller,x.displayNameController)
+		
+	
+	def processQuery(self, left,nameLeft, right,nameRight):
+		placeLeft = Place(left, nameLeft)
+		placeRight = Place(right, nameRight)
+		transition = Transition()
+		arcleft = Arc(placeLeft, transition)
+		arcRight = Arc(transition, placeRight)
+
+		self.net.newPlace(placeLeft)
+		self.net.newPlace(placeRight)
+		self.net.newTransition(transition)
+		self.net.newArc(arcleft)
+		self.net.newArc(arcRight)
+		
 	def readPlaces(self):
 		return self.net.places
 	def readTransitions(self):
