@@ -6,7 +6,7 @@ class QueryTest:
 
 		self.graph = rdflib.Graph()
 		self.graph.parse("../../WP78_70014.owl")
-		self.graph.parse("../../biopax-level3.owl")
+		self.graph.parse("http://www.biopax.org/release/biopax-level3.owl", format='application/rdf+xml')
 		self.test_query()
 		return
 
