@@ -1,5 +1,3 @@
-import biopax
-
 class Query_Test:
 	def __init__(self):
 		self.test_query("WP78_70014.owl")
@@ -17,11 +15,8 @@ class Query_Test:
                 
 			}
 		"""
-
-
-
-		reader = biopax.Reader()
-		result = reader.test_query(inputfile,query)
+		
+		result = self.test_query(inputfile,query)
 
 		print(len(result))
 		for x in result:
@@ -31,4 +26,9 @@ class Query_Test:
 			print(x.displayNameRight)
 			print("")
 			
+	def test_query(self, inputfile,query):
+		graph = rdflib.Graph()
+		graph.parse(inputfile)
+		return graph.query(query)
+		
 test = Query_Test()
