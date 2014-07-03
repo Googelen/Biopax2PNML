@@ -1,3 +1,6 @@
+import rdflib
+from rdflib import plugin
+
 class Query_Test:
 	def __init__(self):
 		self.test_query("WP78_70014.owl")
