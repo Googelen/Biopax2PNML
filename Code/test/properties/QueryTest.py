@@ -11,20 +11,39 @@ class QueryTest:
 		return
 
 	def test_query(self):
-		query = """
+		conversion_query = """
 			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-			SELECT  ?class ?conversion ?child ?childName ?direction
+			SELECT  ?class ?interaction ?hasParticipant ?participant ?displayName ?direction
 			WHERE {
 				?class rdfs:subClassOf+ bp:Conversion.
-				?conversion a ?class.
-				{
-					?conversion bp:left ?child.
-					?child bp:displayName ?childName
-				} UNION {
-					?conversion bp:right ?child.
-					?child bp:displayName ?childName
+				?hasParticipant rdfs:subPropertyOf bp:participant.
+
+				?interaction
+					a ?class;
+					?hasParticipant ?participant.
+
+				OPTIONAL {
+					?child bp:displayName ?childName.
+					?interaction bp:conversionDirection ?direction.
 				}
-				OPTIONAL { ?conversion bp:conversionDirection ?direction }
+			}
+		"""
+		control_query = """
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT  ?class ?interaction ?hasParticipant ?participant ?displayName ?direction ?controlType
+			WHERE {
+				?class rdfs:subClassOf+ bp:Control.
+				?hasParticipant rdfs:subPropertyOf bp:participant.
+
+				?interaction
+					a ?class;
+					?hasParticipant ?participant.
+
+				OPTIONAL {
+					?child bp:displayName ?childName.
+					?interaction bp:catalysisdirection ?direction.
+					?interaction bp:controlType ?controlType.
+				}
 			}
 		"""
 		#I also made a query for the other part
@@ -44,7 +63,7 @@ class QueryTest:
 
 		"""
 
-		result = self.graph.query(query)
+		result = self.graph.query(control_query)
 
 		print(len(result))
 
@@ -53,5 +72,6 @@ class QueryTest:
 				print(prop)
 			print("")
 
+		print(len(result))
 		
 test = QueryTest()
