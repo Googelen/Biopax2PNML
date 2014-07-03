@@ -27,6 +27,22 @@ class QueryTest:
 				OPTIONAL { ?conversion bp:conversionDirection ?direction }
 			}
 		"""
+		#I also made a query for the other part
+		#or did you want to merge these 2?
+		query = """ 
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT  ?class ?control ?controller ?controlled ?direction
+			WHERE {
+				?class rdfs:subClassOf+ bp:Control.
+				?control a ?class.
+				{
+					?control bp:controller ?controller .
+					?control bp:controlled ?controlled
+				} 
+				OPTIONAL { ?control bp:catalysisDirection ?direction }
+			}
+
+		"""
 
 		result = self.graph.query(query)
 
