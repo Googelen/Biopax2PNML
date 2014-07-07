@@ -5,38 +5,45 @@ class PetriNet:
 		self.transitions = {}
 		self.arcs = set()
 
-	def newPlace(self, place):
-		""" Add new place to places in this petri net. Return unique place for place.id
+	def create_place(self, uid, description=''):
+		"""Get place with ID from this petri net. Create new place if non existent.
 
-		If place with same id already exists, then input place is not added and
-		previously existing place is returned.
+		Description is not updated if place already exists.
 
 		:rtype : Place
-		:param place: Place to be added to petri net.
-		:return: Place with same id as input place.
+		:param uid: ID of place to be returned.
+		:return: Place with ID uid.
 		"""
-		if place not in self.places:
-			self.places[place.id] = place
+		if uid not in self.places:
+			self.places[uid] = Place(uid, description)
 
-		return self.places[place.id]
+		return self.places[uid]
 
-	def newTransition(self, transition):
-		""" Add new transition to this petri net. Return unique transition for transition.id
+	def create_transition(self, uid):
+		""" Get transition with ID uid from this petri net. Create new transition if non existent.
 
-		If transition with same id already exists, then input transition is not added and
-		previously existing transition is returned.
 
 		:rtype : Transition
-		:param transition: Transition to be added to petri net.
-		:return: Transition with same id as input place.
+		:param uid: ID of transition to be returned.
+		:return: Transition with ID uid.
 		"""
-		if transition not in self.transitions:
-			self.transitions[transition.id] = transition
+		if uid not in self.transitions:
+			self.transitions[uid] = Transition(uid)
 
-		return self.transitions[transition.id]
+		return self.transitions[uid]
 
-	def newArc(self, arc):
+	def create_arc(self, source, target):
+		"""Create and get arc from source to target.
+
+		:rtype : Arc
+		:param source: Starting node of this arc.
+		:param target: Ending node of this arc.
+		:return: Arc from source to target
+		"""
+		arc = Arc(source, target)
 		self.arcs.add(arc)
+
+		return arc
 
 
 class Node:
@@ -55,7 +62,7 @@ class Node:
 
 class Place(Node):
 	def __init__(self, uid, description):
-		Node.__init__(self, uid.rsplit('/', 1)[1])  # split should be executed before calling constructor.
+		Node.__init__(self, uid)
 		self.description = description
 
 
@@ -67,4 +74,4 @@ class Arc:
 
 class Transition(Node):
 	def __init__(self, uid):
-		Node.__init__(self, uid.rsplit('/', 1)[1])  # split should be executed before calling constructor.
+		Node.__init__(self, uid)
