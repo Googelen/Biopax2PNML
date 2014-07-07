@@ -1,15 +1,39 @@
 class PetriNet:
 	def __init__(self, description):
-		self.description = description;
-		self.places = set()
-		self.transitions = set()
+		self.description = description
+		self.places = {}
+		self.transitions = {}
 		self.arcs = set()
 
 	def newPlace(self, place):
-		self.places.add(place)
+		""" Add new place to places in this petri net. Return unique place for place.id
+
+		If place with same id already exists, then input place is not added and
+		previously existing place is returned.
+
+		:rtype : Place
+		:param place: Place to be added to petri net.
+		:return: Place with same id as input place.
+		"""
+		if place not in self.places:
+			self.places[place.id] = place
+
+		return self.places[place.id]
 
 	def newTransition(self, transition):
-		self.transitions.add(transition)
+		""" Add new transition to this petri net. Return unique transition for transition.id
+
+		If transition with same id already exists, then input transition is not added and
+		previously existing transition is returned.
+
+		:rtype : Transition
+		:param transition: Transition to be added to petri net.
+		:return: Transition with same id as input place.
+		"""
+		if transition not in self.transitions:
+			self.transitions[transition.id] = transition
+
+		return self.transitions[transition.id]
 
 	def newArc(self, arc):
 		self.arcs.add(arc)
