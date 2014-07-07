@@ -1,4 +1,5 @@
 import rdflib
+from rdflib.resource import Resource
 
 
 class QueryTest:
@@ -8,42 +9,38 @@ class QueryTest:
 		self.graph.parse("../../WP78_70014.owl")
 		self.graph.parse("http://www.biopax.org/release/biopax-level3.owl", format='application/rdf+xml')
 		self.test_query()
-		return
+
 
 	def test_query(self):
 		conversion_query = """
 			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-			SELECT  ?class ?interaction ?hasParticipant ?participant ?displayName ?direction
+			SELECT ?interaction ?relation ?participant ?participantName ?direction
 			WHERE {
-				?class rdfs:subClassOf+ bp:Conversion.
-				?hasParticipant rdfs:subPropertyOf bp:participant.
+				?conversionClass rdfs:subClassOf+ bp:Conversion.
+				?participantRelation rdfs:subPropertyOf bp:participant.
 
 				?interaction
-					a ?class;
-					?hasParticipant ?participant.
+					a ?conversionClass;
+					?relation ?participant.
 
-				OPTIONAL {
-					?child bp:displayName ?childName.
-					?interaction bp:conversionDirection ?direction.
-				}
+				OPTIONAL { ?participant bp:displayName ?participantName }
+				OPTIONAL { ?interaction bp:conversionDirection ?direction }
 			}
 		"""
 		control_query = """
 			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-			SELECT  ?class ?interaction ?hasParticipant ?participant ?displayName ?direction ?controlType
+			SELECT ?interaction ?relation ?participant ?participantName ?direction ?controlType
 			WHERE {
-				?class rdfs:subClassOf+ bp:Control.
-				?hasParticipant rdfs:subPropertyOf bp:participant.
+				?controlClass rdfs:subClassOf+ bp:Control.
+				?relation rdfs:subPropertyOf bp:participant.
 
 				?interaction
-					a ?class;
-					?hasParticipant ?participant.
+					a ?controlClass;
+					?relation ?participant.
 
-				OPTIONAL {
-					?child bp:displayName ?childName.
-					?interaction bp:catalysisdirection ?direction.
-					?interaction bp:controlType ?controlType.
-				}
+				OPTIONAL { ?participant bp:displayName ?participantName }
+				OPTIONAL { ?interaction bp:catalysisDirection ?direction }
+				OPTIONAL { ?interaction bp:controlType ?controlType }
 			}
 		"""
 
@@ -53,9 +50,11 @@ class QueryTest:
 
 		for x in result:
 			for prop in x:
-				print(prop)
+				print(Resource(self.graph, prop))
 			print("")
 
 		print(len(result))
+
+		return result
 		
 test = QueryTest()
