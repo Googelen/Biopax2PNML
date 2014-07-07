@@ -1,58 +1,116 @@
 import rdflib
+from rdflib.namespace import Namespace, split_uri, XSD
+from rdflib.term import Literal
 from models import *
-from rdflib import plugin
-#rdflib.plugin.register('sparql', rdflib.query.Processor, 'rdfextras.sparql.processor', 'Processor')
-#rdflib.plugin.register('sparql', rdflib.query.Result, 'rdfextras.sparql.query', 'SPARQLQueryResult')
+
+
+BP = Namespace('http://www.biopax.org/release/biopax-level3.owl')
+RTL = Literal('RIGHT-TO-LEFT', datatype=XSD.string)
+LTR = Literal('LEFT-TO-RIGHT', datatype=XSD.string)
+REVERSIBLE = Literal('REVERSIBLE', datatype=XSD.string)
+
 
 class Reader:
 	def __init__(self):
 		self.net = PetriNet('')
-		return
-		#self.net = PetriNet()
+
 	def read(self, inputfile):
 		graph = rdflib.Graph()
-		result = graph.parse(inputfile)
+		graph.parse(inputfile)
+		# Maybe rather parse a local copy of biopax-level3.owl for performance reason and since the file doesn't
+		# change anyway?
+		graph.parse(BP, format='application/rdf+xml')
+		#graph.parse('biopax-level3.owl')
 
-
-		query = """
-			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-			SELECT  ?left ?displayNameLeft ?right ?displayNameRight
-			WHERE {
-			    ?BiochemicalReaction bp:left ?left . 
-			    ?BiochemicalReaction bp:right ?right .
-			    ?left bp:displayName ?displayNameLeft . 
-			    ?right bp:displayName ?displayNameRight
-			}
-		"""
-
-		for x in graph.query(query):
-			self.processQuery(x.left, x.displayNameLeft, x.right, x.displayNameRight)
-			#print("left: %s right: %s" % x)
-
-		self.readCatalysis(inputfile)
+		self.add_conversions(graph)
+		self.add_controls(graph)
 
 		return self.net
 
-		#print("graph has %s statements." % len(graph))
-		#namespaces = {'bp': 'http://www.biopax.org/release/biopax-level3.owl'}
-		#print(self.root.nsmap)
-		#description = self.root.findall('bp:BiochemicalReaction',namespaces=self.root.nsmap)
-		#print(description)
-	def readCatalysis(self, inputfile):
-		graph = rdflib.Graph()
-		result = graph.parse(inputfile)
-		query = """
-			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-			SELECT  ?controller ?displayNameController ?controlled  ?leftPlaceControlled ?rightPlaceControlled
-			WHERE {
-			    ?Catalysis bp:controller ?controller . 
-			    ?Catalysis bp:controlled ?controlled .
-			    ?controller bp:displayName ?displayNameController .
-			    ?controlled bp:left ?leftPlaceControlled.
-			    ?controlled bp:left ?rightPlaceControlled
+	def add_conversions(self, graph):
 
+		conversion_query = """
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT ?conversionClass ?interaction ?relation ?participant ?participantName ?direction
+			WHERE {
+				?conversionClass rdfs:subClassOf+ bp:Conversion.
+				?participantRelation rdfs:subPropertyOf bp:participant.
+
+				?interaction
+					a ?conversionClass;
+					?relation ?participant.
+
+				OPTIONAL { ?participant bp:displayName ?participantName }
+				OPTIONAL { ?interaction bp:conversionDirection ?direction }
 			}
 		"""
+
+		for conversion in graph.query(conversion_query):
+			self.add_conversion(conversion)
+
+	def add_conversion(self, conv):
+
+		transition = self.net.create_transition(split_uri(conv.interaction)[1])
+		place = self.net.create_place(split_uri(conv.participant)[1], conv.participantName)
+
+		if conv.direction is REVERSIBLE:  # TODO: Is this intended behaviour?
+			self.net.create_arc(transition, place)
+			self.net.create_arc(place, transition)
+
+		elif (conv.relation is BP.right and conv.direction is RTL) \
+				or (conv.relation is BP.left and (conv.direction is LTR or not conv.direction)):
+			self.net.create_arc(place, transition)
+
+		else:  # TODO: Is this intended behaviour for _all_ other cases (i.e. if participant is neither left nor right)?
+			self.net.create_arc(transition, place)
+
+	def add_controls(self, graph):
+
+		control_query = """
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT ?controlClass ?interaction ?relation ?participant ?participantName ?direction ?controlType
+			WHERE {
+				?controlClass rdfs:subClassOf+ bp:Control.
+				?relation rdfs:subPropertyOf bp:participant.
+
+				?interaction
+					a ?controlClass;
+					?relation ?participant.
+
+				OPTIONAL { ?participant bp:displayName ?participantName }
+				OPTIONAL { ?interaction bp:catalysisDirection ?direction }
+				OPTIONAL { ?interaction bp:controlType ?controlType }
+			}
+		"""
+
+		for control in graph.query(control_query):
+			self.add_control(control)
+
+	def add_control(self, control):
+		"""Not implemented
+
+		How is a control interaction implemented in a petri net?
+		controllers are places. controlled are transitions (e.g. a BiochemicalReaction).
+		That works for exactly one controller: We can connect controller and controlled directly.
+		But what happens if there is more than one controller? What happens if there are other
+		participants (such as cofactor)?
+
+		Connecting all controllers directly with the controlled is not an option since
+		 > Multiple controllers are all required for the control to occur (AND relationship).
+		 > OR relationships are defined using multiple control interaction instances.
+		 > (BioPAX Level 3, Release Version 1 Documentation, 2010)
+
+		Therefore an intermediate transition has to be added. However petri nets are bipartite
+		and transitions must not be adjacent to transitions. Therefore another intermediate node
+		has to be added: A place between the Control transition and the controlled transition.
+
+		TODO: Is that the correct implementation?
+		"""
+		return NotImplemented
+
+
+	def old(self, graph, query):
+
 		tempPlaces = []
 		tempArcs = []
 		for x in graph.query(query):
@@ -93,22 +151,11 @@ class Reader:
 					return transition
 
 
-	def processQuery(self, left,nameLeft, right,nameRight):
-		placeLeft = Place(left, nameLeft)
-		placeRight = Place(right, nameRight)
-		transition = Transition()
-		arcleft = Arc(placeLeft, transition)
-		arcRight = Arc(transition, placeRight)
-
-		self.net.newPlace(placeLeft)
-		self.net.newPlace(placeRight)
-		self.net.newTransition(transition)
-		self.net.newArc(arcleft)
-		self.net.newArc(arcRight)
-
 	def readPlaces(self):
 		return self.net.places
+
 	def readTransitions(self):
 		return self.net.transitions
+
 	def readArcs(self):
 		return self.net.arcs
