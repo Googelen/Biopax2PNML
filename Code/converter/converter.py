@@ -1,8 +1,5 @@
-import rdflib
 from rdflib.namespace import Namespace, split_uri, XSD
 from rdflib.term import Literal
-from models import *
-
 
 BP = Namespace('http://www.biopax.org/release/biopax-level3.owl')
 RTL = Literal('RIGHT-TO-LEFT', datatype=XSD.string)
@@ -12,10 +9,11 @@ REVERSIBLE = Literal('REVERSIBLE', datatype=XSD.string)
 
 class BiopaxConverter(object):
 	def __init__(self, graph, petri_net):
-		"""
+		"""Converter class. All conversions from BioPAX to a Petri Net must use this
+		as a superclass.
 
-		:param graph: rdflib.Graph
-		:param petri_net: PetriNet
+		:param graph: rdflib.Graph the parsed BioPAX file.
+		:param petri_net: PetriNet the Petri Net to add nodes and arcs to.
 		"""
 		self.graph = graph
 		self.net = petri_net
@@ -24,7 +22,6 @@ class BiopaxConverter(object):
 		"""Convert class from BioPAX to a Petri Net.
 
 		Add transitions, places, and arcs to petri_net.
-		:rtype : PetriNet
 		"""
 		raise NotImplementedError
 
@@ -57,8 +54,6 @@ class ConversionConverter(BiopaxConverter):
 	def convert(self):
 		for conversion in self.graph.query(self.query):
 			self.add_conversion(conversion)
-
-		return self.net
 
 	def add_conversion(self, conv):
 
@@ -106,7 +101,6 @@ class ControlConverter(BiopaxConverter):
 	def convert(self):
 		for control in self.graph.query(self.query):
 			self.add_control(control)
-		return self.net
 
 	def add_control(self, control):
 		"""Not implemented
