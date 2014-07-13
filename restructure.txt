@@ -42,7 +42,7 @@ suggested file structure:
 
 
 # Second suggestion for a new structure
-
+#Luc: this looks more like a program, so I suppose this is better
 	root
 	|
 	\
@@ -81,7 +81,7 @@ suggested file structure:
 		 validator.py
 		|
 		\
-		 structural.py
+		 structural.py #Luc: this is a duplicate
 	|
 	\
 	 export
