@@ -1,6 +1,7 @@
 # I added some comments
 # (1) In principle all filenames and directory names should be lowercase and not include any spaces.
 # (2) As you already correctly suggest: This repo should only be about the code. All other stuff should be removed.folder of original.py files (the program itself?)?
+# (3) I added another suggestion for restructuring
 
 suggested file structure:
 	root
@@ -38,3 +39,56 @@ suggested file structure:
 	   |
 	   \
 	    paper (move files up or have in this folder?)
+
+
+# Second suggestion for a new structure
+
+	root
+	|
+	\
+	 main.py # (formerly biopax2pnml.py)
+	|
+	\
+	 model
+		|
+		\
+		 petrinet.py
+		|
+		\
+		 # (maybe additional model classes)
+	|
+	\
+	 converter
+		|
+		\
+		 biopax.py # (maybe rename it?)
+		|
+		\
+		 converters.py
+		|
+		\
+		 # (mayby additional converter classes)
+	|
+	\
+	 properties # (maybe rename it)
+		# Maybe we should rethink the structure of the classes in this
+		# module to avoid duplication of functionality.
+		|
+		\
+		 classifier.py
+		|
+		\
+		 validator.py
+		|
+		\
+		 structural.py
+	|
+	\
+	 export
+		|
+		\
+		 pnml.py
+	|
+	\
+	 test
+		# Mirror structure of root directory and write tests for every file.
