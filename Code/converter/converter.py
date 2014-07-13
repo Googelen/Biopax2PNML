@@ -23,7 +23,7 @@ class BiopaxConverter(object):
 
 		Add transitions, places, and arcs to petri_net.
 		"""
-		raise NotImplementedError
+		return self.net
 
 
 class ConversionConverter(BiopaxConverter):
@@ -33,7 +33,7 @@ class ConversionConverter(BiopaxConverter):
 		:param graph: rdflib.Graph
 		:param petri_net: PetriNet
 		"""
-		BiopaxConverter.__init__(graph, petri_net)
+		BiopaxConverter.__init__(self, graph, petri_net)
 
 	query = """
 		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
@@ -79,7 +79,7 @@ class ControlConverter(BiopaxConverter):
 		:param graph: rdflib.Graph
 		:param petri_net: PetriNet
 		"""
-		BiopaxConverter.__init__(graph, petri_net)
+		BiopaxConverter.__init__(self, graph, petri_net)
 
 	query = """
 		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
@@ -122,4 +122,4 @@ class ControlConverter(BiopaxConverter):
 
 		TODO: Is that the correct implementation?
 		"""
-		return NotImplemented
+		return NotImplementedError

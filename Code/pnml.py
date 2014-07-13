@@ -25,11 +25,11 @@ class Writer:
 		self.writeName(placeElement, place.description)
 
 	def writeTransition(self, parent, transition):
-		uid = self.uniqueId('t')
+		if not transition.id:
+			transition.id = self.uniqueId('t')
 		transitionElement = ET.SubElement(parent, 'transition', {
-			'id': uid
+			'id': transition.id
 			})
-		transition.id = uid;
 
 	def writeArc(self, parent, arc):
 		uid = self.uniqueId('a')
@@ -58,10 +58,10 @@ class Writer:
 		self.writeName(page, self.net.description)
 
 		for place in self.net.places:
-			self.writePlace(page, place)
+			self.writePlace(page, self.net.places[place])
 
 		for transition in self.net.transitions:
-			self.writeTransition(page, transition)
+			self.writeTransition(page, self.net.transitions[transition])
 
 		for arc in self.net.arcs:
 			self.writeArc(page, arc)
