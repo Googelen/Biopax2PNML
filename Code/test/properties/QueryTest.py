@@ -44,7 +44,15 @@ class QueryTest:
 			}
 		"""
 
-		result = self.graph.query(control_query)
+		query = """
+			PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+			SELECT ?property
+			WHERE {
+				?property rdfs:subPropertyOf bp:participant.
+			}
+		"""
+
+		result = self.graph.query(query)
 
 		print(len(result))
 

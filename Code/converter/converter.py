@@ -40,23 +40,14 @@ class ConversionConverter(BiopaxConverter):
 		SELECT ?conversionClass ?interaction ?relation ?participant ?participantName ?direction
 		WHERE {
 			?conversionClass rdfs:subClassOf+ bp:Conversion.
-			?participantRelation rdfs:subPropertyOf bp:participant.
+			?relation rdfs:subPropertyOf bp:participant.
 
 			?interaction
 				a ?conversionClass;
 				?relation ?participant.
 
-			FILTER( !regex( str(?relation), str(bp:comment)) &&
-			!regex( str(?relation) ,  str(bp:xref)) &&
-			!regex(str(?relation ), str( bp:eCNumber) )&&
-			!regex(str(?relation ), str( bp:displayName) )&&
-			!regex(str(?relation ),  str(bp:conversionDirection ))) .
-			
 			OPTIONAL { ?participant bp:displayName ?participantName }
-			OPTIONAL { ?interaction bp:conversionDirection ?direction } 
-
-			
-			
+			OPTIONAL { ?interaction bp:conversionDirection ?direction }
 		}
 	"""
 
