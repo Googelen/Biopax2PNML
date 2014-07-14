@@ -46,8 +46,17 @@ class ConversionConverter(BiopaxConverter):
 				a ?conversionClass;
 				?relation ?participant.
 
+			FILTER( !regex( str(?relation), str(bp:comment)) &&
+			!regex( str(?relation) ,  str(bp:xref)) &&
+			!regex(str(?relation ), str( bp:eCNumber) )&&
+			!regex(str(?relation ), str( bp:displayName) )&&
+			!regex(str(?relation ),  str(bp:conversionDirection ))) .
+			
 			OPTIONAL { ?participant bp:displayName ?participantName }
-			OPTIONAL { ?interaction bp:conversionDirection ?direction }
+			OPTIONAL { ?interaction bp:conversionDirection ?direction } 
+
+			
+			
 		}
 	"""
 
