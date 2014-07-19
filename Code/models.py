@@ -19,18 +19,19 @@ class PetriNet:
 
 		return self.places[uid]
 
-	def create_transition(self, uid):
+	def create_transition(self, uid, direction=Direction.unknown):
 		""" Get transition with ID uid from this petri net. Create new transition if non existent.
-
 
 		:rtype : Transition
 		:param uid: ID of transition to be returned.
+		:param direction: Either Direction.left_to_right, Direction.right_to_left, or Direction.unknown.
+		Defaults to Direction.unknown.
 		:return: Transition with ID uid.
 		"""
-		if uid not in self.transitions:
-			self.transitions[uid] = Transition(uid)
+		if (uid, direction) not in self.transitions:
+			self.transitions[(uid, direction)] = Transition(uid, direction)
 
-		return self.transitions[uid]
+		return self.transitions[(uid, direction)]
 
 	def create_arc(self, source, target):
 		"""Create and get arc from source to target.
@@ -64,6 +65,7 @@ class Place(Node):
 	def __init__(self, uid, description):
 		Node.__init__(self, uid)
 		self.description = description
+		# activated? Cellular location? Maybe put all in the description?
 
 
 class Arc:
@@ -73,5 +75,13 @@ class Arc:
 
 
 class Transition(Node):
-	def __init__(self, uid):
+	def __init__(self, uid, direction=Direction.unknown):
 		Node.__init__(self, uid)
+		self.direction = direction
+
+
+class Direction:
+	unknown = 0
+	left_to_right = 1
+	right_to_left = 2
+	reversible = 3

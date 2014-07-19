@@ -24,10 +24,9 @@ class Reader:
 		return self.net
 
 	def convert(self, graph):
-		for Converter in BiopaxConverter.__subclasses__():
+		for Converter in sorted(BiopaxConverter.__subclasses__(), key=lambda t: t.order):
 			c = Converter(graph, self.net)
 			c.convert()
-
 
 	def readPlaces(self):
 		return self.net.places

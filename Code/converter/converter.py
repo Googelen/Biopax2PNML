@@ -1,5 +1,6 @@
 from rdflib.namespace import Namespace, split_uri, XSD
 from rdflib.term import Literal
+from models import Direction
 
 BP = Namespace('http://www.biopax.org/release/biopax-level3.owl')
 RTL = Literal('RIGHT-TO-LEFT', datatype=XSD.string)
@@ -8,6 +9,10 @@ REVERSIBLE = Literal('REVERSIBLE', datatype=XSD.string)
 
 
 class BiopaxConverter(object):
+
+	# Order in which subclasses of BiopaxConverter get executed when converting.
+	order = -1
+
 	def __init__(self, graph, petri_net):
 		"""Converter class. All conversions from BioPAX to a Petri Net must use this
 		as a superclass.
@@ -27,6 +32,9 @@ class BiopaxConverter(object):
 
 
 class ConversionConverter(BiopaxConverter):
+
+	order = 20
+
 	def __init__(self, graph, petri_net):
 		"""Converts members of class Conversion from BioPAX to a Petri Net.
 
@@ -37,7 +45,7 @@ class ConversionConverter(BiopaxConverter):
 
 	query = """
 		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-		SELECT ?conversionClass ?interaction ?relation ?participant ?participantName ?direction
+		SELECT *
 		WHERE {
 			?conversionClass rdfs:subClassOf+ bp:Conversion.
 			?relation rdfs:subPropertyOf bp:participant.
@@ -47,7 +55,9 @@ class ConversionConverter(BiopaxConverter):
 				?relation ?participant.
 
 			OPTIONAL { ?participant bp:displayName ?participantName }
+			OPTIONAL { ?participant bp:cellularLocation ?participantLocation }
 			OPTIONAL { ?interaction bp:conversionDirection ?direction }
+			OPTIONAL { ?interaction bp:spontaneous ?spontaneous }
 		}
 	"""
 
@@ -57,22 +67,57 @@ class ConversionConverter(BiopaxConverter):
 
 	def add_conversion(self, conv):
 
-		transition = self.net.create_transition(split_uri(conv.interaction)[1])
-		place = self.net.create_place(split_uri(conv.participant)[1], conv.participantName)
+		transitions = self.create_transitions(conv)
 
-		if conv.direction is REVERSIBLE:  # TODO: Is this intended behaviour?
-			self.net.create_arc(transition, place)
+		location = ' (' + conv.participantLocation + ') ' if conv.participantLocation else ''
+		place = self.net.create_place(split_uri(conv.participant)[1], conv.participantName + location)
+
+		for transition in transitions:
+			self.connect(transitions, place, conv.relation)
+
+	def connect(self, transition, place, relation):
+		# Default direction for Direction.unknown is left to right.
+		if (transition.direction is Direction.right_to_left and relation is BP.right) or \
+				(transition.direction is not Direction.right_to_left and relation is BP.left):
 			self.net.create_arc(place, transition)
-
-		elif (conv.relation is BP.right and conv.direction is RTL) \
-				or (conv.relation is BP.left and (conv.direction is LTR or not conv.direction)):
-			self.net.create_arc(place, transition)
-
-		else:  # TODO: Is this intended behaviour for _all_ other cases (i.e. if participant is neither left nor right)?
+		else:
 			self.net.create_arc(transition, place)
+
+	def create_transitions(self, conv):
+		direction = self.get_direction(conv.spontaneous, conv.direction)
+		uid = split_uri(conv.interaction)[1]
+
+		if direction is Direction.reversible:
+			return [self.net.create_transition(uid, Direction.left_to_right),
+					self.net.create_transition(uid, Direction.right_to_left)]
+
+		return [self.net.create_transition(uid, direction)]
+
+	def get_direction(self, spontaneous_property, direction_property):
+		direction = Direction.unknown
+
+		if direction_property and direction_property is RTL:
+			direction = Direction.right_to_left
+
+		if direction_property and direction_property is LTR:
+			direction = Direction.left_to_right
+
+		if direction_property and direction_property is REVERSIBLE:
+			direction = Direction.reversible
+
+		# Spontaneous property overwrites direction property.
+		if spontaneous_property and spontaneous_property is RTL:
+			direction = Direction.right_to_left
+
+		if spontaneous_property and spontaneous_property is LTR:
+			direction = Direction.left_to_right
+
+		return direction
 
 
 class ControlConverter(BiopaxConverter):
+
+	order = 10
 	def __init__(self, graph, petri_net):
 		"""Converts members of class Control from BioPAX to a Petri Net.
 
