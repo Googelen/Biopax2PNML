@@ -23,7 +23,7 @@ class BiopaxConverter(object):
 
 		Add transitions, places, and arcs to petri_net.
 		"""
-		return self.net
+		raise NotImplementedError
 
 
 class ConversionConverter(BiopaxConverter):
