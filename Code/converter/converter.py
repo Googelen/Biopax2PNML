@@ -252,6 +252,7 @@ class ActivatingControlConverter(BiopaxConverter):
 			self.net.create_arc(place, transition)
 
 	def get_transitions(self, control):
+		# TODO: This should also duplicate this transition so that each control has its own transition(s). For that (uid, direction, control) should probably the index for the transitions dict.
 		direction = self.get_direction(control)
 		uid = split_uri(control.interaction)[1]
 
@@ -259,12 +260,14 @@ class ActivatingControlConverter(BiopaxConverter):
 
 		if direction is Direction.left_to_right or direction is Direction.reversible:
 			transitions.append(self.get_transition_with_correct_direction(uid, Direction.left_to_right))
+			# TODO: For left_to_right, this should also turn around an existing right_to_left transition.
 
 		if direction is Direction.reversible:
 			transitions.append(self.net.create_transition(uid, Direction.right_to_left))
 
 		if direction is Direction.left_to_right:
 			transitions.append(self.get_transition_with_correct_direction(uid, Direction.right_to_left))
+			# TODO: This should also turn around an existing left_to_right transition!!!
 
 		return transitions
 
@@ -295,5 +298,7 @@ class ActivatingControlConverter(BiopaxConverter):
 
 		self.transitions.pop((uid, old_direction))
 		self.transitions[(uid, new_direction)] = transition
+
+		# TODO: This should also change the arcs.
 
 		return transition
