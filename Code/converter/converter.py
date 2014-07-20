@@ -171,11 +171,8 @@ class ActivatingControlConverter(BiopaxConverter):
 			self.connect(transition, place)
 
 	def connect(self, transition, place):
-		# Default direction for Direction.unknown is left to right.
-		if transition.direction is Direction.right_to_left:
-			self.net.create_arc(transition, place)
-		else:
-			self.net.create_arc(place, transition)
+		self.net.create_arc(transition, place)
+		self.net.create_arc(place, transition)
 
 	def get_transitions(self, control):
 		direction = self.get_direction(control)
