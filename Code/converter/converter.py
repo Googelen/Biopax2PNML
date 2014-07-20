@@ -151,7 +151,9 @@ class ActivatingControlConverter(BiopaxConverter):
 		WHERE {
 			?controlClass rdfs:subClassOf+ bp:Control.
 
-			{ ?relation a bp:controller } UNION { ?relation a bp:cofactor }
+			{ ?relation rdfs:subClassOf* bp:controller }
+			UNION
+			{ ?relation rdfs:subClassOf* bp:cofactor }
 
 			?interaction
 				a ?controlClass;
