@@ -335,7 +335,7 @@ class InhibitionIrreversible(BiopaxConverter):
 		direction = self.get_direction(control)
 		transitions = []
 		transitions.append(self.net.create_transition(split_uri(control.controlled)[1],direction,split_uri(control.interaction)[1]))
-		transitions.append(self.net.create_transition(split_uri(control.controlled)[1],reverse(direction),split_uri(control.interaction)[1]))
+		transitions.append(self.net.create_transition(split_uri(control.controlled)[1],Direction.reverse(direction),split_uri(control.interaction)[1]))
 		transitions.append(self.net.create_transition(split_uri(control.participant)[1],Direction.left_to_right, split_uri(control.participant)[1]+"_IRREVERSIBLE",))
 
 		return transitions
@@ -357,3 +357,10 @@ class InhibitionIrreversible(BiopaxConverter):
 		self.net.create_arc(place, transition)
 
 class NonUnCompetitiveOther(BiopaxConverter):
+	def __init__(self, graph, petri_net):
+		"""Not implemented
+
+		:param graph: rdflib.Graph
+		:param petri_net: PetriNet
+		"""
+		BiopaxConverter.__init__(self, graph, petri_net)
