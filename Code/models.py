@@ -1,9 +1,28 @@
+class Direction:
+	unknown = 0
+	left_to_right = 1
+	right_to_left = 2
+	reversible = 3
+
+	@staticmethod
+	def reverse(direction):
+		if direction is Direction.right_to_left:
+			return Direction.left_to_right
+		elif direction is Direction.reversible:
+			return direction
+		else:
+			# Structure wise unknown is treated like left_to_right
+			return Direction.right_to_left
+
+
 class PetriNet:
 	def __init__(self, description):
 		self.description = description
 		self.places = {}
 		self.transitions = {}
 		self.arcs = set()
+		self.arcs_from_source = {}
+		self.arcs_from_target = {}
 
 	def create_place(self, uid, description=''):
 		"""Get place with ID from this petri net. Create new place if non existent.
@@ -19,19 +38,92 @@ class PetriNet:
 
 		return self.places[uid]
 
-	def create_transition(self, uid, direction=Direction.unknown):
-		""" Get transition with ID uid from this petri net. Create new transition if non existent.
+	def create_transition(self, uid, direction=Direction.unknown, control_id=None):
+		""" Get transition with given attributes from this petri net. Create new transition if non existent.
+
+		Update any existing transition with same ID and without control_id. This possibly changes direction of
+		a transition since Catalysis direction overwrites Conversion direction.
 
 		:rtype : Transition
 		:param uid: ID of transition to be returned.
 		:param direction: Either Direction.left_to_right, Direction.right_to_left, or Direction.unknown.
 		Defaults to Direction.unknown.
-		:return: Transition with ID uid.
+		:param control_id: ID of control which this transition is part of. Defaults to None.
+		:return: Transition with uid, direction and control_id.
 		"""
-		if (uid, direction) not in self.transitions:
-			self.transitions[(uid, direction)] = Transition(uid, direction)
+		if (uid, Direction.unknown, None) in self.transitions:
+			# If there is transition with same ID and no information about direction and control, use that.
+			self.change_transition(uid, Direction.unknown, direction, control_id)
 
-		return self.transitions[(uid, direction)]
+		elif (uid, direction, None) in self.transitions:
+			# If there is transition with same ID and direction but unknown control, use that.
+			self.change_transition(uid, direction, direction, control_id)
+
+		elif (uid, Direction.reverse(direction), None) in self.transitions:
+			# If there is transition with same ID and reverse direction, but unknown control, use that.
+			self.change_transition(uid, Direction.reverse(direction), direction, control_id)
+
+		if (uid, direction, control_id) not in self.transitions:
+			# If there still doesn't exist a transition with same attributes, create a new one.
+			self.transitions[(uid, direction, control_id)] = Transition(uid, direction, control_id)
+
+		return self.transitions[(uid, direction, control_id)]
+
+	def change_transition(self, uid, old_direction, new_direction, control_id):
+		"""Update transition from old to new values. Change direction of connected arcs if necessary.
+
+		:rtype : Transition
+		:param uid: ID of transition to be changed.
+		:param old_direction: Direction of existing transition.
+		:param new_direction: Direction to which transition should be updated.
+		:param control_id: ID of control structure which transitions gets added to.
+		:return: Updated transition.
+		"""
+		transition = self.transitions.pop((uid, old_direction, None))
+
+		if Direction.reverse(old_direction) is new_direction:
+			self.reverse_arcs(transition)
+
+		transition.direction = new_direction
+		transition.control = control_id
+
+		self.transitions[(uid, new_direction, control_id)] = transition
+
+		return transition
+
+	def reverse_arcs(self, transition):
+		"""Reverse all arcs directly connected to transition.
+
+		:param transition: Transition from which all arcs should be reversed.
+		"""
+		reversed_arcs_from_target = self.reverse_arcs_from_one_direction(self.arcs_from_source.get(transition))
+		reversed_arcs_from_source = self.reverse_arcs_from_one_direction(self.arcs_from_target.get(transition))
+
+		self.arcs_from_source[transition].update(reversed_arcs_from_source)
+		self.arcs_from_target[transition].update(reversed_arcs_from_target)
+
+	def reverse_arcs_from_one_direction(self, original_arcs):
+		"""Reverse all arcs in original_arcs. Remove arcs from original_arcs and from self.arcs.
+
+		:rtype : Set(Arc)
+		:param original_arcs: Either self.arcs_from_source[source] or self.arcs_from_target[target]
+		:return: Set of reversed arcs.
+		"""
+		reversed_arcs = set()
+
+		for arc in original_arcs:
+			# Remove old arc
+			self.arcs.remove(arc)
+			original_arcs.remove(arc)
+
+			# Create new arc
+			reversed_arc = Arc(arc.target, arc.source)
+
+			# Add new arc to sets
+			self.arcs.add(reversed_arc)
+			reversed_arcs.add(reversed_arc)
+
+		return reversed_arcs
 
 	def create_arc(self, source, target):
 		"""Create and get arc from source to target.
@@ -44,6 +136,14 @@ class PetriNet:
 		arc = Arc(source, target)
 		self.arcs.add(arc)
 
+		arcs = self.arcs_from_source.get(source, set())
+		arcs.add(arc)
+		self.arcs_from_source[source] = arcs
+
+		arcs = self.arcs_from_target.get(target, set())
+		arcs.add(arc)
+		self.arcs_from_target[target] = arcs
+
 		return arc
 
 
@@ -51,14 +151,17 @@ class Node:
 	def __init__(self, uid):
 		self.id = uid
 
+	def __attributes(self):
+		return self.id
+
 	def __eq__(self, other):
-		return isinstance(other, self.__class__) and (self.id == other.id)
+		return isinstance(other, self.__class__) and (self.__attributes() == other.__attributes)
 
 	def __ne__(self, other):
 		return not self.__eq__(other)
 
 	def __hash__(self):
-		return hash(self.id)
+		return hash(self.__attributes())
 
 
 class Place(Node):
@@ -75,13 +178,10 @@ class Arc:
 
 
 class Transition(Node):
-	def __init__(self, uid, direction=Direction.unknown):
+	def __init__(self, uid, direction=Direction.unknown, control=None):
 		Node.__init__(self, uid)
 		self.direction = direction
+		self.control = control
 
-
-class Direction:
-	unknown = 0
-	left_to_right = 1
-	right_to_left = 2
-	reversible = 3
+	def __attributes(self):
+		return self.id, self.direction, self.control

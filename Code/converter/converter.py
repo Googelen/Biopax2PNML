@@ -119,74 +119,6 @@ class ConversionConverter(BiopaxConverter):
 		return direction
 
 
-class ControlConverter(BiopaxConverter):
-
-	order = 10
-
-	def __init__(self, graph, petri_net):
-		"""Converts members of class Control from BioPAX to a Petri Net.
-
-		:param graph: rdflib.Graph
-		:param petri_net: PetriNet
-		"""
-		BiopaxConverter.__init__(self, graph, petri_net)
-
-	query = """
-		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
-		SELECT ?controlClass ?interaction ?relation ?participant ?participantName ?direction ?controlType
-		WHERE {
-			?controlClass rdfs:subClassOf+ bp:Control.
-			?relation rdfs:subPropertyOf bp:participant.
-
-			?interaction
-				a ?controlClass;
-				?relation ?participant.
-
-			OPTIONAL { ?participant bp:displayName ?participantName }
-			OPTIONAL { ?interaction bp:catalysisDirection ?direction }
-			OPTIONAL { ?interaction bp:controlType ?controlType }
-		}
-	"""
-
-	def convert(self):
-		for control in self.graph.query(self.query):
-			self.add_control(control)
-
-	def add_control(self, control):
-		"""Not implemented
-
-		How is a control interaction implemented in a petri net?
-		controllers are places. controlled are transitions (e.g. a BiochemicalReaction).
-		That works for exactly one controller: We can connect controller and controlled directly.
-		But what happens if there is more than one controller? What happens if there are other
-		participants (such as cofactor)?
-
-		Connecting all controllers directly with the controlled is not an option since
-		 > Multiple controllers are all required for the control to occur (AND relationship).
-		 """
-		 #Luc's comments
-		 """
-		 I thought that the AND relation ship works with multiple input places and OR relations work with multiple transitions
-		 I thought he said that in the meeting.
-		 However if a transition has 2 catalysis and they both do the same thing
-		 You need to duplicate the reaction and have a second catalysis pointed to the newly added transition
-		 Also this direction should be both ways.
-		 At least thats what I thought.
-		 """
-		 """
-		 > OR relationships are defined using multiple control interaction instances.
-		 > (BioPAX Level 3, Release Version 1 Documentation, 2010)
-
-		Therefore an intermediate transition has to be added. However petri nets are bipartite
-		and transitions must not be adjacent to transitions. Therefore another intermediate node
-		has to be added: A place between the Control transition and the controlled transition.
-
-		TODO: Is that the correct implementation?
-		I am not sure, I added a file with all the drawn out situations of the controllers
-		"""
-		return NotImplementedError
-
-
 class ActivatingControlConverter(BiopaxConverter):
 
 	order = 100
@@ -217,9 +149,6 @@ class ActivatingControlConverter(BiopaxConverter):
 			OPTIONAL { ?interaction bp:controlType ?controlType }
 		}
 	"""
-	#This query does not only select active control stuff, and also not only catalysis, or am I wrong?
-	#If this should be specific should I add ?controlClass a bp:Catalysis?
-	#Also there is no such thing as bp:controlClass, so I suppose you ment ?controlClass
 
 	def convert(self):
 		for control in self.graph.query(self.query):
@@ -233,12 +162,9 @@ class ActivatingControlConverter(BiopaxConverter):
 
 		If the direction is reversible, the transition gets duplicated.
 		"""
-		#Luc's comments
-		"""
-		A controller should be both ways right? So I suspect that the get_direction etc. may be superfluous...
-		At least, I do not see the use for it.
-		"""
+		# Create place for new controller or cofactor
 		place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
+		# Get all transitions which are instances of controlled
 		transitions = self.get_transitions(control)
 
 		for transition in transitions:
@@ -252,22 +178,19 @@ class ActivatingControlConverter(BiopaxConverter):
 			self.net.create_arc(place, transition)
 
 	def get_transitions(self, control):
-		# TODO: This should also duplicate this transition so that each control has its own transition(s). For that (uid, direction, control) should probably the index for the transitions dict.
 		direction = self.get_direction(control)
-		uid = split_uri(control.interaction)[1]
+		control_id = split_uri(control.interaction)[1]
+		conversion_id = split_uri(control.controlled)[1]
 
 		transitions = []
 
 		if direction is Direction.left_to_right or direction is Direction.reversible:
-			transitions.append(self.get_transition_with_correct_direction(uid, Direction.left_to_right))
-			# TODO: For left_to_right, this should also turn around an existing right_to_left transition.
+			t = self.net.create_transition(conversion_id, Direction.left_to_right, control_id)
+			transitions.append(t)
 
-		if direction is Direction.reversible:
-			transitions.append(self.net.create_transition(uid, Direction.right_to_left))
-
-		if direction is Direction.left_to_right:
-			transitions.append(self.get_transition_with_correct_direction(uid, Direction.right_to_left))
-			# TODO: This should also turn around an existing left_to_right transition!!!
+		if direction is Direction.right_to_left or direction is Direction.reversible:
+			t = self.net.create_transition(conversion_id, Direction.right_to_left, control_id)
+			transitions.append(t)
 
 		return transitions
 
@@ -284,21 +207,3 @@ class ActivatingControlConverter(BiopaxConverter):
 			direction = Direction.right_to_left
 
 		return direction
-
-	def get_transition_with_correct_direction(self, uid, direction):
-
-		if self.net.transitions.get((uid, Direction.unknown)):
-			return self.update_transition_direction(uid, Direction.unknown, direction)
-		else:
-			return self.net.create_transition(uid, Direction.left_to_right)
-
-	def update_transition_direction(self, uid, old_direction, new_direction):
-		transition = self.transitions[(uid, old_direction)]
-		transition.direction = new_direction
-
-		self.transitions.pop((uid, old_direction))
-		self.transitions[(uid, new_direction)] = transition
-
-		# TODO: This should also change the arcs.
-
-		return transition
