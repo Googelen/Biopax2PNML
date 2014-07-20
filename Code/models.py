@@ -81,10 +81,10 @@ class PetriNet:
 		"""
 		transition = self.transitions.pop((uid, old_direction, None))
 
-		if new_direction is not Direction.unknown:
+		if new_direction != Direction.unknown:
 			# Only update direction if new direction doesn't contain less information.
 
-			if Direction.reverse(old_direction) is new_direction:
+			if Direction.reverse(old_direction) == new_direction:
 				# Only reverse arcs if direction actually changes
 				self.reverse_arcs(transition)
 

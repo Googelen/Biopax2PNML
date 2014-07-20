@@ -2,7 +2,7 @@ from rdflib.namespace import Namespace, split_uri, XSD
 from rdflib.term import Literal
 from models import Direction
 
-BP = Namespace('http://www.biopax.org/release/biopax-level3.owl')
+BP = Namespace('http://www.biopax.org/release/biopax-level3.owl#')
 RTL = Literal('RIGHT-TO-LEFT', datatype=XSD.string)
 LTR = Literal('LEFT-TO-RIGHT', datatype=XSD.string)
 REVERSIBLE = Literal('REVERSIBLE', datatype=XSD.string)
@@ -37,13 +37,13 @@ class BiopaxConverter(object):
 	def get_direction(self, control):
 		direction = Direction.unknown
 
-		if control.direction is REVERSIBLE:
+		if REVERSIBLE == control.direction:
 			direction = Direction.reversible
 
-		if control.direction is PHYSIOL_LTR or control.direction is IRR_LTR:
+		if PHYSIOL_LTR == control.direction or IRR_LTR == control.direction:
 			direction = Direction.left_to_right
 
-		if control.direction is PHYSIOL_RTL or control.direction is IRR_RTL:
+		if PHYSIOL_RTL == control.direction or IRR_RTL == control.direction:
 			direction = Direction.right_to_left
 
 		return direction
@@ -95,39 +95,39 @@ class ConversionConverter(BiopaxConverter):
 
 	def connect(self, transition, place, relation):
 		# Default direction for Direction.unknown is left to right.
-		if (transition.direction is Direction.right_to_left and relation is BP.right) or \
-				(transition.direction is not Direction.right_to_left and relation is BP.left):
+		if (transition.direction == Direction.right_to_left and relation == BP.right) or \
+				(transition.direction != Direction.right_to_left and relation == BP.left):
 			self.net.create_arc(place, transition)
 		else:
 			self.net.create_arc(transition, place)
 
 	def create_transitions(self, conv):
-		direction = self.get_direction(conv.spontaneous, conv.direction)
+		direction = self.get_conversion_direction(conv.spontaneous, conv.direction)
 		uid = split_uri(conv.interaction)[1]
 
-		if direction is Direction.reversible:
+		if direction == Direction.reversible:
 			return [self.net.create_transition(uid, Direction.left_to_right),
 					self.net.create_transition(uid, Direction.right_to_left)]
+		else:
+			return [self.net.create_transition(uid, direction)]
 
-		return [self.net.create_transition(uid, direction)]
-
-	def get_direction(self, spontaneous_property, direction_property):
+	def get_conversion_direction(self, spontaneous_property, direction_property):
 		direction = Direction.unknown
 
-		if direction_property and direction_property is RTL:
+		if direction_property and direction_property == RTL:
 			direction = Direction.right_to_left
 
-		if direction_property and direction_property is LTR:
+		if direction_property and direction_property == LTR:
 			direction = Direction.left_to_right
 
-		if direction_property and direction_property is REVERSIBLE:
+		if direction_property and direction_property == REVERSIBLE:
 			direction = Direction.reversible
 
 		# Spontaneous property overwrites direction property.
-		if spontaneous_property and spontaneous_property is RTL:
+		if spontaneous_property and spontaneous_property == RTL:
 			direction = Direction.right_to_left
 
-		if spontaneous_property and spontaneous_property is LTR:
+		if spontaneous_property and spontaneous_property == LTR:
 			direction = Direction.left_to_right
 
 		return direction
@@ -197,11 +197,11 @@ class ActivatingControlConverter(BiopaxConverter):
 
 		transitions = []
 
-		if direction is Direction.left_to_right or direction is Direction.reversible:
+		if direction == Direction.left_to_right or direction == Direction.reversible:
 			t = self.net.create_transition(conversion_id, Direction.left_to_right, control_id)
 			transitions.append(t)
 
-		if direction is Direction.right_to_left or direction is Direction.reversible:
+		if direction == Direction.right_to_left or direction == Direction.reversible:
 			t = self.net.create_transition(conversion_id, Direction.right_to_left, control_id)
 			transitions.append(t)
 
