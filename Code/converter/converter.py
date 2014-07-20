@@ -146,7 +146,7 @@ class ActivatingControlConverter(BiopaxConverter):
 
 			OPTIONAL { ?participant bp:displayName ?participantName }
 			OPTIONAL { ?interaction bp:catalysisDirection ?direction }
-			OPTIONAL { ?interaction bp:controlType ?controlType }
+			{ ?interaction a bp:Catalysis } UNION { ?interaction bp:controlType 'ACTIVATION' }
 		}
 	"""
 
