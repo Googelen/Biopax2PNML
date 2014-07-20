@@ -66,5 +66,29 @@ class Writer:
 		for arc in self.net.arcs:
 			self.writeArc(page, arc)
 
+		indent(self.root)
 		tree = ET.ElementTree(self.root)
 		tree.write(location)
+
+
+def indent(elem, level=0):
+	"""in-place prettyprint formatter
+
+	Prettyprint from http://effbot.org/zone/element-lib.htm#prettyprint
+
+	:param elem: Element to format. Start with root element.
+	:param level: Indention level. Is recursively used to increase indention.
+	"""
+	i = "\n" + level*"  "
+	if len(elem):
+		if not elem.text or not elem.text.strip():
+			elem.text = i + "  "
+		if not elem.tail or not elem.tail.strip():
+			elem.tail = i
+		for elem in elem:
+			indent(elem, level+1)
+		if not elem.tail or not elem.tail.strip():
+			elem.tail = i
+	else:
+		if level and (not elem.tail or not elem.tail.strip()):
+			elem.tail = i
