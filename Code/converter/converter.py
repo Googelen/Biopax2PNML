@@ -205,6 +205,10 @@ class ActivatingControlConverter(BiopaxConverter):
 			t = self.net.create_transition(conversion_id, Direction.right_to_left, control_id)
 			transitions.append(t)
 
+		if not direction:
+			t = self.net.create_transition(conversion_id, Direction.unknown, control_id)
+			transitions.append(t)
+
 		return transitions
 
 class ActivationInhibitionAlossteric(BiopaxConverter):
