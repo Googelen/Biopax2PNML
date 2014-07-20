@@ -163,6 +163,17 @@ class ControlConverter(BiopaxConverter):
 
 		Connecting all controllers directly with the controlled is not an option since
 		 > Multiple controllers are all required for the control to occur (AND relationship).
+		 """
+		 #Luc's comments
+		 """
+		 I thought that the AND relation ship works with multiple input places and OR relations work with multiple transitions
+		 I thought he said that in the meeting.
+		 However if a transition has 2 catalysis and they both do the same thing
+		 You need to duplicate the reaction and have a second catalysis pointed to the newly added transition
+		 Also this direction should be both ways.
+		 At least thats what I thought.
+		 """
+		 """
 		 > OR relationships are defined using multiple control interaction instances.
 		 > (BioPAX Level 3, Release Version 1 Documentation, 2010)
 
@@ -171,6 +182,7 @@ class ControlConverter(BiopaxConverter):
 		has to be added: A place between the Control transition and the controlled transition.
 
 		TODO: Is that the correct implementation?
+		I am not sure, I added a file with all the drawn out situations of the controllers
 		"""
 		return NotImplementedError
 
@@ -196,7 +208,7 @@ class ActivatingControlConverter(BiopaxConverter):
 			{ ?relation a bp:controller } UNION { ?relation a bp:cofactor }
 
 			?interaction
-				a bp:controlClass;
+				a ?controlClass;
 				bp:controlled ?controlled;
 				?relation ?participant.
 
@@ -205,6 +217,9 @@ class ActivatingControlConverter(BiopaxConverter):
 			OPTIONAL { ?interaction bp:controlType ?controlType }
 		}
 	"""
+	#This query does not only select active control stuff, and also not only catalysis, or am I wrong?
+	#If this should be specific should I add ?controlClass a bp:Catalysis?
+	#Also there is no such thing as bp:controlClass, so I suppose you ment ?controlClass
 
 	def convert(self):
 		for control in self.graph.query(self.query):
@@ -213,10 +228,15 @@ class ActivatingControlConverter(BiopaxConverter):
 	def add_control(self, control):
 		"""Adds a controller to a controlled transition.
 
-		Catalysis can only by of activating control type. Thus the controllers and cofactors are added to input
+		Catalysis can only be of activating control type. Thus the controllers and cofactors are added to input
 		places of the transition.
 
 		If the direction is reversible, the transition gets duplicated.
+		"""
+		#Luc's comments
+		"""
+		A controller should be both ways right? So I suspect that the get_direction etc. may be superfluous...
+		At least, I do not see the use for it.
 		"""
 		place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
 		transitions = self.get_transitions(control)

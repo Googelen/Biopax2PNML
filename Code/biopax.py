@@ -11,13 +11,9 @@ class Reader:
 		self.net = PetriNet('')
 
 	def read(self, inputfile):
-		#add name of file
 		self.net.describtion = inputfile
 		graph = rdflib.Graph()
 		graph.parse(inputfile)
-		# Maybe rather parse a local copy of biopax-level3.owl for performance reason and since the file doesn't
-		# change anyway?
-		#graph.parse(location = BP, format='application/rdf+xml')
 		graph.parse('biopax-level3.owl')
 
 		self.convert(graph)
