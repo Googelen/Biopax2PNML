@@ -144,6 +144,15 @@ class PetriNet:
 
 		return reversed_arcs
 
+	def get_arcs(self, transition):
+		arcs = []
+		for arc in self.arcs:
+			if arc.source.id == transition.id:
+				arcs.append(arc)
+			if arc.target.id == transition.id:
+				arcs.append(arc)
+		return arcs
+
 	def create_arc(self, source, target):
 		"""Create and get arc from source to target.
 

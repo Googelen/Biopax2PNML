@@ -312,14 +312,13 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 			#add arcs to places
 			#get arcs from existing_transition
 			#Here it goes wrong...
-			arcs = self.net.arcs_from_source[existing_transition]
-
+			arcs = self.net.get_arcs(existing_transition)
 			#reverse direction and connect to new_transition
 			for arc in arcs:
-				if arc.source == existing_transition:
-					self.net.create_arc(arc.target, new_transition)
-				if arc.target == existing_transition:
-					self.net.create_arc(new_transition, arc.source)
+				if arc.source.id == existing_transition.id and arc.target.id != split_uri(control.controlledId)[1]:
+					self.net.create_arc(new_transition, arc.target)
+				if arc.target.id == existing_transition.id and arc.source.id != split_uri(control.controlledId)[1]:
+					self.net.create_arc(arc.source, new_transition)
 		else:
 			print("Error: More than 1 transition found")
 
@@ -332,7 +331,7 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 
 
 class InhibitionIrreversible(BiopaxConverter):
-	#order=101;
+	order=101;
 
 	def __init__(self, graph, petri_net):
 		"""Converts Modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.
@@ -423,13 +422,13 @@ class InhibitionIrreversible(BiopaxConverter):
 			#add arcs to places
 			#get arcs from existing_transition
 			#Here it goes wrong...
-			arcs = self.net.arcs_from_source[existing_transition]
+			arcs = self.net.get_arcs(existing_transition)
 
 			#reverse direction and connect to new_transition
 			for arc in arcs:
-				if arc.source == existing_transition:
+				if arc.source.id == existing_transition.id and arc.target.id != split_uri(control.controlledId)[1]:
 					self.net.create_arc(arc.target, new_transition)
-				if arc.target == existing_transition:
+				if arc.target.id == existing_transition.id and arc.source.id != split_uri(control.controlledId)[1]:
 					self.net.create_arc(new_transition, arc.source)
 		else:
 			print("Error: More than 1 transition found")
@@ -443,7 +442,7 @@ class InhibitionIrreversible(BiopaxConverter):
 
 
 class NonUnCompetitiveOther(BiopaxConverter):
-	order=103
+	#order=103
 	def __init__(self, graph, petri_net):
 		"""Not implemented
 
