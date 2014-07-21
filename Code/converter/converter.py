@@ -226,8 +226,7 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		SELECT *
 		WHERE {
 			?controlClass rdfs:subClassOf+ bp:Control.
-
-			{ ?relation a bp:controller } UNION { ?relation a bp:cofactor }
+			?relation rdfs:subClassOf* bp:controller
 
 			?interaction
 				a ?controlClass;
@@ -235,9 +234,9 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 				?relation ?participant.
 
 			OPTIONAL { ?participant bp:displayName ?participantName }
-			OPTIONAL { ?interaction bp:catalysisDirection ?direction }
-			{ ?interaction a bp:Catalysis }	UNION { ?interaction bp:controlType ?types } 
-
+			{ ?interaction a bp:Modulator }	
+			UNION 
+			{ ?interaction bp:controlType ?types }
 			VALUES (?types) { 
 			("INHIBITION")
 			("INHIBITION-ALOSSTERIC")
@@ -260,7 +259,7 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		If the direction is reversible, the transition gets duplicated.
 		"""
 		# Create place for new controller or cofactor
-		place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
+		modulator_place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
 		# Get all transitions which are instances of controlled
 		transitions = self.get_transitions(control)
 
@@ -285,8 +284,7 @@ class InhibitionIrreversible(BiopaxConverter):
 		SELECT *
 		WHERE {
 			?controlClass rdfs:subClassOf+ bp:Control.
-
-			{ ?relation a bp:controller } UNION { ?relation a bp:cofactor }
+			?relation rdfs:subClassOf* bp:controller
 
 			?interaction
 				a ?controlClass;
@@ -294,8 +292,9 @@ class InhibitionIrreversible(BiopaxConverter):
 				?relation ?participant.
 
 			OPTIONAL { ?participant bp:displayName ?participantName }
-			OPTIONAL { ?interaction bp:catalysisDirection ?direction }
-			{ ?interaction a bp:Modulator }	UNION { ?interaction bp:controlType ?types } 
+			{ ?interaction a bp:Modulator }	
+			UNION 
+			{ ?interaction bp:controlType ?types } 
 			
 			VALUES (?types) { 
 			("INHIBITION-IRREVERSIBLE")
@@ -380,7 +379,7 @@ class InhibitionIrreversible(BiopaxConverter):
 		connect_both_ways(new_transition,place[1])
 
 		#add arcs to places
-		#TODO get arcs from existing_transition
+		#get arcs from existing_transition
 		arcs = self.arcs_from_source(existing_transition)
 		#reverse direction and connect to new_transition
 		for arc in arcs:
