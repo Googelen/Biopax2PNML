@@ -8,9 +8,16 @@
  <owl:imports rdf:resource="http://www.biopax.org/release/biopax-level3.owl#" />
 </owl:Ontology>
 
+<bp:Modulation rdf:about="id210">
+ <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">INHIBITION-IRREVERSIBLE</bp:controlType>
+ <bp:controller rdf:resource="eeeee" />
+ <bp:controlled rdf:resource="id108" />
+</bp:Modulation>
+
 <bp:Catalysis rdf:about="id108">
  <bp:controller rdf:resource="e5766" />
  <bp:controlled rdf:resource="id106" />
+ <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ACTIVATION</bp:controlType>
 </bp:Catalysis>
 
 <bp:SmallMolecule rdf:about="e5766">
@@ -19,10 +26,16 @@
 </bp:SmallMolecule>
 
 <bp:BiochemicalReaction rdf:about="id106">
+ <bp:conversionDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LEFT-TO-RIGHT</bp:conversionDirection>
  <bp:right rdf:resource="b96da" />
  <bp:right rdf:resource="b5c93" />
  <bp:left rdf:resource="da75d" />
 </bp:BiochemicalReaction>
+
+<bp:SmallMolecule rdf:about="eeeee">
+ <bp:comment rdf:datatype = "xsd:string">Modulator</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">Modulator</bp:displayName>
+</bp:SmallMolecule>
 
 <bp:SmallMolecule rdf:about="b96da">
  <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 15562</bp:comment>
