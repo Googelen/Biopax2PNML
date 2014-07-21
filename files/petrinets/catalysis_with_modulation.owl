@@ -21,8 +21,8 @@
 </bp:Catalysis>
 
 <bp:SmallMolecule rdf:about="e5766">
- <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57783</bp:comment>
- <bp:displayName rdf:datatype = "xsd:string">NADPH</bp:displayName>
+ <bp:comment rdf:datatype="xsd:string">The ChEBI ID with the correct charge is: 57783</bp:comment>
+ <bp:displayName rdf:datatype="xsd:string">NADPH</bp:displayName>
 </bp:SmallMolecule>
 
 <bp:BiochemicalReaction rdf:about="id106">
@@ -33,21 +33,20 @@
 </bp:BiochemicalReaction>
 
 <bp:SmallMolecule rdf:about="eeeee">
- <bp:comment rdf:datatype = "xsd:string">Modulator</bp:comment>
- <bp:displayName rdf:datatype = "xsd:string">Modulator</bp:displayName>
+ <bp:comment rdf:datatype="xsd:string">Modulator</bp:comment>
+ <bp:displayName rdf:datatype="xsd:string">Modulator</bp:displayName>
 </bp:SmallMolecule>
 
 <bp:SmallMolecule rdf:about="b96da">
- <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 15562</bp:comment>
- <bp:displayName rdf:datatype = "xsd:string">D-threo-Isocitrate</bp:displayName>
+ <bp:comment rdf:datatype="xsd:string">The ChEBI ID with the correct charge is: 15562</bp:comment>
+ <bp:displayName rdf:datatype="xsd:string">D-threo-Isocitrate</bp:displayName>
 </bp:SmallMolecule>
 
 <bp:SmallMolecule rdf:about="b5c93">
- <bp:displayName rdf:datatype = "xsd:string">NADP</bp:displayName>
- <bp:entityReference rdf:resource="id69" />
+ <bp:displayName rdf:datatype="xsd:string">NADP</bp:displayName>
 </bp:SmallMolecule>
 
 <bp:SmallMolecule rdf:about="da75d">
- <bp:displayName rdf:datatype = "xsd:string">2-oxoglutarate</bp:displayName>
+ <bp:displayName rdf:datatype="xsd:string">2-oxoglutarate</bp:displayName>
 </bp:SmallMolecule>
 </rdf:RDF>

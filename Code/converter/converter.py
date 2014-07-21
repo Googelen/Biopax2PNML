@@ -212,6 +212,7 @@ class ActivatingControlConverter(BiopaxConverter):
 		return transitions
 
 class ActivationInhibitionAlossteric(BiopaxConverter):
+	#NOT YET FINISHED
 	def __init__(self, graph, petri_net):
 		"""
 		Converts modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.
@@ -225,24 +226,20 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
 		SELECT *
 		WHERE {
-			?controlClass rdfs:subClassOf+ bp:Control.
-			?relation rdfs:subClassOf* bp:controller
+			 ?interaction
+   				a bp:Modulator;
+   				bp:controlled ?controlled;
+ 				bp:controller ?participant;
+     			bp:controlType ?types.
 
-			?interaction
-				a ?controlClass;
-				bp:controlled ?controlled;
-				?relation ?participant.
-
-			OPTIONAL { ?participant bp:displayName ?participantName }
-			{ ?interaction a bp:Modulator }	
-			UNION 
-			{ ?interaction bp:controlType ?types }
-			VALUES (?types) { 
-			("INHIBITION")
-			("INHIBITION-ALOSSTERIC")
-			("ACTIVATION-ALOSSTERIC")
-			("ACTIVATION")
-			}
+   			OPTIONAL { ?participant bp:displayName ?participantName }
+   
+   			VALUES (?types) { 
+   				("INHIBITION")
+				("INHIBITION-ALOSSTERIC")
+				("ACTIVATION-ALOSSTERIC")
+				("ACTIVATION")
+  			}
 		}
 	"""
 
@@ -259,18 +256,19 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		If the direction is reversible, the transition gets duplicated.
 		"""
 		# Create place for new controller or cofactor
+		places = create_places(control)
 		modulator_place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
-		# Get all transitions which are instances of controlled
+		# Create all transitions which are used in the 
 		transitions = self.get_transitions(control)
 
-		for transition in transitions:
-			self.connect(transition, place)
 
 		#TODO finish this stuff
 		raise NotImplementedError
 
 
 class InhibitionIrreversible(BiopaxConverter):
+	order=101;
+
 	def __init__(self, graph, petri_net):
 		"""Converts Modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.
 
@@ -283,27 +281,23 @@ class InhibitionIrreversible(BiopaxConverter):
 		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
 		SELECT *
 		WHERE {
-			?controlClass rdfs:subClassOf+ bp:Control.
-			?relation rdfs:subClassOf* bp:controller
+			 ?interaction
+   				a bp:Modulation;
+   				bp:controlled ?controlled;
+ 				bp:controller ?participant;
+     			bp:controlType ?types.
 
-			?interaction
-				a ?controlClass;
-				bp:controlled ?controlled;
-				?relation ?participant.
-
-			OPTIONAL { ?participant bp:displayName ?participantName }
-			{ ?interaction a bp:Modulator }	
-			UNION 
-			{ ?interaction bp:controlType ?types } 
-			
-			VALUES (?types) { 
-			("INHIBITION-IRREVERSIBLE")
-			}
+   			OPTIONAL { ?participant bp:displayName ?participantName }
+   
+   			VALUES (?types) { 
+   				("INHIBITION-IRREVERSIBLE")
+  			}
 		}
 	"""
 
 	def convert(self):
 		for control in self.graph.query(self.query):
+			print("called")
 			self.add_control(control)
 
 	def add_control(self, control):
@@ -351,14 +345,9 @@ class InhibitionIrreversible(BiopaxConverter):
 		#transition from 2 catalysis places to eachother
 		transitions.append(self.net.create_transition(split_uri(control.controlled)[1],Direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE"))
 		#transition from modulator to catalysis *
-		transitions.append(self.net.create_transition(split_uri(control.participant)[1],direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE"))
+		transitions.append(self.net.create_transition(split_uri(control.participant)[1],Direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE"))
 
 		return transitions
-
-	def add_reversed_arcs(self, interaction, transition):
-		current_direction = []
-		ingoing_places = []
-		outgoing_places = []
 
 	def connect(self, transitions, places, modulator_place):
 		self.net.create_arc(places[0],transitions[0])
@@ -375,8 +364,8 @@ class InhibitionIrreversible(BiopaxConverter):
 		new_transition = self.net.create_transition(existing_transition.uid+"_"+split_uri(control.participant)[1],Direction.reverse(existing_transition.direction),existing_transition.control)
 
 		#add arcs to controller
-		connect_both_ways(existing_transition,place[0])
-		connect_both_ways(new_transition,place[1])
+		self.connect_both_ways(existing_transition,place[0])
+		self.connect_both_ways(new_transition,place[1])
 
 		#add arcs to places
 		#get arcs from existing_transition
@@ -389,6 +378,9 @@ class InhibitionIrreversible(BiopaxConverter):
 				self.net.create_arc(new_transition, arc.source)
 
 	def connect_both_ways(self, transition, place):
+		"""
+		This function creates an arc between the transition with the place and the place and the transition
+		"""
 		self.net.create_arc(transition,place)
 		self.net.create_arc(place, transition)
 
