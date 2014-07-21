@@ -353,7 +353,6 @@ class InhibitionIrreversible(BiopaxConverter):
 			new_transition = self.net.create_transition(existing_transition.id+"_"+split_uri(control.participant)[1],Direction.reverse(existing_transition.direction),existing_transition.control)
 
 			#add arcs to controller
-			self.connect_both_ways(existing_transition,places[0])
 			self.connect_both_ways(new_transition,places[1])
 
 			#add arcs to places
