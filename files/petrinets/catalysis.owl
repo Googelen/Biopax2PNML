@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+ xmlns:owl="http://www.w3.org/2002/07/owl#"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#">
+<owl:Ontology rdf:about="">
+ <owl:imports rdf:resource="http://www.biopax.org/release/biopax-level3.owl#" />
+</owl:Ontology>
+
+<bp:Catalysis rdf:about="id108">
+ <bp:controller rdf:resource="e5766" />
+ <bp:controlled rdf:resource="id106" />
+</bp:Catalysis>
+
+<bp:SmallMolecule rdf:about="e5766">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 57783</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">NADPH</bp:displayName>
+</bp:SmallMolecule>
+
+<bp:BiochemicalReaction rdf:about="id106">
+ <bp:right rdf:resource="b96da" />
+ <bp:right rdf:resource="b5c93" />
+ <bp:left rdf:resource="da75d" />
+</bp:BiochemicalReaction>
+
+<bp:SmallMolecule rdf:about="b96da">
+ <bp:comment rdf:datatype = "xsd:string">The ChEBI ID with the correct charge is: 15562</bp:comment>
+ <bp:displayName rdf:datatype = "xsd:string">D-threo-Isocitrate</bp:displayName>
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="b5c93">
+ <bp:displayName rdf:datatype = "xsd:string">NADP</bp:displayName>
+ <bp:entityReference rdf:resource="id69" />
+</bp:SmallMolecule>
+
+<bp:SmallMolecule rdf:about="da75d">
+ <bp:displayName rdf:datatype = "xsd:string">2-oxoglutarate</bp:displayName>
+</bp:SmallMolecule>
+</rdf:RDF>
