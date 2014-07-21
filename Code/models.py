@@ -38,6 +38,13 @@ class PetriNet:
 
 		return self.places[uid]
 
+	def get_transition(self, control_id):
+		transitions=[]
+		for transition in self.transitions:
+			if transition[2] == control_id:
+				transitions.append(self.transitions[transition])
+		return transitions;
+
 	def create_transition(self, uid, direction=Direction.unknown, control_id=None):
 		""" Get transition with given attributes from this petri net. Create new transition if non existent.
 

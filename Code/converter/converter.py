@@ -285,8 +285,10 @@ class InhibitionIrreversible(BiopaxConverter):
    				a bp:Modulation;
    				bp:controlled ?controlled;
  				bp:controller ?participant;
-     			bp:controlType ?types.
+     			bp:controlType ?typess.
+     			?controlled bp:controller ?controlledId .
 
+     		OPTIONAL { ?controlledId bp:displayName ?controlledName} .
    			OPTIONAL { ?participant bp:displayName ?participantName }
    
    			VALUES (?types) { 
@@ -297,7 +299,6 @@ class InhibitionIrreversible(BiopaxConverter):
 
 	def convert(self):
 		for control in self.graph.query(self.query):
-			print("called")
 			self.add_control(control)
 
 	def add_control(self, control):
@@ -309,14 +310,14 @@ class InhibitionIrreversible(BiopaxConverter):
 		If the direction is reversible, the transition gets duplicated.
 		"""
 		# Create place for new controller or cofactor
-		places = create_places(control)
+		places = self.create_places(control)
 		modulator_place = self.net.create_place(split_uri(control.participant)[1],control.participantName)
 		# Create transitions necessairy
-		transitions = self.create_transitions(control)
+		transition = self.net.create_transition(split_uri(control.controlled)[1]+"_"+split_uri(control.participant)[1],Direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE")
 
 		#Create arcs
 		self.connect_catalysis(control, places)
-		self.connect(transitions, places, modulator_place)
+		self.connect(transition, places, modulator_place)
 
 	def create_places(self, control):
 		"""
@@ -326,33 +327,19 @@ class InhibitionIrreversible(BiopaxConverter):
 		"""
 
 		places = []
-		places.append(self.net.create_place(split_uri(control.controlled)[1], ''))
-		places.append(self.net.create_place(split_uri(control.controlled)[1]+"_IRREVERSIBLE", "*"))
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]))
+
+		controlledName = control.controlledName
+		if control.controlledName is None:
+			controlledName = ""
+
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]+"_IRREVERSIBLE", controlledName + "*"))
 		return places
 
-
-	def create_transitions(self, control):
-		"""
-		Creats 2 transitions which are neccesairy for the contruction of a irreversible modulator
-		1 is created for the modulator
-		1 is created for the transition between the 2 catalysis places
-
-		:rtype: Set(Transition)
-
-		"""
-		direction = self.get_direction(control)
-		transitions = []
-		#transition from 2 catalysis places to eachother
-		transitions.append(self.net.create_transition(split_uri(control.controlled)[1],Direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE"))
-		#transition from modulator to catalysis *
-		transitions.append(self.net.create_transition(split_uri(control.participant)[1],Direction.left_to_right,split_uri(control.controlled)[1]+"_IRREVERSIBLE"))
-
-		return transitions
-
-	def connect(self, transitions, places, modulator_place):
-		self.net.create_arc(places[0],transitions[0])
-		self.net.create_arc(transitions[0],places[1])
-		self.net.create_arc(modulator_place,transitions[1])
+	def connect(self, transition, places, modulator_place):
+		self.net.create_arc(places[0],transition)
+		self.net.create_arc(transition,places[1])
+		self.net.create_arc(modulator_place,transition)
 
 	def connect_catalysis(self, control,places):
 		"""
@@ -360,22 +347,30 @@ class InhibitionIrreversible(BiopaxConverter):
 
 		"""
 		#get transitions
-		existing_transition = self.net.get_direction(split_uri(control.controlled)[1])
-		new_transition = self.net.create_transition(existing_transition.uid+"_"+split_uri(control.participant)[1],Direction.reverse(existing_transition.direction),existing_transition.control)
+		transitions = self.net.get_transition(split_uri(control.controlled)[1])
+		if len(transitions) ==1:
+			existing_transition = transitions[0]
+			new_transition = self.net.create_transition(existing_transition.id+"_"+split_uri(control.participant)[1],Direction.reverse(existing_transition.direction),existing_transition.control)
 
-		#add arcs to controller
-		self.connect_both_ways(existing_transition,place[0])
-		self.connect_both_ways(new_transition,place[1])
+			#add arcs to controller
+			self.connect_both_ways(existing_transition,places[0])
+			self.connect_both_ways(new_transition,places[1])
 
-		#add arcs to places
-		#get arcs from existing_transition
-		arcs = self.arcs_from_source(existing_transition)
-		#reverse direction and connect to new_transition
-		for arc in arcs:
-			if arc.source == existing_transition:
-				self.net.create_arc(arc.target, new_transition)
-			if arc.target == existing_transition:
-				self.net.create_arc(new_transition, arc.source)
+			#add arcs to places
+			#get arcs from existing_transition
+			#Here it goes wrong...
+			arcs = self.net.arcs_from_source[existing_transition]
+			for arc in arcs:
+				print (arc.source.id)
+				print (arc.target.id)
+			#reverse direction and connect to new_transition
+			for arc in arcs:
+				if arc.source == existing_transition:
+					self.net.create_arc(arc.target, new_transition)
+				if arc.target == existing_transition:
+					self.net.create_arc(new_transition, arc.source)
+		else:
+			print("Error: More than 1 transition found")
 
 	def connect_both_ways(self, transition, place):
 		"""
