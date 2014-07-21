@@ -212,7 +212,7 @@ class ActivatingControlConverter(BiopaxConverter):
 		return transitions
 
 class ActivationInhibitionAlossteric(BiopaxConverter):
-	#NOT YET FINISHED
+	#order=102
 	def __init__(self, graph, petri_net):
 		"""
 		Converts modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.
@@ -227,21 +227,25 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		SELECT *
 		WHERE {
 			 ?interaction
-   				a bp:Modulator;
+   				a bp:Modulation;
    				bp:controlled ?controlled;
  				bp:controller ?participant;
      			bp:controlType ?types.
+     			?controlled bp:controller ?controlledId .
+
+     		OPTIONAL { ?controlledId bp:displayName ?controlledName} .
 
    			OPTIONAL { ?participant bp:displayName ?participantName }
    
-   			VALUES (?types) { 
-   				("INHIBITION")
-				("INHIBITION-ALOSSTERIC")
-				("ACTIVATION-ALOSSTERIC")
-				("ACTIVATION")
-  			}
 		}
 	"""
+	#This stomehow does not work
+	#VALUES (?types) { 
+   	#			("INHIBITION")
+	#			("INHIBITION-ALOSSTERIC")
+	#			("ACTIVATION-ALOSSTERIC")
+	#			("ACTIVATION")
+  	#		}
 
 	def convert(self):
 		for control in self.graph.query(self.query):
@@ -256,18 +260,79 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 		If the direction is reversible, the transition gets duplicated.
 		"""
 		# Create place for new controller or cofactor
-		places = create_places(control)
-		modulator_place = self.net.create_place(split_uri(control.participant)[1], control.participantName)
-		# Create all transitions which are used in the 
-		transitions = self.get_transitions(control)
+		places = self.create_places(control)
+		modulator_place = self.net.create_place(split_uri(control.participant)[1],control.participantName)
+		# Create transitions necessairy
+		transitions = [self.net.create_transition(split_uri(control.controlled)[1]+"_"+split_uri(control.participant)[1]+"_1" ,Direction.left_to_right,split_uri(control.controlled)[1]+"_ALLOSTERIC"), \
+		self.net.create_transition(split_uri(control.controlled)[1]+"_"+split_uri(control.participant)[1]+"_2",Direction.left_to_right,split_uri(control.controlled)[1]+"_ALLOSTERIC")]
 
+		#Create arcs
+		self.connect_catalysis(control, places)
+		self.connect(transitions, places, modulator_place)
 
-		#TODO finish this stuff
-		raise NotImplementedError
+	def create_places(self, control):
+		"""
+		Creates 2 catalysis places, or adds a new place if it is already existing
+
+		:rtype: Set(Place)
+		"""
+
+		places = []
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]))
+
+		controlledName = control.controlledName
+		if control.controlledName is None:
+			controlledName = ""
+
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]+"_ALLOSTERIC", controlledName + "*"))
+		return places
+
+	def connect(self, transitions, places, modulator_place):
+		self.net.create_arc(places[0],transitions[0])
+		self.net.create_arc(transitions[0],places[1])
+		self.net.create_arc(modulator_place,transitions[0])
+		self.net.create_arc(transitions[1],modulator_place)
+		self.net.create_arc(transitions[1],places[0])
+		self.net.create_arc(places[1],transitions[1])
+
+	def connect_catalysis(self, control,places):
+		"""
+		this function connects the 2 catalysis places to the transitions which are part of the reaction they point to
+
+		"""
+		#get transitions
+		transitions = self.net.get_transition(split_uri(control.controlled)[1])
+		if len(transitions) ==1:
+			existing_transition = transitions[0]
+			new_transition = self.net.create_transition(existing_transition.id+"_"+split_uri(control.participant)[1],Direction.reverse(existing_transition.direction),existing_transition.control)
+
+			#add arcs to controller
+			self.connect_both_ways(new_transition,places[1])
+
+			#add arcs to places
+			#get arcs from existing_transition
+			#Here it goes wrong...
+			arcs = self.net.arcs_from_source[existing_transition]
+
+			#reverse direction and connect to new_transition
+			for arc in arcs:
+				if arc.source == existing_transition:
+					self.net.create_arc(arc.target, new_transition)
+				if arc.target == existing_transition:
+					self.net.create_arc(new_transition, arc.source)
+		else:
+			print("Error: More than 1 transition found")
+
+	def connect_both_ways(self, transition, place):
+		"""
+		This function creates an arc between the transition with the place and the place and the transition
+		"""
+		self.net.create_arc(transition,place)
+		self.net.create_arc(place, transition)
 
 
 class InhibitionIrreversible(BiopaxConverter):
-	order=101;
+	#order=101;
 
 	def __init__(self, graph, petri_net):
 		"""Converts Modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.
@@ -295,7 +360,7 @@ class InhibitionIrreversible(BiopaxConverter):
    				("INHIBITION-IRREVERSIBLE")
   			}
 		}
-	"""
+		"""
 
 	def convert(self):
 		for control in self.graph.query(self.query):
@@ -359,9 +424,7 @@ class InhibitionIrreversible(BiopaxConverter):
 			#get arcs from existing_transition
 			#Here it goes wrong...
 			arcs = self.net.arcs_from_source[existing_transition]
-			for arc in arcs:
-				print (arc.source.id)
-				print (arc.target.id)
+
 			#reverse direction and connect to new_transition
 			for arc in arcs:
 				if arc.source == existing_transition:
@@ -380,6 +443,7 @@ class InhibitionIrreversible(BiopaxConverter):
 
 
 class NonUnCompetitiveOther(BiopaxConverter):
+	order=103
 	def __init__(self, graph, petri_net):
 		"""Not implemented
 
@@ -387,3 +451,75 @@ class NonUnCompetitiveOther(BiopaxConverter):
 		:param petri_net: PetriNet
 		"""
 		BiopaxConverter.__init__(self, graph, petri_net)
+
+	query = """
+		PREFIX bp: <http://www.biopax.org/release/biopax-level3.owl#>
+		SELECT *
+		WHERE {
+			 ?interaction
+   				a bp:Modulation;
+   				bp:controlled ?controlled;
+ 				bp:controller ?participant;
+     			bp:controlType ?types.
+     			?controlled bp:controller ?controlledId .
+
+     		OPTIONAL { ?controlledId bp:displayName ?controlledName} .
+
+   			OPTIONAL { ?participant bp:displayName ?participantName }
+   
+			}
+		"""
+	#This stomehow does not work
+	#VALUES (?types) { 
+   	#			("INHIBITION")
+	#			("INHIBITION-ALOSSTERIC")
+	#			("ACTIVATION-ALOSSTERIC")
+	#			("ACTIVATION")
+  	#		}
+
+	def convert(self):
+		for control in self.graph.query(self.query):
+			self.add_control(control)
+
+	def add_control(self, control):
+		"""Adds a controller to a controlled transition.
+
+		Catalysis can only be of activating control type. Thus the controllers and cofactors are added to input
+		places of the transition.
+
+		If the direction is reversible, the transition gets duplicated.
+		"""
+		# Create place for new controller or cofactor
+		places = self.create_places(control)
+		modulator_place = self.net.create_place(split_uri(control.participant)[1],control.participantName)
+		# Create transitions necessairy
+		transitions = [self.net.create_transition(split_uri(control.controlled)[1]+"_"+split_uri(control.participant)[1]+"_1" ,Direction.left_to_right,split_uri(control.controlled)[1]+"_COMPETITIVE"), \
+		self.net.create_transition(split_uri(control.controlled)[1]+"_"+split_uri(control.participant)[1]+"_2",Direction.left_to_right,split_uri(control.controlled)[1]+"_COMPETITIVE")]
+
+		#Create arcs
+		self.connect(transitions, places, modulator_place)
+
+	def create_places(self, control):
+		"""
+		Creates 2 catalysis places, or adds a new place if it is already existing
+
+		:rtype: Set(Place)
+		"""
+
+		places = []
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]))
+
+		controlledName = control.controlledName
+		if control.controlledName is None:
+			controlledName = ""
+
+		places.append(self.net.create_place(split_uri(control.controlledId)[1]+"_COMPETITIVE", controlledName + "*"))
+		return places
+
+	def connect(self, transitions, places, modulator_place):
+		self.net.create_arc(modulator_place,transitions[1])
+		self.net.create_arc(transitions[1],places[1])
+		self.net.create_arc(transitions[0],places[0])
+		self.net.create_arc(transitions[0],modulator_place)
+		self.net.create_arc(places[0], transitions[1])
+		self.net.create_arc(places[1],transitions[0])

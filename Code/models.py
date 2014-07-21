@@ -58,17 +58,25 @@ class PetriNet:
 		:param control_id: ID of control which this transition is part of. Defaults to None.
 		:return: Transition with uid, direction and control_id.
 		"""
+
 		if (uid, Direction.unknown, None) in self.transitions:
 			# If there is transition with same ID and no information about direction and control, use that.
 			self.change_transition(uid, Direction.unknown, direction, control_id)
-
+			
 		elif (uid, direction, None) in self.transitions:
 			# If there is transition with same ID and direction but unknown control, use that.
 			self.change_transition(uid, direction, direction, control_id)
-
+			
 		elif (uid, Direction.reverse(direction), None) in self.transitions:
 			# If there is transition with same ID and reverse direction, but unknown control, use that.
 			self.change_transition(uid, Direction.reverse(direction), direction, control_id)
+			
+		elif (uid, Direction.left_to_right, None) in self.transitions:
+			#If there is a transition with same ID but unknown direction and known control
+			direction = self.change_transition(uid, Direction.left_to_right, direction, control_id)
+			
+		elif (uid, Direction.right_to_left, None) in self.transitions:
+			direction = self.change_transition(uid, Direction.right_to_left, direction, control_id)
 
 		if (uid, direction, control_id) not in self.transitions:
 			# If there still doesn't exist a transition with same attributes, create a new one.
@@ -100,6 +108,7 @@ class PetriNet:
 		transition.control = control_id
 
 		self.transitions[(uid, transition.direction, control_id)] = transition
+		return transition.direction
 
 	def reverse_arcs(self, transition):
 		"""Reverse all arcs directly connected to transition.
