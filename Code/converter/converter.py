@@ -331,7 +331,7 @@ class ActivationInhibitionAlossteric(BiopaxConverter):
 
 
 class InhibitionIrreversible(BiopaxConverter):
-	order=101;
+	#order=101;
 
 	def __init__(self, graph, petri_net):
 		"""Converts Modulator of class Control with controlType Inhibition, Inhibition-Alossteric and Activation-Alossteric from BioPAX to a Petri Net.

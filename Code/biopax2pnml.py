@@ -8,8 +8,8 @@ class Convertor:
 	def __init__(self, inputfile, outputfile):
 		reader = biopax.Reader()
 		net = reader.read(inputfile)
-		validatorThingy = validator.Validator(net)
-		validatorThingy.checkArcs()
+		#validatorThingy = validator.Validator(net)
+		#validatorThingy.checkArcs()
 		#classify = classifier.NetClassifier(net)
 		#classify.classify()
 		writer = pnml.Writer(net)
